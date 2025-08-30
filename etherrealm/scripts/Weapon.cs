@@ -1,15 +1,24 @@
 using Godot;
 using System;
 
-public partial class Weapon : Node
+public partial class Weapon : Node2D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	
+	public virtual void Input(InputEvent @event)
 	{
+		// zjistí, že bylo stisknuto tlačítko myši
+		if (@event is InputEventMouseButton mouseEvent)
+		{
+			if (mouseEvent.IsActionPressed("MouseLeftButton"))
+			{
+				// otočí Node2D tak, aby směřoval na pozici myši (globální souřadnice)
+				LookAt(GetGlobalMousePosition());
+			}
+		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public virtual void Stab()
 	{
+
 	}
 }

@@ -5,7 +5,7 @@ public partial class Player : CharacterBody2D
 {
 	public float acceleration = 600.0f;
 	public float friction = 1000.0f;
-	public const float maxSpeed = 200.0f;
+	public const float maxSpeed = 150.0f;
 	public const float JumpVelocity = -400.0f;
 	
 
