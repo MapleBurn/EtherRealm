@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4gu18mclw13j"]
+
+[ext_resource type="Script" uid="uid://bbo80iooat65c" path="res://scripts/Testenemy.cs" id="1_5sw1c"]
+[ext_resource type="Texture2D" uid="uid://bb3sh3o5qkg4c" path="res://icon.svg" id="1_tpr7q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sw1c"]
+size = Vector2(20, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkm5"]
+size = Vector2(20, 38)
+
+[node name="testEnemy" type="CharacterBody2D"]
+collision_mask = 3
+script = ExtResource("1_5sw1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_5sw1c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.15625, 0.296875)
+texture = ExtResource("1_tpr7q")
+
+[node name="hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_iwkm5")
+
+[connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

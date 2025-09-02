@@ -3,6 +3,7 @@ using System;
 
 public partial class Weapon : Node2D
 {
+	public int damage;
 	
 	public virtual void Input(InputEvent @event)
 	{

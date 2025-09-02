@@ -3,6 +3,8 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	[Export] private AnimatedSprite2D sprite;
+	
 	public float acceleration = 600.0f;
 	public float friction = 1000.0f;
 	public const float maxSpeed = 150.0f;
@@ -32,11 +34,17 @@ public partial class Player : CharacterBody2D
 		{
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
+			sprite.Play("walk");
+			if (direction > Vector2.Zero)
+				sprite.FlipH = false;
+			else
+				sprite.FlipH = true;
 		}
 		else
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
+			sprite.Play("idle");
 		}
 
 		Velocity = velocity;

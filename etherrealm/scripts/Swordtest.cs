@@ -7,6 +7,12 @@ public partial class Swordtest : Weapon
     
     private Tween stabTween;
     private float stabDistance = 10f;
+    private int stabDamage = 10;
+
+    public override void _Ready()
+    {
+        damage = stabDamage;
+    }
     
     public override void _Input(InputEvent @event)
     {
@@ -28,12 +34,12 @@ public partial class Swordtest : Weapon
         if (stabTween != null)
             return;
         
-        var origin = GlobalPosition;
-        var mouseDir = (GetGlobalMousePosition() - origin).Normalized();
+        var origin = Position;
+        var mouseDir = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 
         stabTween = GetTree().CreateTween().BindNode(this);
-        stabTween.TweenProperty(this, "global_position", origin + (mouseDir * stabDistance), 0.1f);
-        stabTween.TweenProperty(this, "global_position", origin, 0.1f).SetDelay(0.1f);
+        stabTween.TweenProperty(this, "position", origin + (mouseDir * stabDistance), 0.1f);
+        stabTween.TweenProperty(this, "position", origin, 0.1f).SetDelay(0.1f);
         
         //make it null after finishing
         stabTween.Finished += () => stabTween = null;

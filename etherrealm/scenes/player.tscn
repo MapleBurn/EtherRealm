@@ -105,9 +105,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
 collision_mask = 2
 script = ExtResource("1_g2els")
+sprite = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-8, 4.5)
@@ -117,7 +118,6 @@ shape = SubResource("CapsuleShape2D_g2els")
 sprite_frames = SubResource("SpriteFrames_ur7pv")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.456144
 
 [node name="hand" type="Node2D" parent="."]
 
