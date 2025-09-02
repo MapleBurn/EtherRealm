@@ -7,21 +7,22 @@ public partial class Swordtest : Weapon
     
     private Tween stabTween;
     private float stabDistance = 10f;
-    private int stabDamage = 10;
+    private int _stabDamage = 10;
+    private int _crit = 15; //percentage chance to crit
 
     public override void _Ready()
     {
-        damage = stabDamage;
+        damage = _stabDamage;
+        critChance = _crit;
     }
     
     public override void _Input(InputEvent @event)
     {
-        //Input(@event);
         if (@event is InputEventMouseButton mouseEvent)
         {
             if (mouseEvent.IsActionPressed("MouseLeftButton"))
             {
-                //otočí Node2D tak, aby směřoval na pozici myši (globální souřadnice)
+                //rotate to mouse
                 LookAt(GetGlobalMousePosition());
                 Stab();
             }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdptssos0lehs"]
 
-[ext_resource type="Script" uid="uid://c0602c4bl8hmn" path="res://scripts/Swordtest.cs" id="1_6dook"]
+[ext_resource type="Script" uid="uid://c0602c4bl8hmn" path="res://scripts/item/Swordtest.cs" id="1_6dook"]
 [ext_resource type="Texture2D" uid="uid://dibxb5nc6jyjh" path="res://assets/items/swordtest.png" id="1_xasec"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxn4k"]
@@ -16,7 +16,9 @@ position = Vector2(11, -1)
 rotation = 0.785398
 texture = ExtResource("1_xasec")
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="." groups=["weapons"]]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(12, 0)

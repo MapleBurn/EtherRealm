@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4gu18mclw13j"]
+[gd_scene load_steps=6 format=3 uid="uid://d4gu18mclw13j"]
 
-[ext_resource type="Script" uid="uid://bbo80iooat65c" path="res://scripts/Testenemy.cs" id="1_5sw1c"]
+[ext_resource type="Script" uid="uid://bbo80iooat65c" path="res://scripts/entity/Testenemy.cs" id="1_5sw1c"]
 [ext_resource type="Texture2D" uid="uid://bb3sh3o5qkg4c" path="res://icon.svg" id="1_tpr7q"]
+[ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/healthbar.tscn" id="3_iwkm5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5sw1c"]
 size = Vector2(20, 38)
@@ -9,9 +10,11 @@ size = Vector2(20, 38)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkm5"]
 size = Vector2(20, 38)
 
-[node name="testEnemy" type="CharacterBody2D"]
+[node name="testEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "healthbar")]
 collision_mask = 3
 script = ExtResource("1_5sw1c")
+hurtbox = NodePath("hurtbox")
+healthbar = NodePath("healthbar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -23,11 +26,22 @@ scale = Vector2(0.15625, 0.296875)
 texture = ExtResource("1_tpr7q")
 
 [node name="hurtbox" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 0
+collision_layer = 8
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_iwkm5")
+
+[node name="healthbar" parent="." instance=ExtResource("3_iwkm5")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -14.0
+offset_top = 23.0
+offset_right = 15.0
+offset_bottom = 31.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

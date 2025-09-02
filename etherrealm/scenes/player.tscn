@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Texture2D" uid="uid://ckfygrdn1auja" path="res://assets/character/SpriteSheet/Warrior_Sheet-Effect.png" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/Player.cs" id="1_g2els"]
+[ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://cdptssos0lehs" path="res://scenes/swordtest.tscn" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]

@@ -4,6 +4,7 @@ using System;
 public partial class Weapon : Node2D
 {
 	public int damage;
+	public int critChance; // chance in percent to do critical hit
 	
 	public virtual void Input(InputEvent @event)
 	{
