@@ -4,8 +4,12 @@ using System;
 public partial class Swordtest : Weapon
 {
     [Export] private Sprite2D sprite { get; set; }
+    [Export] private Area2D hitbox { get; set; }
     
     private Tween stabTween;
+    private bool isAttacking = false;
+    
+    //this weapons properties
     private float stabDistance = 10f;
     private int _stabDamage = 10;
     private int _crit = 15; //percentage chance to crit
@@ -29,6 +33,20 @@ public partial class Swordtest : Weapon
         }
     }
 
+    public override void _Process(double delta)
+    {
+        if (isAttacking)
+        {
+            Visible = true;
+            hitbox.Monitorable = true;
+        }
+        else
+        {
+            Visible = false;
+            hitbox.Monitorable = false;
+        }
+    }
+    
     public override void Stab()
     {
         //let the stab finish so 1) no spamming 2) the sword doesn't fly off
@@ -42,7 +60,13 @@ public partial class Swordtest : Weapon
         stabTween.TweenProperty(this, "position", origin + (mouseDir * stabDistance), 0.1f);
         stabTween.TweenProperty(this, "position", origin, 0.1f).SetDelay(0.1f);
         
+        isAttacking = true;
+        
         //make it null after finishing
-        stabTween.Finished += () => stabTween = null;
+        stabTween.Finished += () =>
+        {
+            isAttacking = false;
+            stabTween = null;
+        };
     }
 }

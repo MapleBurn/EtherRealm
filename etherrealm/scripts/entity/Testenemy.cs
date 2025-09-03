@@ -6,7 +6,7 @@ public partial class Testenemy : CharacterBody2D
     [Export] private Area2D hurtbox;
     [Export] private Healthbar healthbar;
     
-    public int maxHealth = 100;
+    public const int maxHealth = 500;
     public int health;
     private Random rdm = new Random();
 
