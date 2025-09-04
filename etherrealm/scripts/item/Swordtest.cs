@@ -25,9 +25,4 @@ public partial class Swordtest : Weapon
         attackCollider = GetNode<CollisionShape2D>("hitbox/collider");
         stabDistance = _attackDistance;
     }
-    
-    public override void Attack()
-    {
-        Stab();
-    }
 }

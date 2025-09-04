@@ -23,7 +23,12 @@ public partial class Weapon : Node2D
 			{
 				//rotate to mouse
 				LookAt(GetGlobalMousePosition());
-				Attack();
+				Stab();
+			}
+			else if (mouseEvent.IsActionPressed("MouseRightButton"))
+			{
+				//rotate to mouse
+				Swing();
 			}
 		}
 	}
@@ -41,18 +46,13 @@ public partial class Weapon : Node2D
 			attackCollider.Disabled = true;
 		}
 	}
-
-	public virtual void Attack()
-	{
-		Stab();
-	}
 	
 	public void Stab()
 	{
 		//let the stab finish so 1) no spamming 2) the sword doesn't fly off
 		if (attackTween != null)
 			return;
-        
+		
 		var origin = Position;
 		var mouseDir = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		hitDir = mouseDir;
@@ -97,10 +97,10 @@ public partial class Weapon : Node2D
 			startAngle = targetAngle + swingAngle / 2f;
 			endAngle = targetAngle - swingAngle / 2f;
 		}
-
+		
 		Rotation = startAngle;
 		attackTween = GetTree().CreateTween().BindNode(this);
-		attackTween.TweenProperty(this, "rotation", endAngle, 0.2f);
+		attackTween.TweenProperty(this, "rotation", endAngle, 0.4f);
 
 		isAttacking = true;
 		attackTween.Finished += () =>

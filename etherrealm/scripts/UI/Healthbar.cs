@@ -4,9 +4,11 @@ using System;
 public partial class Healthbar : ProgressBar
 {
 	[Export] private ProgressBar damagebar;
-	[Export] private Timer timer;
 	
 	private bool lowerDamageBar = false;
+	private double startTime;
+	private double endTime;
+	
 
 	public override void _Ready()
 	{
@@ -14,6 +16,11 @@ public partial class Healthbar : ProgressBar
 
 	public override void _Process(double delta)
 	{
+		if (Time.GetTicksMsec() - startTime > 1000)
+		{
+			lowerDamageBar = true;
+		}
+		
 		if (lowerDamageBar)
 		{
 			if (damagebar.Value > Value)
@@ -39,11 +46,11 @@ public partial class Healthbar : ProgressBar
 	public void UpdateHealthbar(int hp)
 	{
 		Value = hp;
-		timer.Start();
+		TimerStarted();
 	}
 
-	public void TimerTimeout()
+	private void TimerStarted()
 	{
-		lowerDamageBar = true;
+		startTime = Time.GetTicksMsec();
 	}
 }
