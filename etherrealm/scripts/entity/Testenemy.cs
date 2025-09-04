@@ -9,6 +9,10 @@ public partial class Testenemy : CharacterBody2D
     public const int maxHealth = 500;
     public int health;
     private Random rdm = new Random();
+    
+    public float acceleration = 600.0f;
+    public float friction = 1000.0f;
+    public const float maxSpeed = 150.0f;
 
     public override void _Ready()
     {
@@ -32,6 +36,20 @@ public partial class Testenemy : CharacterBody2D
             velocity += GetGravity() * (float)delta;
         }
         
+        //BROKEN
+        Vector2 direction = Velocity.Normalized();
+        float targetX = direction.X * maxSpeed;
+        if (direction != Vector2.Zero)
+        {
+            //Accelerate to target speed
+            velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
+        }
+        else
+        {
+            //slow down when no input
+            velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
+        }
+        
         Velocity = velocity;
         MoveAndSlide();
     }
@@ -42,19 +60,22 @@ public partial class Testenemy : CharacterBody2D
             return;
         
         Weapon weapon = area.GetParent<Weapon>();
-        int damage = weapon.damage;
-        int critChance = weapon.critChance;
+        float damage = weapon.damage;
+        float critChance = weapon.critChance;
+        float knockback = weapon.knockback;
         bool isCrit = false;
         
         if (rdm.Next(0, 100) < critChance) //chance for a critical hit
         {
             damage *= 2; 
             isCrit = true;
+            knockback *= 1.5f;
         }
-        health -= damage;
+        health -= (int)damage;
+        Velocity += weapon.hitDir * knockback;
         
         //spawn damage floating text
-        SpawnDFT(isCrit, damage);
+        SpawnDFT(isCrit, (int)damage);
         
         //update healthbar
         healthbar.Visible = true;

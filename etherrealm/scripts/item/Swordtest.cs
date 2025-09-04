@@ -7,17 +7,21 @@ public partial class Swordtest : Weapon
     [Export] private Area2D hitbox { get; set; }
     
     private Tween stabTween;
+    private CollisionShape2D stabCollider;
     private bool isAttacking = false;
     
     //this weapons properties
     private float stabDistance = 10f;
-    private int _stabDamage = 10;
-    private int _crit = 15; //percentage chance to crit
+    private float _stabDamage = 10;
+    private float _crit = 15; //percentage chance to crit
+    private float _knockback = 10;
 
     public override void _Ready()
     {
         damage = _stabDamage;
         critChance = _crit;
+        stabCollider = GetNode<CollisionShape2D>("hitbox/collider");
+        knockback = _knockback;
     }
     
     public override void _Input(InputEvent @event)
@@ -38,12 +42,12 @@ public partial class Swordtest : Weapon
         if (isAttacking)
         {
             Visible = true;
-            hitbox.Monitorable = true;
+            stabCollider.Disabled = false;
         }
         else
         {
             Visible = false;
-            hitbox.Monitorable = false;
+            stabCollider.Disabled = true;
         }
     }
     
@@ -55,6 +59,7 @@ public partial class Swordtest : Weapon
         
         var origin = Position;
         var mouseDir = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+        hitDir = mouseDir;
 
         stabTween = GetTree().CreateTween().BindNode(this);
         stabTween.TweenProperty(this, "position", origin + (mouseDir * stabDistance), 0.1f);

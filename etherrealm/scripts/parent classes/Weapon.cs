@@ -3,8 +3,10 @@ using System;
 
 public partial class Weapon : Node2D
 {
-	public int damage;
-	public int critChance; // chance in percent to do critical hit
+	public float damage;
+	public float critChance; // chance in percent to do critical hit
+	public float knockback;
+	public Vector2 hitDir;
 	
 	public virtual void Input(InputEvent @event)
 	{
