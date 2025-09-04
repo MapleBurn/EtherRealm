@@ -5,7 +5,9 @@ public partial class Weapon : Node2D
 {
 	public float damage;
 	public float critChance; // chance in percent to do critical hit
+	public float critDmgMult;
 	public float knockback;
+	public float critKBMult;
 	public Vector2 hitDir;
 	public Area2D hitbox { get; set; }
 	public float stabDistance;
