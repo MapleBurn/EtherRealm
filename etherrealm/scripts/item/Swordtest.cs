@@ -10,7 +10,7 @@ public partial class Swordtest : Weapon
     private float _attackDistance = 10f;
     private float _attackDamage = 10;
     private float _crit = 15; //percentage chance to crit
-    private float _knockback = 10;
+    private float _knockback = 100;
 
     public override void _Ready()
     {

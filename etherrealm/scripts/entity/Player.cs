@@ -6,7 +6,7 @@ public partial class Player : CharacterBody2D
 	[Export] private AnimatedSprite2D sprite;
 	
 	public float acceleration = 600.0f;
-	public float friction = 1000.0f;
+	public float friction = 800.0f;
 	public const float maxSpeed = 150.0f;
 	public const float JumpVelocity = -400.0f;
 	

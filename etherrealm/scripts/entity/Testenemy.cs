@@ -10,9 +10,10 @@ public partial class Testenemy : CharacterBody2D
     public int health;
     private Random rdm = new Random();
     
-    public float acceleration = 600.0f;
-    public float friction = 1000.0f;
-    public const float maxSpeed = 150.0f;
+    private float acceleration = 600.0f;
+    private float friction = 600.0f;
+    private const float maxSpeed = 150.0f;
+    private bool isWalking = false;
 
     public override void _Ready()
     {
@@ -36,10 +37,9 @@ public partial class Testenemy : CharacterBody2D
             velocity += GetGravity() * (float)delta;
         }
         
-        //BROKEN
-        Vector2 direction = Velocity.Normalized();
+        Vector2 direction = velocity.Normalized();
         float targetX = direction.X * maxSpeed;
-        if (direction != Vector2.Zero)
+        if (isWalking)
         {
             //Accelerate to target speed
             velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
