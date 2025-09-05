@@ -6,12 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxn4k"]
 size = Vector2(23.25, 8)
 
-[node name="swordtest" type="Node2D" node_paths=PackedStringArray("sprite", "_hitbox", "_timer")]
+[node name="swordtest" type="Node2D" node_paths=PackedStringArray("sprite", "_hitbox")]
 z_index = 1
 script = ExtResource("1_6dook")
 sprite = NodePath("Sprite2D")
 _hitbox = NodePath("hitbox")
-_timer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(17, -1)

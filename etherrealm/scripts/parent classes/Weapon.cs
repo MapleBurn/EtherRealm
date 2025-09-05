@@ -9,11 +9,15 @@ public partial class Weapon : Node2D
 	public float knockback;
 	public float critKBMult;
 	public Vector2 hitDir;
+	public float delay;
 	public Area2D hitbox { get; set; }
 	public float stabDistance;
 	public Tween attackTween;
 	public CollisionShape2D attackCollider;
 	public bool isAttacking = false;
+	
+	private bool isCooldown = false;
+	private float startCooldown;
 	
 	public override void _Input(InputEvent @event)
 	{
@@ -45,12 +49,15 @@ public partial class Weapon : Node2D
 			Visible = false;
 			attackCollider.Disabled = true;
 		}
+
+		if (isCooldown && startCooldown + delay < Time.GetTicksMsec())
+			isCooldown = false;
 	}
 	
 	public void Stab()
 	{
 		//let the stab finish so 1) no spamming 2) the sword doesn't fly off
-		if (attackTween != null)
+		if (attackTween != null || isCooldown)
 			return;
 		
 		var origin = Position;
@@ -73,11 +80,12 @@ public partial class Weapon : Node2D
 
 	public void Swing()
 	{
-		if (attackTween != null)
+		if (attackTween != null || isCooldown)
 			return;
 
 		Vector2 mouseDir = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		float targetAngle = mouseDir.Angle();
+		hitDir = mouseDir;
 
 		float swingAngle = Mathf.Pi / 2f; // 90 degrees
 
@@ -105,6 +113,8 @@ public partial class Weapon : Node2D
 		isAttacking = true;
 		attackTween.Finished += () =>
 		{
+			isCooldown = true;
+			startCooldown = Time.GetTicksMsec();
 			isAttacking = false;
 			attackTween = null;
 		};

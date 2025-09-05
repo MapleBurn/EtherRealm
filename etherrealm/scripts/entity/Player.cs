@@ -4,13 +4,21 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	[Export] private AnimatedSprite2D sprite;
+	[Export] private Area2D hurtbox;
 	
-	public float acceleration = 600.0f;
-	public float friction = 800.0f;
-	public const float maxSpeed = 150.0f;
-	public const float JumpVelocity = -400.0f;
-	
+	private float acceleration = 600.0f;
+	private float friction = 800.0f;
+	private const float maxSpeed = 150.0f;
+	private const float JumpVelocity = -400.0f;
+	private int maxHealth = 100;
+	private int health;
+	private Random rdm;
 
+	public override void _Ready()
+	{
+		health = maxHealth;
+	}
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
@@ -49,5 +57,60 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+	
+	public void HurtboxAreaEntered(Area2D area)
+	{
+		if (!area.IsInGroup("enemies"))
+			return;
+        
+		Enemy enemy = area.GetParent<Enemy>();
+		float damage = enemy.damage;
+		float critDmgMult = enemy.critDmgMult;
+		float critChance = enemy.critChance;
+		bool isCrit = false;
+		Vector2 hitDir = enemy.hitDir;
+		float knockback = enemy.knockback;
+		float critKBMult = enemy.critKBMult;
+        
+		
+		
+		if (rdm.Next(0, 100) < critChance) //chance for a critical hit
+		{
+			damage *= critDmgMult; 
+			isCrit = true;
+			knockback *= critKBMult;
+		}
+		ProcessDamage(damage, isCrit);
+		ProcessKnockback(knockback, hitDir);
+	}
+	
+	private void ProcessDamage(float damage, bool isCrit)
+	{
+		health -= (int)damage;
+		//spawn damage floating text
+		SpawnDFT(isCrit, (int)damage);
+        
+		//update healthbar
+		//healthbar.Visible = true;
+		//healthbar.UpdateHealthbar(health);
+	}
+
+	private void ProcessKnockback(float knockback, Vector2 hitDir)
+	{
+		Velocity += hitDir * knockback;
+	}
+    
+	private void SpawnDFT(bool isCrit, int damage)
+	{
+		PackedScene damageTextScene = GD.Load<PackedScene>("res://scenes/floating_text.tscn");
+		FloatingText damageText = damageTextScene.Instantiate<FloatingText>();
+		GetParent().AddChild(damageText);
+        
+		if (isCrit)
+			damageText.SetDamage(damage, FloatingText.DamageType.crit);
+		else
+			damageText.SetDamage(damage, FloatingText.DamageType.damage);
+		damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
 	}
 }

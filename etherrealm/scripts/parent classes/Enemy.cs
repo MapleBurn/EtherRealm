@@ -10,6 +10,14 @@ public partial class Enemy : CharacterBody2D
     public int health;
     public Random rdm = new Random();
     
+    //Enemy attack stats
+    public float damage;
+    public float critChance; // chance in percent to do critical hit
+    public float critDmgMult;
+    public float knockback;
+    public float critKBMult;
+    public Vector2 hitDir; 
+    
     public float acceleration;
     public float friction;
     public float maxSpeed;

@@ -1,12 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1528ohkmrre2"]
+[gd_scene load_steps=19 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Texture2D" uid="uid://ckfygrdn1auja" path="res://assets/character/SpriteSheet/Warrior_Sheet-Effect.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://cdptssos0lehs" path="res://scenes/swordtest.tscn" id="3_qhqgy"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 7.0
-height = 31.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(15, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(15, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("1_3vyb7")
@@ -105,14 +107,23 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "hurtbox")]
 collision_mask = 2
 script = ExtResource("1_g2els")
 sprite = NodePath("AnimatedSprite2D")
+hurtbox = NodePath("hurtbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-8, 4.5)
-shape = SubResource("CapsuleShape2D_g2els")
+position = Vector2(-7.5, 4.5)
+shape = SubResource("RectangleShape2D_qhqgy")
+
+[node name="hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="collider" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(-7.5, 4.5)
+shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ur7pv")
@@ -123,3 +134,5 @@ autoplay = "idle"
 
 [node name="swordtest" parent="hand" instance=ExtResource("3_qhqgy")]
 position = Vector2(-3, 8)
+
+[connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]
