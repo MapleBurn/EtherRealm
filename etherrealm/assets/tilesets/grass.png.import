@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://06ngrsdmw0g5"
-path="res://.godot/imported/cavesofgallet_tiles.png-41c3855469f131eaf71d3274a01fd9b1.ctex"
+uid="uid://t5ohl1v2isf5"
+path="res://.godot/imported/grass.png-a276a6b82cfa521a67a5b96f247ec98c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/cavesofgallet_tiles.png"
-dest_files=["res://.godot/imported/cavesofgallet_tiles.png-41c3855469f131eaf71d3274a01fd9b1.ctex"]
+source_file="res://assets/tilesets/grass.png"
+dest_files=["res://.godot/imported/grass.png-a276a6b82cfa521a67a5b96f247ec98c.ctex"]
 
 [params]
 

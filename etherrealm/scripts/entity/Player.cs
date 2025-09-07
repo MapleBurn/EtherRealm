@@ -1,4 +1,4 @@
-using Godot;
+	using Godot;
 using System;
 
 public partial class Player : CharacterBody2D
@@ -12,7 +12,8 @@ public partial class Player : CharacterBody2D
 	private const float JumpVelocity = -400.0f;
 	private int maxHealth = 100;
 	private int health;
-	private Random rdm;
+	private Random rdm = new Random();
+	private bool isDead = false;
 
 	public override void _Ready()
 	{
@@ -21,6 +22,14 @@ public partial class Player : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if (isDead)
+			return;
+		
+		if (health <= 0)
+		{
+			Die();
+		}
+		
 		Vector2 velocity = Velocity;
 
 		// Add the gravity
@@ -112,5 +121,10 @@ public partial class Player : CharacterBody2D
 		else
 			damageText.SetDamage(damage, FloatingText.DamageType.damage);
 		damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
+	}
+	
+	private void Die()
+	{
+		isDead = true;
 	}
 }
