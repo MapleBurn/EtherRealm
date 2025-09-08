@@ -132,7 +132,8 @@ autoplay = "idle"
 
 [node name="hand" type="Node2D" parent="."]
 
-[node name="swordtest" parent="hand" instance=ExtResource("3_qhqgy")]
+[node name="swordtest" parent="hand" node_paths=PackedStringArray("_player") instance=ExtResource("3_qhqgy")]
 position = Vector2(-3, 8)
+_player = NodePath("../..")
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

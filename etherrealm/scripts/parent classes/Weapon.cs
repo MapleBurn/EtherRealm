@@ -10,7 +10,8 @@ public partial class Weapon : Node2D
 	public float critKBMult;
 	public Vector2 hitDir;
 	public float delay;
-	public Area2D hitbox { get; set; }
+	public Area2D hitbox;
+	public Player player;
 	public float stabDistance;
 	public Tween attackTween;
 	public CollisionShape2D attackCollider;

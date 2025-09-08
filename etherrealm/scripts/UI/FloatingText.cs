@@ -23,18 +23,34 @@ public partial class FloatingText : Label
 			QueueFree();
 	}
 	
-	public void SetDamage(int amount, DamageType type)
+	public void SetDamage(int amount, DamageType type, bool isPlayer)
 	{
 		Text = amount.ToString();
-		if (type == DamageType.damage) //change text color based on whether it's damage, heal or crit
-			Modulate = Colors.Red;
-		else if (type == DamageType.heal)
-			Modulate = Colors.LimeGreen;
-		else if (type == DamageType.crit) 
+		if (isPlayer)
 		{
-			Modulate = Colors.Gold;
-			floatSpeed *= 1.5f;
-			lifetime *= 1.5f;
+			if (type == DamageType.damage) //change text color based on whether it's damage, heal or crit
+				Modulate = Colors.Red;
+			else if (type == DamageType.heal)
+				Modulate = Colors.LimeGreen;
+			else if (type == DamageType.crit)
+			{
+				Modulate = Colors.Gold;
+				floatSpeed *= 1.5f;
+				lifetime *= 1.5f;
+			}
+		}
+		else
+		{
+			if (type == DamageType.damage) //change text color based on whether it's damage, heal or crit
+				Modulate = Colors.IndianRed;
+			else if (type == DamageType.heal)
+				Modulate = Colors.GreenYellow;
+			else if (type == DamageType.crit)
+			{
+				Modulate = Colors.Yellow;
+				floatSpeed *= 1.5f;
+				lifetime *= 1.5f;
+			}
 		}
 	}
 }

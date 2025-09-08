@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4gu18mclw13j"]
+[gd_scene load_steps=7 format=3 uid="uid://d4gu18mclw13j"]
 
 [ext_resource type="Script" uid="uid://bbo80iooat65c" path="res://scripts/entity/Testenemy.cs" id="1_5sw1c"]
 [ext_resource type="Texture2D" uid="uid://dk5mid5iqegt4" path="res://assets/NPC/Globber.png" id="2_iwkm5"]
@@ -9,6 +9,9 @@ size = Vector2(17, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkm5"]
 size = Vector2(17, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iwkm5"]
+radius = 211.116
 
 [node name="testEnemy" type="CharacterBody2D" node_paths=PackedStringArray("_hurtbox", "_healthbar")]
 collision_mask = 2
@@ -42,5 +45,10 @@ offset_right = 13.0
 offset_bottom = 27.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="detectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
+shape = SubResource("CircleShape2D_iwkm5")
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

@@ -5,10 +5,12 @@ public partial class Enemy : CharacterBody2D
 {
     public Area2D hurtbox;
     public Healthbar healthbar;
+    public Player player;
     
     public int maxHealth;
     public int health;
     public Random rdm = new Random();
+    public bool isDead;
     
     //Enemy attack stats
     public float damage;
@@ -22,6 +24,11 @@ public partial class Enemy : CharacterBody2D
     public float friction;
     public float maxSpeed;
     public bool isWalking = false;
+
+    public override void _Ready()
+    {
+        player = GetParent().GetNode<Player>("player");
+    }
     
     public override void _PhysicsProcess(double delta)
     {
@@ -102,11 +109,12 @@ public partial class Enemy : CharacterBody2D
         GetParent().AddChild(damageText);
         
         if (isCrit)
-            damageText.SetDamage(damage, FloatingText.DamageType.crit);
+            damageText.SetDamage(damage, FloatingText.DamageType.crit, false);
         else
-            damageText.SetDamage(damage, FloatingText.DamageType.damage);
+            damageText.SetDamage(damage, FloatingText.DamageType.damage, false);
         damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
     }
+    
     public virtual void Die()
     {
         QueueFree();

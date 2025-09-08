@@ -3,6 +3,7 @@ using System;
 
 public partial class Swordtest : Weapon
 {
+    [Export] private Player _player { get; set; }
     [Export] private Sprite2D sprite { get; set; }
     [Export] private Area2D _hitbox { get; set; }
     
@@ -26,5 +27,6 @@ public partial class Swordtest : Weapon
         attackCollider = GetNode<CollisionShape2D>("hitbox/collider");
         stabDistance = _attackDistance;
         delay = _delay;
+        player = _player;
     }
 }

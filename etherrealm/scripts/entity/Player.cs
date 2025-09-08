@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	[Export] private AnimatedSprite2D sprite;
+	[Export] public AnimatedSprite2D sprite;
 	[Export] private Area2D hurtbox;
 	
 	private float acceleration = 600.0f;
@@ -117,9 +117,9 @@ public partial class Player : CharacterBody2D
 		GetParent().AddChild(damageText);
         
 		if (isCrit)
-			damageText.SetDamage(damage, FloatingText.DamageType.crit);
+			damageText.SetDamage(damage, FloatingText.DamageType.crit, true);
 		else
-			damageText.SetDamage(damage, FloatingText.DamageType.damage);
+			damageText.SetDamage(damage, FloatingText.DamageType.damage, true);
 		damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
 	}
 	
