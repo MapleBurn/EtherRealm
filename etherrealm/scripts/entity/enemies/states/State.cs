@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class State : Node
+public abstract partial class State : Node
 {
     [Signal] public delegate void StateChangedEventHandler(State requestingState, string newStateName);
 

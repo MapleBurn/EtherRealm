@@ -80,7 +80,7 @@ public partial class Player : CharacterBody2D
 		bool isCrit = false;
 		Vector2 hitDir = enemy.hitDir;
 		float knockback = enemy.knockback;
-		float critKBMult = enemy.critKBMult;
+		float critKnockMult = enemy.critKnockMult;
         
 		
 		
@@ -88,7 +88,7 @@ public partial class Player : CharacterBody2D
 		{
 			damage *= critDmgMult; 
 			isCrit = true;
-			knockback *= critKBMult;
+			knockback *= critKnockMult;
 		}
 		ProcessDamage(damage, isCrit);
 		ProcessKnockback(knockback, hitDir);

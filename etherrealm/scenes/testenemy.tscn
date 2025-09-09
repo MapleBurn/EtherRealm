@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4gu18mclw13j"]
+[gd_scene load_steps=11 format=3 uid="uid://d4gu18mclw13j"]
 
-[ext_resource type="Script" uid="uid://bbo80iooat65c" path="res://scripts/entity/Testenemy.cs" id="1_5sw1c"]
+[ext_resource type="Script" uid="uid://n3ffxbi1o3pj" path="res://scripts/entity/enemies/TestEnemy.cs" id="1_5sw1c"]
+[ext_resource type="Resource" uid="uid://q3d8jpr3qplh" path="res://resources/TestEnemyRes.tres" id="2_ijs0m"]
 [ext_resource type="Texture2D" uid="uid://dk5mid5iqegt4" path="res://assets/NPC/Globber.png" id="2_iwkm5"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/healthbar.tscn" id="3_iwkm5"]
+[ext_resource type="Script" uid="uid://d4hamr2ewn6p6" path="res://scripts/entity/enemies/states/StateMachine.cs" id="4_u8gne"]
+[ext_resource type="Script" uid="uid://wjpmwttbkar5" path="res://scripts/entity/enemies/states/IdleState.cs" id="6_e7now"]
+[ext_resource type="Script" uid="uid://by1qhu4l42kgv" path="res://scripts/entity/enemies/states/ChaseState.cs" id="7_xhbj7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5sw1c"]
 size = Vector2(17, 28)
@@ -13,11 +17,13 @@ size = Vector2(17, 28)
 [sub_resource type="CircleShape2D" id="CircleShape2D_iwkm5"]
 radius = 211.116
 
-[node name="testEnemy" type="CharacterBody2D" node_paths=PackedStringArray("_hurtbox", "_healthbar")]
+[node name="testEnemy" type="CharacterBody2D" node_paths=PackedStringArray("_hurtbox", "_healthbar", "_stateMachine")]
 collision_mask = 2
 script = ExtResource("1_5sw1c")
 _hurtbox = NodePath("hurtbox")
 _healthbar = NodePath("healthbar")
+testEnemyStats = ExtResource("2_ijs0m")
+_stateMachine = NodePath("stateMachine")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 3)
@@ -50,5 +56,16 @@ grow_vertical = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
 shape = SubResource("CircleShape2D_iwkm5")
+
+[node name="stateMachine" type="Node" parent="." node_paths=PackedStringArray("inicialState")]
+script = ExtResource("4_u8gne")
+inicialState = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="stateMachine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("6_e7now")
+enemy = NodePath("../..")
+
+[node name="ChaseState" type="Node" parent="stateMachine"]
+script = ExtResource("7_xhbj7")
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

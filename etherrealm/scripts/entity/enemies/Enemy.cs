@@ -6,6 +6,7 @@ public partial class Enemy : CharacterBody2D
     public Area2D hurtbox;
     public Healthbar healthbar;
     public Player player;
+    public StateMachine stateMachine;
     
     public int maxHealth;
     public int health;
@@ -17,17 +18,20 @@ public partial class Enemy : CharacterBody2D
     public float critChance; // chance in percent to do critical hit
     public float critDmgMult;
     public float knockback;
-    public float critKBMult;
+    public float critKnockMult;
     public Vector2 hitDir; 
     
+    //movement stats
     public float acceleration;
     public float friction;
     public float maxSpeed;
-    public bool isWalking = false;
 
     public override void _Ready()
     {
         player = GetParent().GetNode<Player>("player");
+        
+        //calls the Init method of the state machine to set up states only after enemy is loaded
+        stateMachine.Init(this);
     }
     
     public override void _PhysicsProcess(double delta)
@@ -37,29 +41,10 @@ public partial class Enemy : CharacterBody2D
             Die();
         }
         
-        
-        Vector2 velocity = Velocity;
-        
         if (!IsOnFloor())
         {
-            velocity += GetGravity() * (float)delta;
+            Velocity += GetGravity() * (float)delta;
         }
-        
-        Vector2 direction = velocity.Normalized();
-        float targetX = direction.X * maxSpeed;
-        if (isWalking)
-        {
-            //Accelerate to target speed
-            velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
-        }
-        else
-        {
-            //slow down when no input
-            velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-        }
-        
-        Velocity = velocity;
-        MoveAndSlide();
     }
 
     public void HurtboxAreaEntered(Area2D area)

@@ -1,11 +1,12 @@
-using Godot;
+﻿using Godot;
 using System;
 
-public partial class IdleState : State
+public partial class ChaseState : State
 {
+    private Enemy enemy;
     public override void Enter()
     {
-        //if (_pleb.isOnWater)
+        //if (enemy.isOnWater)
         //{
         //    Exit();
         //    EmitSignal(State.SignalName.StateChanged, this, "swimState");

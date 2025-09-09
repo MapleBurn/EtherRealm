@@ -9,10 +9,9 @@ public partial class StateMachine : Node
     private Enemy enemy;
     private Dictionary<string, State> states = new Dictionary<string, State>();
 
-    public override void _Ready()
+    public void Init(Enemy e)
     {
-        //state machine will check if pleb is alive before it updates current state
-        enemy = GetParent<Enemy>();
+        enemy = e;
         
         foreach (var child in GetChildren())
         {

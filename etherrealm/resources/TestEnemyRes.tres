@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://q3d8jpr3qplh"]
+
+[ext_resource type="Script" uid="uid://cis7ftyyy10sh" path="res://scripts/resource/TestEnemyStats.cs" id="1_m86l0"]
+
+[resource]
+script = ExtResource("1_m86l0")
+maxHealth = 100
+maxSpeed = 100.0
+acceleration = 600.0
+friction = 600.0
+damage = 20.0
+critChance = 10.0
+critDmgMult = 2.0
+knockback = 200.0
+critKnockMult = 5.0
