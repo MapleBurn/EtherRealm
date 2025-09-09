@@ -3,7 +3,7 @@ using Godot;
 
 namespace EtherRealm.Enemies.States;
 
-public partial class IdleState : State
+public partial class WanderState : State
 {
     [Export] private Enemy enemy;
     [Export] private Resource stats;
@@ -18,34 +18,42 @@ public partial class IdleState : State
     private float acceleration;
     private float friction;
     private float maxSpeed;
+    private bool isWalking = true;
     public override void Enter()
     {
-        waitTime = rdm.NextDouble() * 1000;
+        waitTime = rdm.NextDouble() * 10000;
         timer = Time.GetTicksMsec();
         
         acceleration = enemy.acceleration;
         friction = enemy.friction;
         maxSpeed = enemy.maxSpeed;
         velocity = enemy.Velocity;
-        
-        //if (enemy.isOnWater)
-        //{
-        //    Exit();
-        //    EmitSignal(State.SignalName.StateChanged, this, "swimState");
-        //}
     }
 
     public override void Update(double delta)
     {
-        
+
     }
 
     public override void PhysicsUpdate(double delta)
     {
+        if (timer + waitTime < Time.GetTicksMsec())
+        {
+            if (rdm.Next(0, 100) < 15)
+            {
+                Exit();
+                EmitSignal(State.SignalName.StateChanged, this, "IdleState");
+            }
+            ChooseWalkDir();
+            timer = Time.GetTicksMsec();
+            waitTime = rdm.NextDouble() * 1000;
+        }
+        
         velocity = enemy.Velocity;
-        float targetX = direction.X * maxSpeed; 
-        //slow down when no direction is given
-        velocity.X = Mathf.MoveToward(velocity.X, 0, friction * (float)delta);
+        float targetX = direction.X * maxSpeed;
+        //Accelerate to target speed
+        velocity.X = Mathf.MoveToward(velocity.X, targetX, acceleration * (float)delta);
+        
         
         enemy.Velocity = velocity;
         enemy.MoveAndSlide();
@@ -54,5 +62,14 @@ public partial class IdleState : State
     public override void Exit()
     {
         
+    }
+    
+    private void ChooseWalkDir()
+    {
+        bool isRight = rdm.Next(0, 100) < 50;
+        if (isRight)
+            direction = Vector2.Right;
+        else
+            direction = Vector2.Left;
     }
 }
