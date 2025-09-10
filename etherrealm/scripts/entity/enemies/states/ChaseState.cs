@@ -3,14 +3,22 @@ using System;
 
 public partial class ChaseState : State
 {
-    private Enemy enemy;
+    [Export] private Enemy enemy;
+    
+    //movement
+    private float walkDir;
+    private Vector2 velocity;
+    private Vector2 direction;
+    private float acceleration;
+    private float friction;
+    private float maxSpeed;
+    private bool isWalking = true;
     public override void Enter()
     {
-        //if (enemy.isOnWater)
-        //{
-        //    Exit();
-        //    EmitSignal(State.SignalName.StateChanged, this, "swimState");
-        //}
+        acceleration = enemy.acceleration;
+        friction = enemy.friction;
+        maxSpeed = enemy.maxSpeed;
+        velocity = enemy.Velocity;
     }
 
     public override void Update(double delta)
@@ -20,7 +28,15 @@ public partial class ChaseState : State
 
     public override void PhysicsUpdate(double delta)
     {
+        direction = (enemy.player.Position - enemy.Position).Normalized();
+        velocity = enemy.Velocity;
+        float targetX = direction.X * maxSpeed;
+        //Accelerate to target speed
+        velocity.X = Mathf.MoveToward(velocity.X, targetX, acceleration * (float)delta);
         
+        
+        enemy.Velocity = velocity;
+        enemy.MoveAndSlide();
     }
     
     public override void Exit()

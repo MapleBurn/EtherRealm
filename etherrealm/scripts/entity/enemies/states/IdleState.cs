@@ -6,7 +6,6 @@ namespace EtherRealm.Enemies.States;
 public partial class IdleState : State
 {
     [Export] private Enemy enemy;
-    [Export] private Resource stats;
     private Random rdm = new Random();
     private ulong timer;
     private double waitTime; //time to wait before choosing new destination
@@ -20,19 +19,13 @@ public partial class IdleState : State
     private float maxSpeed;
     public override void Enter()
     {
-        waitTime = rdm.NextDouble() * 1000;
+        waitTime = rdm.NextDouble() * 2000;
         timer = Time.GetTicksMsec();
         
         acceleration = enemy.acceleration;
         friction = enemy.friction;
         maxSpeed = enemy.maxSpeed;
         velocity = enemy.Velocity;
-        
-        //if (enemy.isOnWater)
-        //{
-        //    Exit();
-        //    EmitSignal(State.SignalName.StateChanged, this, "swimState");
-        //}
     }
 
     public override void Update(double delta)
@@ -49,6 +42,18 @@ public partial class IdleState : State
         
         enemy.Velocity = velocity;
         enemy.MoveAndSlide();
+        
+        //temporary idle to wander transition
+        if (timer + waitTime < Time.GetTicksMsec())
+        {
+            Exit();
+            EmitSignal(State.SignalName.StateChanged, this, "WanderState");
+        }
+        else if (enemy.isChasing)
+        {
+            Exit();
+            EmitSignal(State.SignalName.StateChanged, this, "ChaseState");
+        }
     }
     
     public override void Exit()

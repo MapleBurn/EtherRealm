@@ -6,7 +6,6 @@ namespace EtherRealm.Enemies.States;
 public partial class WanderState : State
 {
     [Export] private Enemy enemy;
-    [Export] private Resource stats;
     private Random rdm = new Random();
     private ulong timer;
     private double waitTime; //time to wait before choosing new destination
@@ -57,6 +56,12 @@ public partial class WanderState : State
         
         enemy.Velocity = velocity;
         enemy.MoveAndSlide();
+        
+        if (enemy.isChasing)
+        {
+            Exit();
+            EmitSignal(State.SignalName.StateChanged, this, "ChaseState");
+        }
     }
     
     public override void Exit()

@@ -19,7 +19,8 @@ public partial class Enemy : CharacterBody2D
     public float critDmgMult;
     public float knockback;
     public float critKnockMult;
-    public Vector2 hitDir; 
+    public Vector2 hitDir;
+    public bool isChasing;
     
     //movement stats
     public float acceleration;
@@ -28,8 +29,6 @@ public partial class Enemy : CharacterBody2D
 
     public override void _Ready()
     {
-        player = GetParent().GetNode<Player>("player");
-        
         //calls the Init method of the state machine to set up states only after enemy is loaded
         stateMachine.Init(this);
     }
@@ -47,6 +46,8 @@ public partial class Enemy : CharacterBody2D
         }
     }
 
+    #region Signals
+    
     public void HurtboxAreaEntered(Area2D area)
     {
         if (!area.IsInGroup("weapons"))
@@ -70,6 +71,19 @@ public partial class Enemy : CharacterBody2D
         ProcessDamage(damage, isCrit);
         ProcessKnockback(knockback, hitDir);
     }
+    
+    public void DetectionAreaPlayerEntered(Area2D area)
+    {
+        if (!area.IsInGroup("player"))
+            return;
+        
+        player = area.GetParent<Player>();
+        isChasing = true;
+    }
+    
+    #endregion
+    
+    
 
     public virtual void ProcessDamage(float damage, bool isCrit)
     {

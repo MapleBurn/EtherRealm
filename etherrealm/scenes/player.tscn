@@ -117,7 +117,7 @@ hurtbox = NodePath("hurtbox")
 position = Vector2(-7.5, 4.5)
 shape = SubResource("RectangleShape2D_qhqgy")
 
-[node name="hurtbox" type="Area2D" parent="."]
+[node name="hurtbox" type="Area2D" parent="." groups=["player"]]
 collision_layer = 8
 collision_mask = 4
 
