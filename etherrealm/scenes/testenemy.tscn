@@ -54,6 +54,8 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="detectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
 shape = SubResource("CircleShape2D_iwkm5")
@@ -75,4 +77,4 @@ script = ExtResource("8_xhbj7")
 enemy = NodePath("../..")
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]
-[connection signal="area_shape_entered" from="detectionArea" to="." method="DetectionAreaPlayerEntered"]
+[connection signal="area_entered" from="detectionArea" to="." method="DetectionAreaPlayerEntered"]

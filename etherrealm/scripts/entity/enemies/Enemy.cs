@@ -73,7 +73,7 @@ public partial class Enemy : CharacterBody2D
     }
     
     public void DetectionAreaPlayerEntered(Area2D area)
-    {
+     {
         if (!area.IsInGroup("player"))
             return;
         
@@ -82,8 +82,6 @@ public partial class Enemy : CharacterBody2D
     }
     
     #endregion
-    
-    
 
     public virtual void ProcessDamage(float damage, bool isCrit)
     {

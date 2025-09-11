@@ -5,6 +5,10 @@ public partial class Player : CharacterBody2D
 {
 	[Export] public AnimatedSprite2D sprite;
 	[Export] private Area2D hurtbox;
+	[Export] private TileMapLayer tilemap;
+	
+	//tilemap stuff
+	private int tilesize;
 	
 	private float acceleration = 600.0f;
 	private float friction = 800.0f;
@@ -18,6 +22,7 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		health = maxHealth;
+		tilesize = tilemap.TileSet.TileSize.X;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -92,6 +97,11 @@ public partial class Player : CharacterBody2D
 		}
 		ProcessDamage(damage, isCrit);
 		ProcessKnockback(knockback, hitDir);
+	}
+
+	private bool TryStepUp()
+	{
+		return true;
 	}
 	
 	private void ProcessDamage(float damage, bool isCrit)
