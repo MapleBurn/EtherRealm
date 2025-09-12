@@ -1,4 +1,4 @@
-	using Godot;
+using Godot;
 using System;
 
 public partial class Player : CharacterBody2D
@@ -6,6 +6,7 @@ public partial class Player : CharacterBody2D
 	[Export] public AnimatedSprite2D sprite;
 	[Export] private Area2D hurtbox;
 	[Export] private TileMapLayer tilemap;
+	[Export] private RayCast2D raycast;
 	
 	//tilemap stuff
 	private int tilesize;
@@ -18,6 +19,7 @@ public partial class Player : CharacterBody2D
 	private int health;
 	private Random rdm = new Random();
 	private bool isDead = false;
+	private int dir = 1; //one means right
 
 	public override void _Ready()
 	{
@@ -54,13 +56,27 @@ public partial class Player : CharacterBody2D
 		
 		if (direction != Vector2.Zero)
 		{
+			if (raycast.IsColliding())
+			{ 
+				Vector2 tilePos = raycast.GetCollisionPoint();
+				tilePos = tilemap.ToLocal(tilePos);
+				Vector2I tileCoords = tilemap.LocalToMap(tilePos);
+				TryStepUp(tileCoords);
+			}
+			
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
 			sprite.Play("walk");
 			if (direction > Vector2.Zero)
+			{
 				sprite.FlipH = false;
+				dir = 1;
+			}
 			else
+			{
 				sprite.FlipH = true;
+				dir = -1;
+			}
 		}
 		else
 		{
@@ -99,9 +115,12 @@ public partial class Player : CharacterBody2D
 		ProcessKnockback(knockback, hitDir);
 	}
 
-	private bool TryStepUp()
+	private bool TryStepUp(Vector2I tileCoords)
 	{
-		return true;
+		var upTC1 =  tileCoords + new Vector2I(0, -1);
+		var upTC2 =  tileCoords + new Vector2I(0, -2);
+		var upTC3 =  tileCoords + new Vector2I(0, -3);
+		var upSideTC =  tileCoords + new Vector2I(-dir, -3);
 	}
 	
 	private void ProcessDamage(float damage, bool isCrit)
