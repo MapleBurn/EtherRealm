@@ -107,11 +107,11 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "hurtbox", "raycast")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("_sprite", "_hurtbox", "raycast")]
 collision_mask = 2
 script = ExtResource("1_g2els")
-sprite = NodePath("AnimatedSprite2D")
-hurtbox = NodePath("hurtbox")
+_sprite = NodePath("AnimatedSprite2D")
+_hurtbox = NodePath("hurtbox")
 raycast = NodePath("RayCast2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -133,8 +133,9 @@ autoplay = "idle"
 
 [node name="hand" type="Node2D" parent="."]
 
-[node name="swordtest" parent="hand" instance=ExtResource("3_qhqgy")]
+[node name="swordtest" parent="hand" node_paths=PackedStringArray("_player") instance=ExtResource("3_qhqgy")]
 position = Vector2(-3, 8)
+_player = NodePath("../..")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 16)

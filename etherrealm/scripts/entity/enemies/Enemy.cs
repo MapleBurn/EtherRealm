@@ -1,17 +1,11 @@
 using Godot;
 using System;
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : Entity
 {
-    public Area2D hurtbox;
-    public Healthbar healthbar;
     public Player player;
-    public StateMachine stateMachine;
-    
-    public int maxHealth;
-    public int health;
-    public Random rdm = new Random();
-    public bool isDead;
+    protected StateMachine stateMachine;
+    protected Healthbar healthbar;
     
     //Enemy attack stats
     public float damage;
@@ -21,11 +15,6 @@ public partial class Enemy : CharacterBody2D
     public float critKnockMult;
     public Vector2 hitDir;
     public bool isChasing;
-    
-    //movement stats
-    public float acceleration;
-    public float friction;
-    public float maxSpeed;
 
     public override void _Ready()
     {
@@ -48,7 +37,7 @@ public partial class Enemy : CharacterBody2D
 
     #region Signals
     
-    public void HurtboxAreaEntered(Area2D area)
+    protected override void HurtboxAreaEntered(Area2D area)
     {
         if (!area.IsInGroup("weapons"))
             return;
@@ -72,7 +61,7 @@ public partial class Enemy : CharacterBody2D
         ProcessKnockback(knockback, hitDir);
     }
     
-    public void DetectionAreaPlayerEntered(Area2D area)
+    protected void DetectionAreaPlayerEntered(Area2D area)
      {
         if (!area.IsInGroup("player"))
             return;
@@ -83,36 +72,18 @@ public partial class Enemy : CharacterBody2D
     
     #endregion
 
-    public virtual void ProcessDamage(float damage, bool isCrit)
+    public override void ProcessDamage(float damage, bool isCrit)
     {
         health -= (int)damage;
         //spawn damage floating text
-        SpawnDFT(isCrit, (int)damage);
+        SpawnDFT(isCrit, (int)damage, false);
         
         //update healthbar
         healthbar.Visible = true;
         healthbar.UpdateHealthbar(health);
     }
-
-    public virtual void ProcessKnockback(float knockback, Vector2 hitDir)
-    {
-        Velocity += hitDir * knockback;
-    }
     
-    public void SpawnDFT(bool isCrit, int damage)
-    {
-        PackedScene damageTextScene = GD.Load<PackedScene>("res://scenes/floating_text.tscn");
-        FloatingText damageText = damageTextScene.Instantiate<FloatingText>();
-        GetParent().AddChild(damageText);
-        
-        if (isCrit)
-            damageText.SetDamage(damage, FloatingText.DamageType.crit, false);
-        else
-            damageText.SetDamage(damage, FloatingText.DamageType.damage, false);
-        damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
-    }
-    
-    public virtual void Die()
+    public override void Die()
     {
         QueueFree();
     }

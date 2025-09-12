@@ -1,29 +1,35 @@
 using Godot;
 using System;
 
-public partial class Player : CharacterBody2D
+public partial class Player : Entity
 {
-	[Export] public AnimatedSprite2D sprite;
-	[Export] private Area2D hurtbox;
+	[Export] private AnimatedSprite2D _sprite;
+	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
 	[Export] private RayCast2D raycast;
 	
 	//tilemap stuff
 	private int tilesize;
 	
-	private float acceleration = 600.0f;
-	private float friction = 800.0f;
-	private const float maxSpeed = 150.0f;
-	private const float JumpVelocity = -400.0f;
-	private int maxHealth = 100;
-	private int health;
-	private Random rdm = new Random();
-	private bool isDead = false;
+	[Export] private float _acceleration = 600.0f;
+	[Export] private float _friction = 800.0f;
+	[Export] private float _maxSpeed = 150.0f;
+	[Export] private float _JumpVelocity = -400.0f;
+	[Export] private int _maxHealth = 100;
 	private int dir = 1; //one means right
 
 	public override void _Ready()
 	{
+		hurtbox = _hurtbox;
+		sprite = _sprite;
+		
+		acceleration = _acceleration;
+		friction =  _friction;
+		maxSpeed = _maxSpeed;
+		jumpVelocity = _JumpVelocity;
+		maxHealth = _maxHealth;
 		health = maxHealth;
+		
 		tilesize = tilemap.TileSet.TileSize.X;
 	}
 	
@@ -48,7 +54,7 @@ public partial class Player : CharacterBody2D
 		// Handle Jump
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 		{
-			velocity.Y = JumpVelocity;
+			velocity.Y = jumpVelocity;
 		}
 		
 		Vector2 direction = Input.GetVector("left", "right", "up", "down");
@@ -89,7 +95,7 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 	
-	public void HurtboxAreaEntered(Area2D area)
+	protected override void HurtboxAreaEntered(Area2D area)
 	{
 		if (!area.IsInGroup("enemies"))
 			return;
@@ -121,38 +127,22 @@ public partial class Player : CharacterBody2D
 		var upTC2 =  tileCoords + new Vector2I(0, -2);
 		var upTC3 =  tileCoords + new Vector2I(0, -3);
 		var upSideTC =  tileCoords + new Vector2I(-dir, -3);
+
+		return false;
 	}
 	
-	private void ProcessDamage(float damage, bool isCrit)
+	public override void ProcessDamage(float damage, bool isCrit)
 	{
 		health -= (int)damage;
 		//spawn damage floating text
-		SpawnDFT(isCrit, (int)damage);
+		SpawnDFT(isCrit, (int)damage, true);
         
 		//update healthbar
 		//healthbar.Visible = true;
 		//healthbar.UpdateHealthbar(health);
 	}
-
-	private void ProcessKnockback(float knockback, Vector2 hitDir)
-	{
-		Velocity += hitDir * knockback;
-	}
-    
-	private void SpawnDFT(bool isCrit, int damage)
-	{
-		PackedScene damageTextScene = GD.Load<PackedScene>("res://scenes/floating_text.tscn");
-		FloatingText damageText = damageTextScene.Instantiate<FloatingText>();
-		GetParent().AddChild(damageText);
-        
-		if (isCrit)
-			damageText.SetDamage(damage, FloatingText.DamageType.crit, true);
-		else
-			damageText.SetDamage(damage, FloatingText.DamageType.damage, true);
-		damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
-	}
 	
-	private void Die()
+	public override void Die()
 	{
 		isDead = true;
 	}
