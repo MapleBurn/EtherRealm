@@ -62,12 +62,32 @@ public partial class Player : Entity
 		
 		if (direction != Vector2.Zero)
 		{
-			if (raycast.IsColliding())
-			{ 
+			/*if (raycast.IsColliding())
+			{
 				Vector2 tilePos = raycast.GetCollisionPoint();
 				tilePos = tilemap.ToLocal(tilePos);
 				Vector2I tileCoords = tilemap.LocalToMap(tilePos);
-				TryStepUp(tileCoords);
+				if (CanStepUp(tileCoords))
+				{
+					GlobalPosition += new Vector2(8 * dir, -8);
+				}
+			}*/
+			
+			raycast.ForceRaycastUpdate();
+			if (raycast.IsColliding())
+			{
+				// získej bod kolize v globálních souřadnicích
+				Vector2 collisionPoint = raycast.GetCollisionPoint();
+
+				// převedeme do lokálních souřadnic tilemapy před voláním LocalToMap
+				Vector2 localPoint = tilemap.ToLocal(collisionPoint);
+				Vector2I tileCoords = tilemap.LocalToMap(localPoint);
+
+				if (CanStepUp(tileCoords))
+				{
+					// posuň hráče o malý krok nahoru+ahead (globálně)
+					GlobalPosition += new Vector2(8 * dir, -8);
+				}
 			}
 			
 			//Accelerate to target speed
@@ -77,11 +97,13 @@ public partial class Player : Entity
 			{
 				sprite.FlipH = false;
 				dir = 1;
+				DirChanged();
 			}
 			else
 			{
 				sprite.FlipH = true;
 				dir = -1;
+				DirChanged();
 			}
 		}
 		else
@@ -108,8 +130,6 @@ public partial class Player : Entity
 		Vector2 hitDir = enemy.hitDir;
 		float knockback = enemy.knockback;
 		float critKnockMult = enemy.critKnockMult;
-        
-		
 		
 		if (rdm.Next(0, 100) < critChance) //chance for a critical hit
 		{
@@ -121,14 +141,21 @@ public partial class Player : Entity
 		ProcessKnockback(knockback, hitDir);
 	}
 
-	private bool TryStepUp(Vector2I tileCoords)
+	private bool CanStepUp(Vector2I tileCoords)
 	{
-		var upTC1 =  tileCoords + new Vector2I(0, -1);
-		var upTC2 =  tileCoords + new Vector2I(0, -2);
-		var upTC3 =  tileCoords + new Vector2I(0, -3);
-		var upSideTC =  tileCoords + new Vector2I(-dir, -3);
+		Godot.Collections.Array<Vector2I> tilecoords = new Godot.Collections.Array<Vector2I>();
+		tilecoords.Add(tileCoords + new Vector2I(0, -1));
+		tilecoords.Add(tileCoords + new Vector2I(0, -2));
+		tilecoords.Add(tileCoords + new Vector2I(0, -3));
+		tilecoords.Add(tileCoords + new Vector2I(-dir, -3));
 
-		return false;
+		foreach (Vector2I coord in tilecoords)
+		{
+			Vector2I atlascoords = tilemap.GetCellAtlasCoords(coord);
+			if (atlascoords != new Vector2I(-1, -1))
+				return false;
+		}
+		return true;
 	}
 	
 	public override void ProcessDamage(float damage, bool isCrit)
@@ -140,6 +167,20 @@ public partial class Player : Entity
 		//update healthbar
 		//healthbar.Visible = true;
 		//healthbar.UpdateHealthbar(health);
+	}
+
+	private void DirChanged()
+	{
+		if (dir == 1)
+		{
+			raycast.Position += new Vector2(15, 0);
+			raycast.Rotation = -90;
+		}
+		else
+		{
+			raycast.Position -= new Vector2(15, 0);
+			raycast.Rotation = 90;
+		}
 	}
 	
 	public override void Die()

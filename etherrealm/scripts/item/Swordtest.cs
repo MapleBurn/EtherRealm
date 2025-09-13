@@ -7,7 +7,7 @@ public partial class Swordtest : Weapon
     [Export] private Sprite2D sprite { get; set; }
     [Export] private Area2D _hitbox { get; set; }
     
-    //this weapons properties
+    //this weapon's properties
     private float _attackDistance = 10f;
     private float _attackDamage = 10f;
     private float _critChance = 15f; //percentage chance to crit
