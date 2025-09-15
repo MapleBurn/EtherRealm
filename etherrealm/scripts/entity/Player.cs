@@ -65,23 +65,25 @@ public partial class Player : Entity
 			if (raycast.IsColliding())
 			{
 				Vector2 collisionPoint = raycast.GetCollisionPoint();
-				
 				Vector2 localPoint = tilemap.ToLocal(collisionPoint);
 				Vector2I tileCoords = tilemap.LocalToMap(localPoint);
 
 				if (CanStepUp(tileCoords))
 				{
-					//GlobalPosition += new Vector2(0, -10);
-					//velocity -= (GetGravity() / 10) + new Vector2(dir * 50, 50);
+					//Is instant but works fast
+					/*
+					Position += new Vector2(dir * 16, -18);
+					Velocity = new Vector2(Velocity.X, Velocity.Y * 0.5f);
+					*/
 					
+					//Step works smoothly but is uninfluenced by speed and does not stop until stepping up the tile
+					Vector2 stepUpOffset = new Vector2(dir * 16, -17);
+					Vector2 stepTarget = GlobalPosition + stepUpOffset;
 					stepTween?.Kill();
-					var targetPos = collisionPoint - new  Vector2(0, 1000);
-					
 					stepTween = CreateTween();
-					stepTween.TweenProperty(this, "velocity", targetPos, 0.2f);
-					//.SetTrans(Tween.TransitionType.Sine)  
-					//.SetEase(Tween.EaseType.Out);
+					stepTween.TweenProperty(this, "position", stepTarget, 0.2f);
 				}
+
 			}
 			
 			//Accelerate to target speed
