@@ -7,9 +7,10 @@ public partial class Player : Entity
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
 	[Export] private RayCast2D raycast;
+	private Tween stepTween;
 	
-	//tilemap stuff
-	private int tilesize;
+	//stepup stuff
+	
 	
 	[Export] private float _acceleration = 600.0f;
 	[Export] private float _friction = 800.0f;
@@ -29,8 +30,6 @@ public partial class Player : Entity
 		jumpVelocity = _JumpVelocity;
 		maxHealth = _maxHealth;
 		health = maxHealth;
-		
-		tilesize = tilemap.TileSet.TileSize.X;
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -62,31 +61,26 @@ public partial class Player : Entity
 		
 		if (direction != Vector2.Zero)
 		{
-			/*if (raycast.IsColliding())
-			{
-				Vector2 tilePos = raycast.GetCollisionPoint();
-				tilePos = tilemap.ToLocal(tilePos);
-				Vector2I tileCoords = tilemap.LocalToMap(tilePos);
-				if (CanStepUp(tileCoords))
-				{
-					GlobalPosition += new Vector2(8 * dir, -8);
-				}
-			}*/
-			
 			raycast.ForceRaycastUpdate();
 			if (raycast.IsColliding())
 			{
-				// získej bod kolize v globálních souřadnicích
 				Vector2 collisionPoint = raycast.GetCollisionPoint();
-
-				// převedeme do lokálních souřadnic tilemapy před voláním LocalToMap
+				
 				Vector2 localPoint = tilemap.ToLocal(collisionPoint);
 				Vector2I tileCoords = tilemap.LocalToMap(localPoint);
 
 				if (CanStepUp(tileCoords))
 				{
-					// posuň hráče o malý krok nahoru+ahead (globálně)
-					GlobalPosition += new Vector2(8 * dir, -8);
+					//GlobalPosition += new Vector2(0, -10);
+					//velocity -= (GetGravity() / 10) + new Vector2(dir * 50, 50);
+					
+					stepTween?.Kill();
+					var targetPos = collisionPoint - new  Vector2(0, 1000);
+					
+					stepTween = CreateTween();
+					stepTween.TweenProperty(this, "velocity", targetPos, 0.2f);
+					//.SetTrans(Tween.TransitionType.Sine)  
+					//.SetEase(Tween.EaseType.Out);
 				}
 			}
 			
@@ -95,13 +89,11 @@ public partial class Player : Entity
 			sprite.Play("walk");
 			if (direction > Vector2.Zero)
 			{
-				sprite.FlipH = false;
 				dir = 1;
 				DirChanged();
 			}
 			else
 			{
-				sprite.FlipH = true;
 				dir = -1;
 				DirChanged();
 			}
@@ -143,6 +135,9 @@ public partial class Player : Entity
 
 	private bool CanStepUp(Vector2I tileCoords)
 	{
+		if (!IsOnFloor())
+			return false;
+		
 		Godot.Collections.Array<Vector2I> tilecoords = new Godot.Collections.Array<Vector2I>();
 		tilecoords.Add(tileCoords + new Vector2I(0, -1));
 		tilecoords.Add(tileCoords + new Vector2I(0, -2));
@@ -173,13 +168,13 @@ public partial class Player : Entity
 	{
 		if (dir == 1)
 		{
-			raycast.Position += new Vector2(15, 0);
-			raycast.Rotation = -90;
+			sprite.FlipH = false;
+			raycast.Rotation = Mathf.DegToRad(-90);
 		}
 		else
 		{
-			raycast.Position -= new Vector2(15, 0);
-			raycast.Rotation = 90;
+			sprite.FlipH = true;
+			raycast.Rotation = Mathf.DegToRad(90);
 		}
 	}
 	
