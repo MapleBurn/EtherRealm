@@ -77,11 +77,17 @@ public partial class Player : Entity
 					*/
 					
 					//Step works smoothly but is uninfluenced by speed and does not stop until stepping up the tile
-					Vector2 stepUpOffset = new Vector2(dir * 16, -17);
+					Vector2 stepUpOffset = new Vector2(dir * 8, -8);
 					Vector2 stepTarget = GlobalPosition + stepUpOffset;
+
+					float duration;
+					duration = (stepUpOffset.X / maxSpeed) * 1.5f;
+					if (duration > 0.1f)
+						duration = 0.1f;
+					
 					stepTween?.Kill();
 					stepTween = CreateTween();
-					stepTween.TweenProperty(this, "position", stepTarget, 0.2f);
+					stepTween.TweenProperty(this, "position", stepTarget, duration);
 				}
 
 			}
