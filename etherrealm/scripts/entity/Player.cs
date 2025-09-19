@@ -17,6 +17,8 @@ public partial class Player : Entity
 	[Export] private float _maxSpeed = 150.0f;
 	[Export] private float _JumpVelocity = -400.0f;
 	[Export] private int _maxHealth = 100;
+	[Export] private float _invincibleTime = 0.5f;
+	private float invTime = 0;
 	private int dir = 1; //one means right
 
 	public override void _Ready()
@@ -40,6 +42,17 @@ public partial class Player : Entity
 		if (health <= 0)
 		{
 			Die();
+		}
+		
+		if (!hurtbox.Monitoring)
+		{
+			if (invTime < _invincibleTime)
+				invTime += (float)delta;
+			else
+			{
+				invTime = 0;
+				hurtbox.Monitoring = true;
+			}
 		}
 		
 		Vector2 velocity = Velocity;
@@ -70,12 +83,6 @@ public partial class Player : Entity
 
 				if (CanStepUp(tileCoords))
 				{
-					//Is instant but works fast
-					/*
-					Position += new Vector2(dir * 16, -18);
-					Velocity = new Vector2(Velocity.X, Velocity.Y * 0.5f);
-					*/
-					
 					//Step works smoothly but is uninfluenced by speed and does not stop until stepping up the tile
 					Vector2 stepUpOffset = new Vector2(dir * 8, -8);
 					Vector2 stepTarget = GlobalPosition + stepUpOffset;
@@ -137,7 +144,7 @@ public partial class Player : Entity
 			isCrit = true;
 			knockback *= critKnockMult;
 		}
-		ProcessDamage(damage, isCrit);
+		CallDeferred("ProcessDamage", damage, isCrit); //it shan't work
 		ProcessKnockback(knockback, hitDir);
 	}
 
@@ -167,6 +174,7 @@ public partial class Player : Entity
 		//spawn damage floating text
 		SpawnDFT(isCrit, (int)damage, true);
         
+		hurtbox.Monitoring = false; //temporal
 		//update healthbar
 		//healthbar.Visible = true;
 		//healthbar.UpdateHealthbar(health);
