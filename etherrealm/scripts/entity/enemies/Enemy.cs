@@ -5,7 +5,6 @@ public partial class Enemy : Entity
 {
     public Player player;
     protected StateMachine stateMachine;
-    protected Healthbar healthbar;
     
     //Enemy attack stats
     public float damage;
@@ -43,22 +42,22 @@ public partial class Enemy : Entity
             return;
         
         Weapon weapon = area.GetParent<Weapon>();
-        float damage = weapon.damage;
-        float critDmgMult = weapon.critDmgMult;
-        float critChance = weapon.critChance;
+        float wepDamage = weapon.damage;
+        float wepCritDmgMult = weapon.critDmgMult;
+        float wepCritChance = weapon.critChance;
         bool isCrit = false;
-        Vector2 hitDir = weapon.hitDir;
-        float knockback = weapon.knockback;
-        float critKBMult = weapon.critKBMult;
+        Vector2 wepHitDir = weapon.hitDir;
+        float wepKnockback = weapon.knockback;
+        float wepCritKBMult = weapon.critKBMult;
         
-        if (rdm.Next(0, 100) < critChance) //chance for a critical hit
+        if (rdm.Next(0, 100) < wepCritChance) //chance for a critical hit
         {
-            damage *= critDmgMult; 
+            wepDamage *= wepCritDmgMult; 
             isCrit = true;
-            knockback *= critKBMult;
+            wepKnockback *= wepCritKBMult;
         }
-        ProcessDamage(damage, isCrit);
-        ProcessKnockback(knockback, hitDir);
+        ProcessDamage(wepDamage, isCrit);
+        ProcessKnockback(wepKnockback, wepHitDir);
     }
     
     protected void DetectionAreaPlayerEntered(Area2D area)
@@ -72,7 +71,7 @@ public partial class Enemy : Entity
     
     #endregion
 
-    public override void ProcessDamage(float damage, bool isCrit)
+    protected override void ProcessDamage(float damage, bool isCrit)
     {
         health -= (int)damage;
         //spawn damage floating text
@@ -83,7 +82,7 @@ public partial class Enemy : Entity
         healthbar.UpdateHealthbar(health);
     }
     
-    public override void Die()
+    protected override void Die()
     {
         QueueFree();
     }

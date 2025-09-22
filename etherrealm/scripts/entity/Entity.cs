@@ -6,6 +6,7 @@ public partial class Entity : CharacterBody2D
     protected AnimatedSprite2D sprite;
     protected Area2D hurtbox;
     protected static Random rdm = new Random();
+    protected Healthbar healthbar;
 
     public int maxHealth;
     public int health;
@@ -18,13 +19,15 @@ public partial class Entity : CharacterBody2D
 
 
     protected virtual void HurtboxAreaEntered(Area2D area) { }
-    public virtual void ProcessDamage(float damage, bool isCrit)
+    
+    #region Combat
+    protected virtual void ProcessDamage(float damage, bool isCrit)
     {
         health -= (int)damage;
         SpawnDFT(isCrit, (int)damage, true);
     }
     
-    public void ProcessKnockback(float knockback, Vector2 hitDir)
+    protected void ProcessKnockback(float knockback, Vector2 hitDir)
     {
         Velocity += hitDir * knockback;
     }
@@ -41,8 +44,25 @@ public partial class Entity : CharacterBody2D
             damageText.SetDamage(damage, FloatingText.DamageType.damage, isPlayer);
         damageText.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-20, 20), GD.RandRange(-10, -30));
     }
+    #endregion
 
-    public virtual void Die()
+    protected virtual void FallDamage()
+    {
+        //fall damage
+    }
+    
+    protected virtual void ApplyHealing(int healAmount)
+    {
+        if (health + healAmount >= maxHealth)
+        { 
+            health = maxHealth;
+            return;
+        }
+        health += healAmount;
+        healthbar.UpdateHealthbar(health);
+    }
+    
+    protected virtual void Die()
     {
         isDead = true;
     }

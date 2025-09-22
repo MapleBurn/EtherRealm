@@ -9,16 +9,19 @@ public partial class Player : Entity
 	[Export] private RayCast2D raycast;
 	private Tween stepTween;
 	
-	//stepup stuff
-	
-	
+	//players properties
 	[Export] private float _acceleration = 600.0f;
 	[Export] private float _friction = 800.0f;
 	[Export] private float _maxSpeed = 150.0f;
 	[Export] private float _JumpVelocity = -400.0f;
 	[Export] private int _maxHealth = 100;
-	[Export] private float _invincibleTime = 0.5f;
-	private float invTime = 0;
+	
+	//timers
+	private float _invincibleTime = 0.5f;
+	private float invTimer = 0;
+	private float healTime = 5.0f;
+	private float heTimer = 0;
+	
 	private int dir = 1; //one means right
 
 	public override void _Ready()
@@ -32,6 +35,9 @@ public partial class Player : Entity
 		jumpVelocity = _JumpVelocity;
 		maxHealth = _maxHealth;
 		health = maxHealth;
+		
+		healthbar = GetNode<Healthbar>("healthbar");
+		healthbar.Initialize(maxHealth);
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -46,15 +52,23 @@ public partial class Player : Entity
 		
 		if (!hurtbox.Monitoring)
 		{
-			if (invTime < _invincibleTime)
-				invTime += (float)delta;
+			if (invTimer < _invincibleTime)
+				invTimer += (float)delta;
 			else
 			{
-				invTime = 0;
+				invTimer = 0;
 				hurtbox.Monitoring = true;
 			}
 		}
-		
+
+		if (heTimer < healTime)
+			heTimer += (float)delta;
+		else
+		{
+			ApplyHealing(2);	//passive healing
+			heTimer = 0;
+		}
+			
 		Vector2 velocity = Velocity;
 
 		// Add the gravity
@@ -168,7 +182,7 @@ public partial class Player : Entity
 		return true;
 	}
 	
-	public override void ProcessDamage(float damage, bool isCrit)
+	protected override void ProcessDamage(float damage, bool isCrit)
 	{
 		health -= (int)damage;
 		//spawn damage floating text
@@ -177,7 +191,7 @@ public partial class Player : Entity
 		hurtbox.Monitoring = false; //temporal
 		//update healthbar
 		//healthbar.Visible = true;
-		//healthbar.UpdateHealthbar(health);
+		healthbar.UpdateHealthbar(health);
 	}
 
 	private void DirChanged()
@@ -186,15 +200,17 @@ public partial class Player : Entity
 		{
 			sprite.FlipH = false;
 			raycast.Rotation = Mathf.DegToRad(-90);
+			raycast.Position = new Vector2(0, 16);
 		}
 		else
 		{
 			sprite.FlipH = true;
 			raycast.Rotation = Mathf.DegToRad(90);
+			raycast.Position = new Vector2(-15, 16);
 		}
 	}
 	
-	public override void Die()
+	protected override void Die()
 	{
 		isDead = true;
 	}

@@ -8,13 +8,13 @@ public partial class Swordtest : Weapon
     [Export] private Area2D _hitbox { get; set; }
     
     //this weapon's properties
-    private float _attackDistance = 10f;
-    private float _attackDamage = 10f;
-    private float _critChance = 15f; //percentage chance to crit
-    private float _critDmgMult = 2f;
-    private float _critKBMult = 1.5f;
-    private float _knockback = 100f;
-    private float _delay = 300f;
+    [Export] private float _attackDistance = 10f;
+    [Export] private float _attackDamage = 10f;
+    [Export] private float _critChance = 15f; //percentage chance to crit
+    [Export] private float _critDmgMult = 2f;
+    [Export] private float _critKBMult = 1.5f;
+    [Export] private float _knockback = 200f;
+    [Export] private float _delay = 300f;
 
     public override void _Ready()
     {

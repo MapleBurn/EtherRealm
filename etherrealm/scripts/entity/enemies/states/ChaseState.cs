@@ -23,7 +23,7 @@ public partial class ChaseState : State
 
     public override void Update(double delta)
     {
-        
+        enemy.hitDir = (enemy.player.GlobalPosition - enemy.GlobalPosition).Normalized();
     }
 
     public override void PhysicsUpdate(double delta)
