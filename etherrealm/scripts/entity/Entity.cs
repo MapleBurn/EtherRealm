@@ -29,7 +29,7 @@ public partial class Entity : CharacterBody2D
     
     protected void ProcessKnockback(float knockback, Vector2 hitDir)
     {
-        Velocity += hitDir * knockback;
+        Velocity = hitDir * knockback;
     }
     
     protected void SpawnDFT(bool isCrit, int damage, bool isPlayer)

@@ -11,6 +11,7 @@ z_index = 1
 script = ExtResource("1_6dook")
 sprite = NodePath("Sprite2D")
 _hitbox = NodePath("hitbox")
+_knockback = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(17, -1)

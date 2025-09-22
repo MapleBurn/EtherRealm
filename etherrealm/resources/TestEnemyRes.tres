@@ -11,5 +11,5 @@ friction = 600.0
 damage = 5.0
 critChance = 2.0
 critDamageMult = 1.5
-knockback = 300.0
+knockback = 200.0
 critKnockbackMult = 1.5

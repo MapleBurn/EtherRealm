@@ -17,12 +17,14 @@ public partial class Player : Entity
 	[Export] private int _maxHealth = 100;
 	
 	//timers
-	private float _invincibleTime = 0.5f;
 	private float invTimer = 0;
-	private float healTime = 5.0f;
 	private float heTimer = 0;
+	private float remJumpTimer = 0; //jump after getting in the air for responsiveness
+	//private float predictJumpTimer = 0; //if player jumps a bit before touching the ground will jump for responsiveness
+	//private bool isJumpPredicted = false;
 	
 	private int dir = 1; //one means right
+	private float cutJumpHeight = 0.3f;
 
 	public override void _Ready()
 	{
@@ -50,24 +52,7 @@ public partial class Player : Entity
 			Die();
 		}
 		
-		if (!hurtbox.Monitoring)
-		{
-			if (invTimer < _invincibleTime)
-				invTimer += (float)delta;
-			else
-			{
-				invTimer = 0;
-				hurtbox.Monitoring = true;
-			}
-		}
-
-		if (heTimer < healTime)
-			heTimer += (float)delta;
-		else
-		{
-			ApplyHealing(2);	//passive healing
-			heTimer = 0;
-		}
+		TimerProcess((float)delta);	//does all the time stuff
 			
 		Vector2 velocity = Velocity;
 
@@ -76,18 +61,21 @@ public partial class Player : Entity
 		{
 			velocity += GetGravity() * (float)delta;
 		}
-
+		
 		// Handle Jump
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+		if (Input.IsActionPressed("space") && (IsOnFloor() || remJumpTimer < 0.1f))
 		{
 			velocity.Y = jumpVelocity;
 		}
+		if (Input.IsActionJustReleased("space") && velocity.Y < 0)
+			velocity.Y = jumpVelocity * cutJumpHeight;
 		
-		Vector2 direction = Input.GetVector("left", "right", "up", "down");
+		Vector2 direction = Input.GetVector("left", "right", "deadkey", "deadkey");
 		float targetX = direction.X * maxSpeed;
 		
 		if (direction != Vector2.Zero)
 		{
+			//step-up logic
 			raycast.ForceRaycastUpdate();
 			if (raycast.IsColliding())
 			{
@@ -97,7 +85,6 @@ public partial class Player : Entity
 
 				if (CanStepUp(tileCoords))
 				{
-					//Step works smoothly but is uninfluenced by speed and does not stop until stepping up the tile
 					Vector2 stepUpOffset = new Vector2(dir * 8, -8);
 					Vector2 stepTarget = GlobalPosition + stepUpOffset;
 
@@ -136,6 +123,39 @@ public partial class Player : Entity
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+	
+	private void TimerProcess(float delta)
+	{
+		if (!hurtbox.Monitoring)
+		{
+			if (invTimer < 0.5f)
+				invTimer += delta;
+			else
+			{
+				invTimer = 0;
+				hurtbox.Monitoring = true;
+			}
+		}
+
+		if (heTimer < 5.0f)
+			heTimer += delta;
+		else
+		{
+			ApplyHealing(2);	//passive healing
+			heTimer = 0;
+		}
+		
+		//jump memory - for smoothness
+		if (IsOnFloor())
+			remJumpTimer = 0;
+		else
+			remJumpTimer += delta;
+
+		//if (isJumpPredicted && predictJumpTimer < 0.2f)
+		//	predictJumpTimer += delta;
+		//else
+		//	isJumpPredicted = false;
 	}
 	
 	protected override void HurtboxAreaEntered(Area2D area)
@@ -190,7 +210,6 @@ public partial class Player : Entity
         
 		hurtbox.Monitoring = false; //temporal
 		//update healthbar
-		//healthbar.Visible = true;
 		healthbar.UpdateHealthbar(health);
 	}
 
