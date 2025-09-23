@@ -36,7 +36,10 @@ public partial class ChaseState : State
         
         
         enemy.Velocity = velocity;
+        Vector2 prevV = velocity;
         enemy.MoveAndSlide();
+        
+        enemy.ApplyImpactDamage(prevV); 
     }
     
     public override void Exit()

@@ -13,18 +13,17 @@ public partial class Player : Entity
 	[Export] private float _acceleration = 600.0f;
 	[Export] private float _friction = 800.0f;
 	[Export] private float _maxSpeed = 150.0f;
-	[Export] private float _JumpVelocity = -400.0f;
+	[Export] private float _jumpVelocity = -400.0f;
+	[Export] private float _fallDamageThreshold = 550f;
 	[Export] private int _maxHealth = 100;
 	
 	//timers
 	private float invTimer = 0;
 	private float heTimer = 0;
 	private float remJumpTimer = 0; //jump after getting in the air for responsiveness
-	//private float predictJumpTimer = 0; //if player jumps a bit before touching the ground will jump for responsiveness
-	//private bool isJumpPredicted = false;
-	
+
 	private int dir = 1; //one means right
-	private float cutJumpHeight = 0.3f;
+	private float cutJumpHeight = 0.4f;
 
 	public override void _Ready()
 	{
@@ -34,7 +33,8 @@ public partial class Player : Entity
 		acceleration = _acceleration;
 		friction =  _friction;
 		maxSpeed = _maxSpeed;
-		jumpVelocity = _JumpVelocity;
+		jumpVelocity = _jumpVelocity;
+		fallDamageThreshold = _fallDamageThreshold;
 		maxHealth = _maxHealth;
 		health = maxHealth;
 		
@@ -122,7 +122,10 @@ public partial class Player : Entity
 		}
 
 		Velocity = velocity;
+		Vector2 prevV = velocity;
 		MoveAndSlide();
+
+		ApplyImpactDamage(prevV); 
 	}
 	
 	private void TimerProcess(float delta)
@@ -151,11 +154,6 @@ public partial class Player : Entity
 			remJumpTimer = 0;
 		else
 			remJumpTimer += delta;
-
-		//if (isJumpPredicted && predictJumpTimer < 0.2f)
-		//	predictJumpTimer += delta;
-		//else
-		//	isJumpPredicted = false;
 	}
 	
 	protected override void HurtboxAreaEntered(Area2D area)
@@ -178,7 +176,7 @@ public partial class Player : Entity
 			isCrit = true;
 			knockback *= critKnockMult;
 		}
-		CallDeferred("ProcessDamage", damage, isCrit); //it shan't work
+		CallDeferred("ProcessDamage", damage, isCrit);
 		ProcessKnockback(knockback, hitDir);
 	}
 

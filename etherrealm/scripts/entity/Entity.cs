@@ -16,7 +16,7 @@ public partial class Entity : CharacterBody2D
     public float friction;
     public float maxSpeed;
     public float jumpVelocity;
-
+    public float fallDamageThreshold;
 
     protected virtual void HurtboxAreaEntered(Area2D area) { }
     
@@ -46,9 +46,57 @@ public partial class Entity : CharacterBody2D
     }
     #endregion
 
-    protected virtual void FallDamage()
+    public void ApplyImpactDamage(Vector2 prevVelocity)
     {
-        //fall damage
+        int slideCount = GetSlideCollisionCount();
+        if (slideCount <= 0)
+            return;
+
+        //we’ll get the worst (max) impact this frame to avoid double-damaging on multiple contacts.
+        float maxImpactCollision = 0f;
+
+        for (int i = 0; i < slideCount; i++)
+        {
+            var col = GetSlideCollision(i);
+            if (col == null) continue;
+
+            if (!IsSolidCollider(col.GetCollider()))
+                continue;
+
+            //collision normal points out of the collider (into us), e.g. floor is (0, -1), wall is (±1, 0), ceiling is (0, 1).
+            Vector2 n = col.GetNormal().Normalized();
+
+            // Impact speed along the normal uses our pre-impact velocity.
+            // Positive means we were moving INTO the surface.
+            float impactSpeed = Mathf.Abs(prevVelocity.Dot(n));
+
+            if (impactSpeed > maxImpactCollision)
+                maxImpactCollision = impactSpeed;
+        }
+
+        if (maxImpactCollision > fallDamageThreshold)
+        {
+            int damage = ComputeDamage(maxImpactCollision - fallDamageThreshold, 0.05f);
+            if (damage > 0)
+                ProcessDamage(damage, false);
+        }
+    }
+
+    private bool IsSolidCollider(object collider)
+    {
+        if (collider is Node node)
+        {
+            //treat tilemap and StaticBody2D as solid
+            if (node is TileMapLayer) return true;
+            if (node is StaticBody2D) return true;
+        }
+        return false;
+    }
+
+    private int ComputeDamage(float overSpeed, float scale)
+    {
+        var raw = overSpeed * scale;
+        return Mathf.Clamp(Mathf.RoundToInt(raw), 1, health); //makes sure that it's not more than health
     }
     
     protected virtual void ApplyHealing(int healAmount)

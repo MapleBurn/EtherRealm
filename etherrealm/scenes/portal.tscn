@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtu87vw7d2n23"]
+
+[ext_resource type="Script" uid="uid://djholeff34ffp" path="res://scripts/entity/Portal.cs" id="1_1ffj6"]
+[ext_resource type="Texture2D" uid="uid://dibxb5nc6jyjh" path="res://assets/items/swordtest.png" id="1_v0xau"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ppl40"]
+radius = 19.0
+height = 40.0
+
+[node name="portal" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_1ffj6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v0xau")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ppl40")
+
+[connection signal="area_entered" from="." to="." method="OnPortalEntered"]

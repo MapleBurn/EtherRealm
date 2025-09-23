@@ -55,8 +55,10 @@ public partial class WanderState : State
         
         
         enemy.Velocity = velocity;
+        Vector2 prevV = velocity;
         enemy.MoveAndSlide();
         
+        enemy.ApplyImpactDamage(prevV); 
         if (enemy.isChasing)
         {
             Exit();
