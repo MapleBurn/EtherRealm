@@ -7,7 +7,7 @@ public partial class Portal : Area2D
     {
         if (area.GetParent() is Player player)
         {
-            player.GlobalPosition = new  Vector2(1350, -350);
+            player.GlobalPosition = new  Vector2(850, -1100);
         }
     }
 }

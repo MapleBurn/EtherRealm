@@ -85,7 +85,7 @@ public partial class Player : Entity
 
 				if (CanStepUp(tileCoords))
 				{
-					Vector2 stepUpOffset = new Vector2(dir * 8, -8);
+					Vector2 stepUpOffset = new Vector2(dir * 16, -16);
 					Vector2 stepTarget = GlobalPosition + stepUpOffset;
 
 					float duration;

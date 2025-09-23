@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckfygrdn1auja"
-path="res://.godot/imported/Warrior_Sheet-Effect.png-c21f882a1b921966ae9a16c8ad4baa3d.ctex"
+uid="uid://5n8vccx2bmox"
+path="res://.godot/imported/testCharacter-idle.png-b16ab4b1a778762463821dcdb8483343.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/character/SpriteSheet/Warrior_Sheet-Effect.png"
-dest_files=["res://.godot/imported/Warrior_Sheet-Effect.png-c21f882a1b921966ae9a16c8ad4baa3d.ctex"]
+source_file="res://assets/character/SpriteSheet/testCharacter-idle.png"
+dest_files=["res://.godot/imported/testCharacter-idle.png-b16ab4b1a778762463821dcdb8483343.ctex"]
 
 [params]
 
