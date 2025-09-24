@@ -6,6 +6,7 @@ public partial class Swordtest : Weapon
     [Export] private Player _player { get; set; }
     [Export] private Sprite2D sprite { get; set; }
     [Export] private Area2D _hitbox { get; set; }
+    [Export] private AnimationPlayer _animPlayer { get; set; }
     
     //this weapon's properties
     [Export] private float _attackDistance = 10f;
@@ -28,5 +29,6 @@ public partial class Swordtest : Weapon
         stabDistance = _attackDistance;
         delay = _delay;
         player = _player;
+        animPlayer = _animPlayer;
     }
 }

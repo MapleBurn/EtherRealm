@@ -15,6 +15,7 @@ public partial class Weapon : Node2D
 	public float stabDistance;
 	public Tween attackTween;
 	public CollisionShape2D attackCollider;
+	public AnimationPlayer animPlayer;
 	public bool isAttacking = false;
 	
 	private bool isCooldown = false;
@@ -32,7 +33,6 @@ public partial class Weapon : Node2D
 			}
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))
 			{
-				//rotate to mouse
 				Swing();
 			}
 		}
@@ -81,43 +81,20 @@ public partial class Weapon : Node2D
 
 	public void Swing()
 	{
-		if (attackTween != null || isCooldown)
+		if (animPlayer.IsPlaying() || isCooldown)
 			return;
 
-		Vector2 mouseDir = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-		float targetAngle = mouseDir.Angle();
-		hitDir = mouseDir;
-
-		float swingAngle = Mathf.Pi / 2f; // 90 degrees
-
-		// Determine if swing is to the left or right
-		bool rightSide = mouseDir.X > 0;
-		float startAngle, endAngle;
-
-		if (rightSide)
-		{
-			// Clockwise swing
-			startAngle = targetAngle - swingAngle / 2f;
-			endAngle = targetAngle + swingAngle / 2f;
-		}
-		else
-		{
-			// Counterclockwise swing
-			startAngle = targetAngle + swingAngle / 2f;
-			endAngle = targetAngle - swingAngle / 2f;
-		}
-		
-		Rotation = startAngle;
-		attackTween = GetTree().CreateTween().BindNode(this);
-		attackTween.TweenProperty(this, "rotation", endAngle, 0.4f);
-
 		isAttacking = true;
-		attackTween.Finished += () =>
+		animPlayer.Play("swing");
+	}
+	
+	protected void AnimationFinished(StringName animName)
+	{
+		if (animName == "swing")
 		{
+			isAttacking = false;
 			isCooldown = true;
 			startCooldown = Time.GetTicksMsec();
-			isAttacking = false;
-			attackTween = null;
-		};
+		}
 	}
 }
