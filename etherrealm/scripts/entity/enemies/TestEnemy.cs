@@ -27,6 +27,7 @@ public partial class TestEnemy : Enemy
         knockback = testEnemyStats.knockback;
         critKnockMult = testEnemyStats.critKnockbackMult;
         stateMachine = _stateMachine;
+        fallDamageThreshold = testEnemyStats.fallDamageThreshold;
 
         base._Ready();
     }

@@ -10,7 +10,7 @@ public partial class TestEnemyStats : Resource
     [Export] public float maxSpeed;
     [Export] public float acceleration;
     [Export] public float friction;
-    [Export] private float _fallDamageThreshold;
+    [Export] public float fallDamageThreshold;
 
     //Enemy attack stats
     [Export] public float damage;
