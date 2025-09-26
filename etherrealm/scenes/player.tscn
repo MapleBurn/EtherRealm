@@ -1,10 +1,176 @@
-[gd_scene load_steps=20 format=3 uid="uid://d1528ohkmrre2"]
+[gd_scene load_steps=22 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://5n8vccx2bmox" path="res://assets/character/SpriteSheet/testCharacter-idle.png" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://cdptssos0lehs" path="res://scenes/swordtest.tscn" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://cv810pry0twso" path="res://assets/character/SpriteSheet/testCharacter-swing.png" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/healthbar.tscn" id="5_qlg0r"]
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.00531]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"swing"]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "swing"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 0), Vector2(-3, -18), Vector2(-4, -16), Vector2(-1.19209e-07, 2), Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [-1.0472, -3.32485, -3.75246, 0.610865, -1.0472]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"swing"]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "idle"
+length = 4.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.06667, 4.1, 4.2, 4.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+
+[sub_resource type="Animation" id="Animation_fjrip"]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"walk"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
+_data = {
+&"RESET": SubResource("Animation_qlg0r"),
+&"idle": SubResource("Animation_tuyoq"),
+&"swing": SubResource("Animation_dqkch"),
+&"walk": SubResource("Animation_fjrip")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(21, 45)
@@ -86,97 +252,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_qlg0r"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("hand:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.0053097]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"swing"]
-}
-
-[sub_resource type="Animation" id="Animation_dqkch"]
-resource_name = "swing"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-1, 0), Vector2(-4, -15.999999), Vector2(-4, -15.999999), Vector2(-1.1920929e-07, 2), Vector2(-1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("hand:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [-1.0471975511965976, -3.7524578917878086, -3.7524579, 0.61086524, -1.0471975511965976]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"swing"]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
-_data = {
-&"RESET": SubResource("Animation_qlg0r"),
-&"swing": SubResource("Animation_dqkch")
-}
-
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("_sprite", "_hurtbox", "raycast")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("_animPlayer", "_hurtbox", "raycast")]
 collision_mask = 2
 script = ExtResource("1_g2els")
-_sprite = NodePath("AnimatedSprite2D")
+_animPlayer = NodePath("AnimationPlayer")
 _hurtbox = NodePath("hurtbox")
 raycast = NodePath("RayCast2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tuyoq")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10.5, -2.5)
@@ -195,13 +281,11 @@ shape = SubResource("RectangleShape2D_dqkch")
 position = Vector2(-10, -3)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
 animation = &"swing"
-autoplay = "idle"
 frame = 2
-frame_progress = 0.85409725
 
 [node name="hand" type="Node2D" parent="."]
 position = Vector2(-1, 0)
-rotation = -1.0053097
+rotation = -1.00531
 
 [node name="swordtest" parent="hand" node_paths=PackedStringArray("_player", "_animPlayer") instance=ExtResource("3_qhqgy")]
 _player = NodePath("../..")
@@ -229,10 +313,5 @@ offset_bottom = -129.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_tuyoq")
-}
-
-[connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="hand/swordtest" method="AnimationFinished"]
+[connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

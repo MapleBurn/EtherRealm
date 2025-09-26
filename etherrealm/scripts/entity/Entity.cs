@@ -3,7 +3,7 @@ using System;
 
 public partial class Entity : CharacterBody2D
 {
-    protected AnimatedSprite2D sprite;
+    protected AnimationPlayer animPlayer;
     protected Area2D hurtbox;
     protected static Random rdm = new Random();
     protected Healthbar healthbar;

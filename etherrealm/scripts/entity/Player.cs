@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : Entity
 {
-	[Export] private AnimatedSprite2D _sprite;
+	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
 	[Export] private RayCast2D raycast;
@@ -28,7 +28,7 @@ public partial class Player : Entity
 	public override void _Ready()
 	{
 		hurtbox = _hurtbox;
-		sprite = _sprite;
+		animPlayer = _animPlayer;
 		
 		acceleration = _acceleration;
 		friction =  _friction;
@@ -102,7 +102,7 @@ public partial class Player : Entity
 			
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
-			sprite.Play("walk");
+			//animPlayer.Play("walk");
 			if (direction > Vector2.Zero)
 			{
 				dir = 1;
@@ -118,7 +118,7 @@ public partial class Player : Entity
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-			sprite.Play("idle");
+			animPlayer.Play("idle");
 		}
 
 		Velocity = velocity;
@@ -213,18 +213,11 @@ public partial class Player : Entity
 
 	private void DirChanged()
 	{
-		if (dir == 1)
-		{
-			sprite.FlipH = false;
-			raycast.Rotation = Mathf.DegToRad(-90);
-			raycast.Position = new Vector2(0, 16);
-		}
-		else
-		{
-			sprite.FlipH = true;
-			raycast.Rotation = Mathf.DegToRad(90);
-			raycast.Position = new Vector2(-15, 16);
-		}
+		var scale = Scale;
+		scale.X = dir;
+		Scale = scale;
+		//raycast.Rotation = Mathf.DegToRad(-90);
+		//raycast.Position = new Vector2(0, 16);
 	}
 	
 	protected override void Die()
