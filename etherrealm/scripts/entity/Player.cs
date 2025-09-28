@@ -118,7 +118,10 @@ public partial class Player : Entity
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-			animPlayer.Play("idle");
+			if (dir == 1)
+				animPlayer.Play("idleRight");
+			else
+				animPlayer.Play("idleLeft");
 		}
 
 		Velocity = velocity;
@@ -211,13 +214,19 @@ public partial class Player : Entity
 		healthbar.UpdateHealthbar(health);
 	}
 
-	private void DirChanged()
+	private void DirChanged() //method name is wrong - rn it's called every frame not only when dir changes
 	{
-		var scale = Scale;
-		scale.X = dir;
-		Scale = scale;
-		//raycast.Rotation = Mathf.DegToRad(-90);
-		//raycast.Position = new Vector2(0, 16);
+		if (dir == -1)	//left
+		{
+			raycast.Position = new Vector2(-21, 16);
+			animPlayer.Play("idleLeft");
+		}
+		else   //right
+		{
+			raycast.Rotation = Mathf.DegToRad(90 * dir);
+			raycast.Position = new Vector2(0, 16);
+			animPlayer.Play("idleRight");
+		}
 	}
 	
 	protected override void Die()

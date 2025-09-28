@@ -14,7 +14,7 @@ public partial class Weapon : Node2D
 	public Player player;
 	public float stabDistance;
 	public Tween attackTween;
-	public CollisionShape2D attackCollider;
+	public CollisionPolygon2D attackCollider;
 	public AnimationPlayer animPlayer;
 	public bool isAttacking = false;
 	
@@ -29,6 +29,7 @@ public partial class Weapon : Node2D
 			{
 				//rotate to mouse
 				LookAt(GetGlobalMousePosition());
+				Rotation += 45;
 				Stab();
 			}
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))
@@ -85,7 +86,7 @@ public partial class Weapon : Node2D
 			return;
 
 		isAttacking = true;
-		animPlayer.Play("swing");
+		animPlayer.Play("swingRight");
 	}
 	
 	protected void AnimationFinished(StringName animName)

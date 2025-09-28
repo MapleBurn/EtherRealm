@@ -25,7 +25,7 @@ public partial class Swordtest : Weapon
         knockback = _knockback;
         critKBMult =  _critKBMult;
         hitbox = _hitbox;
-        attackCollider = GetNode<CollisionShape2D>("hitbox/collider");
+        attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
         stabDistance = _attackDistance;
         delay = _delay;
         player = _player;
