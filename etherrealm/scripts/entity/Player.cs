@@ -3,10 +3,12 @@ using System;
 
 public partial class Player : Entity
 {
+	//other nodes
 	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
 	[Export] private RayCast2D raycast;
+	[Export] private Weapon weapon;
 	private Tween stepTween;
 	
 	//players properties
@@ -40,6 +42,27 @@ public partial class Player : Entity
 		
 		healthbar = GetNode<Healthbar>("healthbar");
 		healthbar.Initialize(maxHealth);
+	}
+	
+	public override void _Input(InputEvent @event)  
+	{  
+		if (isDead || !weapon.CanAttack())  
+			return;  
+		  
+		if (@event is InputEventMouseButton mouseEvent)  
+		{  
+			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
+			{  
+				// Rotate weapon to mouse and stab  
+				weapon.SetRotationToTarget(GetGlobalMousePosition());  
+				weapon.Stab(GetGlobalMousePosition());  
+			}  
+			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
+			{  
+				// Swing based on player direction  
+				weapon.Swing(dir == 1);  
+			}  
+		}  
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -102,22 +125,25 @@ public partial class Player : Entity
 			
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
-			//animPlayer.Play("walk");
-			if (direction > Vector2.Zero)
-			{
-				dir = 1;
-				DirChanged();
-			}
-			else
-			{
-				dir = -1;
-				DirChanged();
+			
+			if (direction.X > 0)  
+			{  
+				dir = 1;  
+				DirChanged();  
+				animPlayer.Play("walkRight");  
+			}  
+			else if (direction.X < 0)  
+			{  
+				dir = -1;  
+				DirChanged();  
+				animPlayer.Play("walkLeft");  
 			}
 		}
 		else
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
+			
 			if (dir == 1)
 				animPlayer.Play("idleRight");
 			else
@@ -128,6 +154,7 @@ public partial class Player : Entity
 		Vector2 prevV = velocity;
 		MoveAndSlide();
 
+		//fall and collision damage
 		ApplyImpactDamage(prevV); 
 	}
 	

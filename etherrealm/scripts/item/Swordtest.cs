@@ -3,8 +3,7 @@ using System;
 
 public partial class Swordtest : Weapon
 {
-    [Export] private Player _player { get; set; }
-    [Export] private Sprite2D sprite { get; set; }
+    //[Export] private Player _player { get; set; }
     [Export] private Area2D _hitbox { get; set; }
     [Export] private AnimationPlayer _animPlayer { get; set; }
     
@@ -28,7 +27,7 @@ public partial class Swordtest : Weapon
         attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
         stabDistance = _attackDistance;
         delay = _delay;
-        player = _player;
+        //player = _player;
         animPlayer = _animPlayer;
     }
 }

@@ -8,9 +8,11 @@ public partial class Entity : CharacterBody2D
     protected static Random rdm = new Random();
     protected Healthbar healthbar;
 
+    //combat properties
     public int maxHealth;
     public int health;
     public bool isDead;
+    protected bool isAttacking;
     
     public float acceleration;
     public float friction;
