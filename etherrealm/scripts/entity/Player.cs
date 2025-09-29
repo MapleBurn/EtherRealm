@@ -219,13 +219,11 @@ public partial class Player : Entity
 		if (dir == -1)	//left
 		{
 			raycast.Position = new Vector2(-21, 16);
-			animPlayer.Play("idleLeft");
 		}
 		else   //right
 		{
 			raycast.Rotation = Mathf.DegToRad(90 * dir);
 			raycast.Position = new Vector2(0, 16);
-			animPlayer.Play("idleRight");
 		}
 	}
 	
