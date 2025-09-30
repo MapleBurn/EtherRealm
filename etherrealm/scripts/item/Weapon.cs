@@ -15,7 +15,8 @@ public partial class Weapon : Node2D
 	protected Tween attackTween;  
 	protected CollisionPolygon2D attackCollider;  
 	protected AnimationPlayer animPlayer;  
-	protected bool isAttacking = false;  
+	
+	public bool isAttacking = false;  
 	  
 	private bool isCooldown = false;  
 	  
@@ -23,11 +24,7 @@ public partial class Weapon : Node2D
 	{  
 		// Initialize components  
 		hitbox = GetNode<Area2D>("Hitbox");  
-		attackCollider = GetNode<CollisionPolygon2D>("Hitbox/CollisionPolygon2D");  
-		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");  
-		  
-		// Connect animation finished signal  
-		animPlayer.AnimationFinished += AnimationFinished;  
+		attackCollider = GetNode<CollisionPolygon2D>("Hitbox/CollisionPolygon2D"); ;  
 	}  
 	  
 	public override void _Process(double delta)  
@@ -73,36 +70,33 @@ public partial class Weapon : Node2D
 		};  
 	}  
   
-	public void Swing(bool facingRight)  
+	public void Swing(int dir)  
 	{  
 		if (isAttacking || isCooldown)  
 			return;  
   
 		isAttacking = true;  
 		  
-		if (facingRight)  
+		if (dir == 1)  
 			animPlayer.Play("swingRight");  
 		else  
 			animPlayer.Play("swingLeft");  
 	}  
+	
+	public void AttackFinished()  
+	{  
+		isAttacking = false;  
+		isCooldown = true;  
+  
+		GetTree().CreateTimer(1.0).Timeout += () =>  
+		{  
+			isCooldown = false;   
+		};  
+	}
 	  
 	public void SetRotationToTarget(Vector2 targetPosition)  
 	{  
 		LookAt(targetPosition);  
 		Rotation += Mathf.DegToRad(45);  
-	}  
-	  
-	protected void AnimationFinished(StringName animName)  
-	{  
-		if (animName == "swingRight" || animName == "swingLeft")  
-		{  
-			isAttacking = false;  
-			isCooldown = true;  
-  
-			GetTree().CreateTimer(1.0).Timeout += () =>  
-			{  
-				isCooldown = false;   
-			};  
-		}  
 	}  
 }

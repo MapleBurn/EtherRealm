@@ -60,7 +60,7 @@ public partial class Player : Entity
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
 				// Swing based on player direction  
-				weapon.Swing(dir == 1);  
+				weapon.Swing(dir);  
 			}  
 		}  
 	}
@@ -126,28 +126,28 @@ public partial class Player : Entity
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
 			
+			//direction and animation
 			if (direction.X > 0)  
 			{  
 				dir = 1;  
 				DirChanged();  
-				animPlayer.Play("walkRight");  
 			}  
 			else if (direction.X < 0)  
 			{  
 				dir = -1;  
 				DirChanged();  
-				animPlayer.Play("walkLeft");  
 			}
+
+			if (!weapon.isAttacking)
+				UpdateAnimation("walk");
 		}
 		else
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-			
-			if (dir == 1)
-				animPlayer.Play("idleRight");
-			else
-				animPlayer.Play("idleLeft");
+
+			if (!weapon.isAttacking)
+				UpdateAnimation("idle");
 		}
 
 		Velocity = velocity;
@@ -208,6 +208,22 @@ public partial class Player : Entity
 		}
 		CallDeferred("ProcessDamage", damage, isCrit);
 		ProcessKnockback(knockback, hitDir);
+	}
+	
+	private void AnimationFinished(StringName animName)  
+	{  
+		if (animName == "swingRight" || animName == "swingLeft")  
+		{  
+			weapon.AttackFinished();
+		}  
+	}
+
+	private void UpdateAnimation(string animName)
+	{
+		if (dir == 1)
+			animPlayer.Play(animName + "Right");
+		else
+			animPlayer.Play(animName + "Left");
 	}
 
 	private bool CanStepUp(Vector2I tileCoords)
