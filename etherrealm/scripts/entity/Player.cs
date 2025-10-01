@@ -7,7 +7,8 @@ public partial class Player : Entity
 	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
-	[Export] private RayCast2D raycast;
+	private RayCast2D raycast;
+	private ShapeCast2D shapecast;
 	[Export] private Weapon weapon;
 	private Tween stepTween;
 	
@@ -42,6 +43,8 @@ public partial class Player : Entity
 		
 		healthbar = GetNode<Healthbar>("healthbar");
 		healthbar.Initialize(maxHealth);
+		raycast = GetNode<RayCast2D>("RayCast2D");
+		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
 	}
 	
 	public override void _Input(InputEvent @event)  
@@ -102,17 +105,12 @@ public partial class Player : Entity
 			raycast.ForceRaycastUpdate();
 			if (raycast.IsColliding())
 			{
-				Vector2 collisionPoint = raycast.GetCollisionPoint();
-				Vector2 localPoint = tilemap.ToLocal(collisionPoint);
-				Vector2I tileCoords = tilemap.LocalToMap(localPoint);
-
-				if (CanStepUp(tileCoords))
+				if (CanStepUp())
 				{
 					Vector2 stepUpOffset = new Vector2(dir * 16, -16);
 					Vector2 stepTarget = GlobalPosition + stepUpOffset;
-
-					float duration;
-					duration = (stepUpOffset.X / maxSpeed) * 1.5f;
+					
+					float duration = MathF.Abs(stepUpOffset.X / maxSpeed) * 1.5f;
 					if (duration > 0.1f)
 						duration = 0.1f;
 					
@@ -120,7 +118,6 @@ public partial class Player : Entity
 					stepTween = CreateTween();
 					stepTween.TweenProperty(this, "position", stepTarget, duration);
 				}
-
 			}
 			
 			//Accelerate to target speed
@@ -128,15 +125,9 @@ public partial class Player : Entity
 			
 			//direction and animation
 			if (direction.X > 0)  
-			{  
 				dir = 1;  
-				DirChanged();  
-			}  
 			else if (direction.X < 0)  
-			{  
 				dir = -1;  
-				DirChanged();  
-			}
 
 			if (!weapon.isAttacking)
 				UpdateAnimation("walk");
@@ -226,24 +217,14 @@ public partial class Player : Entity
 			animPlayer.Play(animName + "Left");
 	}
 
-	private bool CanStepUp(Vector2I tileCoords)
+	private bool CanStepUp()
 	{
 		if (!IsOnFloor())
 			return false;
 		
-		Godot.Collections.Array<Vector2I> tilecoords = new Godot.Collections.Array<Vector2I>();
-		tilecoords.Add(tileCoords + new Vector2I(0, -1));
-		tilecoords.Add(tileCoords + new Vector2I(0, -2));
-		tilecoords.Add(tileCoords + new Vector2I(0, -3));
-		tilecoords.Add(tileCoords + new Vector2I(-dir, -3));
-
-		foreach (Vector2I coord in tilecoords)
-		{
-			Vector2I atlascoords = tilemap.GetCellAtlasCoords(coord);
-			if (atlascoords != new Vector2I(-1, -1))
-				return false;
-		}
-		return true;
+		shapecast.Enabled = true;
+		shapecast.ForceShapecastUpdate();
+		return !shapecast.IsColliding();	//return true if the shape cast doesn't detect anything
 	}
 	
 	protected override void ProcessDamage(float damage, bool isCrit)
@@ -255,19 +236,6 @@ public partial class Player : Entity
 		hurtbox.Monitoring = false; //temporal
 		//update healthbar
 		healthbar.UpdateHealthbar(health);
-	}
-
-	private void DirChanged() //method name is wrong - rn it's called every frame not only when dir changes
-	{
-		if (dir == -1)	//left
-		{
-			raycast.Position = new Vector2(-21, 16);
-		}
-		else   //right
-		{
-			raycast.Rotation = Mathf.DegToRad(90 * dir);
-			raycast.Position = new Vector2(0, 16);
-		}
 	}
 	
 	protected override void Die()

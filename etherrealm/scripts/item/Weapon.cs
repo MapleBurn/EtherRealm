@@ -16,8 +16,8 @@ public partial class Weapon : Node2D
 	protected CollisionPolygon2D attackCollider;  
 	protected AnimationPlayer animPlayer;  
 	
-	public bool isAttacking = false;  
-	  
+	public bool isAttacking = false;
+	public string attackType;
 	private bool isCooldown = false;  
 	  
 	public override void _Ready()  
@@ -50,8 +50,9 @@ public partial class Weapon : Node2D
 	{  
 		//let the stab finish so 1) no spamming 2) the sword doesn't fly off  
 		if (attackTween != null || isCooldown)  
-			return;  
-		  
+			return;
+
+		attackType = "stab";
 		var origin = Position;  
 		var mouseDir = (targetPosition - GlobalPosition).Normalized();  
 		hitDir = mouseDir;  
@@ -74,13 +75,20 @@ public partial class Weapon : Node2D
 	{  
 		if (isAttacking || isCooldown)  
 			return;  
-  
+		
+		attackType = "swing";
 		isAttacking = true;  
 		  
-		if (dir == 1)  
-			animPlayer.Play("swingRight");  
-		else  
-			animPlayer.Play("swingLeft");  
+		if (dir == 1)
+		{
+			animPlayer.Play("swingRight");
+			hitDir = Vector2.Right;
+		}
+		else
+		{
+			animPlayer.Play("swingLeft");
+			hitDir = Vector2.Left;
+		}
 	}  
 	
 	public void AttackFinished()  
@@ -88,7 +96,7 @@ public partial class Weapon : Node2D
 		isAttacking = false;  
 		isCooldown = true;  
   
-		GetTree().CreateTimer(1.0).Timeout += () =>  
+		GetTree().CreateTimer(0.8).Timeout += () =>  
 		{  
 			isCooldown = false;   
 		};  

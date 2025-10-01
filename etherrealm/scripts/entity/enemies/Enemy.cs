@@ -50,6 +50,18 @@ public partial class Enemy : Entity
         float wepKnockback = weapon.knockback;
         float wepCritKBMult = weapon.critKBMult;
         
+        //attack type damage scaling
+        if (weapon.attackType == "stab")
+        {
+            wepDamage *= 1.0f;
+            wepKnockback *= 0.8f;
+        }
+        else if (weapon.attackType == "swing")
+        {
+            wepDamage *= 1.5f;
+            wepKnockback *= 1.2f;
+        }
+
         if (rdm.Next(0, 100) < wepCritChance) //chance for a critical hit
         {
             wepDamage *= wepCritDmgMult; 
