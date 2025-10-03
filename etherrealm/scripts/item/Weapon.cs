@@ -1,7 +1,7 @@
 using Godot;  
 using System;  
   
-public partial class Weapon : Node2D  
+public partial class Weapon : Node2D
 {  
 	public float damage;  
 	public float critChance; // chance in percent to do critical hit  

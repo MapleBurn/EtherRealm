@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://cai5nwc7qr6b2"]
+[gd_scene load_steps=8 format=4 uid="uid://cai5nwc7qr6b2"]
 
 [ext_resource type="PackedScene" uid="uid://d1528ohkmrre2" path="res://scenes/player.tscn" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://dxcbo7if727wr" path="res://assets/tilesets/template16.png" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://d4gu18mclw13j" path="res://scenes/testenemy.tscn" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://dtu87vw7d2n23" path="res://scenes/portal.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://cl71wmwj04e42" path="res://scenes/UI/Inventory/hotbar.tscn" id="5_71j4m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71j4m"]
 texture = ExtResource("2_k0juu")
@@ -133,3 +134,5 @@ tilemap = NodePath("../map")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(2, 2)
+
+[node name="hotbar" parent="." instance=ExtResource("5_71j4m")]
