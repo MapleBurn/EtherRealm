@@ -7,6 +7,7 @@ public partial class Player : Entity
 	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
+	[Export] private Healthbar _healthbar;
 	private RayCast2D raycast;
 	private ShapeCast2D shapecast;
 	[Export] private Weapon weapon;
@@ -41,7 +42,7 @@ public partial class Player : Entity
 		maxHealth = _maxHealth;
 		health = maxHealth;
 		
-		healthbar = GetNode<Healthbar>("healthbar");
+		healthbar = _healthbar;
 		healthbar.Initialize(maxHealth);
 		raycast = GetNode<RayCast2D>("RayCast2D");
 		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");

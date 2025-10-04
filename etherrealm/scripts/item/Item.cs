@@ -11,10 +11,13 @@ public partial class Item : CharacterBody2D
 
     public override void _Ready()
     {
-        collider = GetNode<CollisionShape2D>("collider");
-        sprite = GetNode<Sprite2D>("Sprite2D");
+        Inicialize();
         CollisionMask = 2;  //make it collide with ground (2)
     }
-    
-    
+
+    public void Inicialize()
+    {
+        collider = GetNode<CollisionShape2D>("collider");
+        sprite = GetNode<Sprite2D>("Sprite2D");
+    }
 }

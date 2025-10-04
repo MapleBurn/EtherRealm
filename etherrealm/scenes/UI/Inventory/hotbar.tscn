@@ -6,9 +6,7 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqkof"]
 texture = ExtResource("1_vcuhn")
 
-[node name="hotbar" type="CanvasLayer"]
-
-[node name="background" type="Panel" parent="."]
+[node name="hotbar" type="Panel"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -17,7 +15,7 @@ offset_top = -60.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="GridContainer" type="GridContainer" parent="background"]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -32,74 +30,92 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 6
 
-[node name="hotSlot1" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot1" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
 script = ExtResource("2_byvp6")
+index = 1
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot1"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot1"]
 layout_mode = 0
-offset_left = -356.0
-offset_top = -302.0
-offset_right = -316.0
-offset_bottom = -262.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
 
-[node name="hotSlot2" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot2" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
+script = ExtResource("2_byvp6")
+index = 2
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot2"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot2"]
 layout_mode = 0
-offset_left = -410.0
-offset_top = -302.0
-offset_right = -370.0
-offset_bottom = -262.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
 
-[node name="hotSlot3" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot3" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
+script = ExtResource("2_byvp6")
+index = 3
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot3"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot3"]
 layout_mode = 0
-offset_left = -4.0
-offset_right = -4.0
-offset_bottom = 50.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
 
-[node name="hotSlot4" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot4" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
+script = ExtResource("2_byvp6")
+index = 4
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot4"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot4"]
 layout_mode = 0
-offset_left = -518.0
-offset_top = -302.0
-offset_right = -478.0
-offset_bottom = -262.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
 
-[node name="hotSlot5" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot5" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
+script = ExtResource("2_byvp6")
+index = 5
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot5"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot5"]
 layout_mode = 0
-offset_left = -572.0
-offset_top = -302.0
-offset_right = -532.0
-offset_bottom = -262.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
 
-[node name="hotSlot6" type="Panel" parent="background/GridContainer"]
+[node name="hotSlot6" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqkof")
+script = ExtResource("2_byvp6")
+index = 6
 
-[node name="icon" type="TextureRect" parent="background/GridContainer/hotSlot6"]
+[node name="icon" type="TextureRect" parent="GridContainer/hotSlot6"]
 layout_mode = 0
-offset_left = -626.0
-offset_top = -302.0
-offset_right = -586.0
-offset_bottom = -262.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+expand_mode = 1
