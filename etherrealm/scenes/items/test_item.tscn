@@ -8,6 +8,7 @@ size = Vector2(12, 12)
 
 [node name="testItem" type="CharacterBody2D"]
 script = ExtResource("1_r0ivm")
+name = "godot"
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r0ivm")

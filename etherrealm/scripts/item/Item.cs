@@ -6,8 +6,8 @@ public partial class Item : CharacterBody2D
     //other nodes and children
     private CollisionShape2D collider;
     public Sprite2D sprite;
-    
-    private int count = 1;
+    [Export] public string name;
+    public int count = 1;
 
     public override void _Ready()
     {

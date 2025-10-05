@@ -1,23 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://cl71wmwj04e42"]
+[gd_scene load_steps=5 format=3 uid="uid://dtwf6oujrlhjq"]
 
-[ext_resource type="Texture2D" uid="uid://bh6cx6jjtb86j" path="res://assets/UI/hotbarSlot.png" id="1_vcuhn"]
-[ext_resource type="Script" uid="uid://bjm4txxjlbbw5" path="res://scripts/UI/inventory/HotSlot.cs" id="2_byvp6"]
+[ext_resource type="Script" uid="uid://3134mnfq3rx" path="res://scripts/UI/Inventory/Inventory.cs" id="1_8ovi3"]
+[ext_resource type="Texture2D" uid="uid://c1tywn5fmlba3" path="res://assets/UI/slot.png" id="1_rdjly"]
+[ext_resource type="Script" uid="uid://bohqq1doh433b" path="res://scripts/UI/inventory/InventorySlot.cs" id="2_rdjly"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_xqkof"]
+[sub_resource type="LabelSettings" id="LabelSettings_lhpkj"]
 font_size = 13
 
-[node name="hotbar" type="Panel"]
+[node name="inventory" type="Panel"]
+visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -60.0
-offset_right = -802.0
+offset_top = -648.0
+offset_right = -807.0
+offset_bottom = -300.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_horizontal = 0
 size_flags_vertical = 8
+script = ExtResource("1_8ovi3")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -25,9 +31,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = -25.0
+offset_top = -163.0
 offset_right = 160.0
-offset_bottom = 25.0
+offset_bottom = 163.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 6
@@ -35,12 +41,11 @@ columns = 6
 [node name="invSlot1" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 1
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot1"]
 layout_mode = 0
@@ -57,18 +62,17 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
 
 [node name="invSlot2" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 2
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot2"]
 layout_mode = 0
@@ -85,18 +89,17 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
 
 [node name="invSlot3" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 3
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot3"]
 layout_mode = 0
@@ -113,18 +116,17 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
 
 [node name="invSlot4" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 4
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot4"]
 layout_mode = 0
@@ -141,18 +143,17 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
 
 [node name="invSlot5" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 5
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot5"]
 layout_mode = 0
@@ -169,18 +170,17 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
 
 [node name="invSlot6" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("1_vcuhn")
+icon = ExtResource("1_rdjly")
 flat = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("2_byvp6")
-index = 6
+script = ExtResource("2_rdjly")
 
 [node name="icon" type="TextureRect" parent="GridContainer/invSlot6"]
 layout_mode = 0
@@ -197,5 +197,5 @@ offset_left = 4.5
 offset_top = 27.0
 offset_right = 44.5
 offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_xqkof")
+label_settings = SubResource("LabelSettings_lhpkj")
 horizontal_alignment = 2
