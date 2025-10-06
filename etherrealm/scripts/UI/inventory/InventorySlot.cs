@@ -4,7 +4,6 @@ using System;
 public partial class InventorySlot : Button
 {
     public Item Item;
-
     // Set these in the editor or with [Export] if you want.
     protected TextureRect IconRect;
     protected Label CountLabel;
@@ -19,13 +18,13 @@ public partial class InventorySlot : Button
         
         PackedScene itemScene = GD.Load<PackedScene>("res://scenes/items/test_item.tscn");
         Item item = itemScene.Instantiate<Item>();
-        item.Inicialize();
-        SetItem(item);
+        item.Initialize();
+        SetSlot(item);
         
         UpdateSlot();
     }
 
-    public void SetItem(Item item)
+    public void SetSlot(Item item)
     {
         Item = item;
         UpdateSlot();
@@ -58,7 +57,6 @@ public partial class InventorySlot : Button
     }
 
     // Drag & Drop
-
     public override Variant _GetDragData(Vector2 atPosition)
     {
         if (Item == null)
@@ -84,19 +82,22 @@ public partial class InventorySlot : Button
         {
             if (Item != null && draggedSlot.Item != null && Item.Name == draggedSlot.Item.Name)
             {
-                // Same item type
-                Item.count += draggedSlot.Item.count;
-                UpdateSlot();
-
+                AddToSlot(draggedSlot.Item);
                 draggedSlot.ClearItem();
             }
             else
             {
                 // Different item, swap between slots
                 var tempItem = Item;
-                SetItem(draggedSlot.Item);
-                draggedSlot.SetItem(tempItem);
+                SetSlot(draggedSlot.Item);
+                draggedSlot.SetSlot(tempItem);
             }
         }
+    }
+
+    public void AddToSlot(Item item)
+    {
+        Item.count += item.count;
+        UpdateSlot();
     }
 }

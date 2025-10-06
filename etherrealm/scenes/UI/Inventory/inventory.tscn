@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://dtwf6oujrlhjq"]
 
-[ext_resource type="Script" uid="uid://3134mnfq3rx" path="res://scripts/UI/Inventory/Inventory.cs" id="1_8ovi3"]
+[ext_resource type="Script" uid="uid://3134mnfq3rx" path="res://scripts/UI/inventory/Inventory.cs" id="1_8ovi3"]
 [ext_resource type="Texture2D" uid="uid://c1tywn5fmlba3" path="res://assets/UI/slot.png" id="1_rdjly"]
 [ext_resource type="Script" uid="uid://bohqq1doh433b" path="res://scripts/UI/inventory/InventorySlot.cs" id="2_rdjly"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhpkj"]
 font_size = 13
 
-[node name="inventory" type="Panel"]
+[node name="inventory" type="Panel" node_paths=PackedStringArray("grid")]
 visible = false
 anchors_preset = 12
 anchor_top = 1.0
@@ -21,6 +21,7 @@ grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 8
 script = ExtResource("1_8ovi3")
+grid = NodePath("GridContainer")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 custom_minimum_size = Vector2(50, 50)

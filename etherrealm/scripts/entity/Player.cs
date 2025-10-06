@@ -178,6 +178,7 @@ public partial class Player : Entity
 			remJumpTimer += delta;
 	}
 	
+	#region Signals
 	protected override void HurtboxAreaEntered(Area2D area)
 	{
 		if (!area.IsInGroup("enemies"))
@@ -201,6 +202,15 @@ public partial class Player : Entity
 		CallDeferred("ProcessDamage", damage, isCrit);
 		ProcessKnockback(knockback, hitDir);
 	}
+
+	private void PickupAreaBodyEntered(Node2D body)
+	{
+		if (body.IsInGroup("items"))
+		{
+			Item item = (Item)body;
+			item.PickUp();
+		}
+	}
 	
 	private void AnimationFinished(StringName animName)  
 	{  
@@ -209,6 +219,8 @@ public partial class Player : Entity
 			weapon.AttackFinished();
 		}  
 	}
+	
+	#endregion
 
 	private void UpdateAnimation(string animName)
 	{
