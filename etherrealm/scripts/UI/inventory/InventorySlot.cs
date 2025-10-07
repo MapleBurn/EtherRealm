@@ -1,22 +1,17 @@
 using Godot;
 using System;
 
-public partial class InventorySlot : Button
+public partial class InventorySlot : SlotBase
 {
     public Item Item;
     // Set these in the editor or with [Export] if you want.
-    protected TextureRect IconRect;
-    protected Label CountLabel;
+
 
     public override void _Ready()
     {
-        // Get nodes if not assigned in editor.
-        if (IconRect == null)
-            IconRect = GetNode<TextureRect>("icon");
-        if (CountLabel == null)
-            CountLabel = GetNode<Label>("countLabel");
+        base._Ready();
         
-        PackedScene itemScene = GD.Load<PackedScene>("res://scenes/items/test_item.tscn");
+        PackedScene itemScene = GD.Load<PackedScene>("res://scenes/items/item.tscn");
         Item item = itemScene.Instantiate<Item>();
         item.Initialize();
         SetSlot(item);

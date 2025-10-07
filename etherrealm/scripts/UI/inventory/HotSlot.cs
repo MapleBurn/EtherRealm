@@ -1,20 +1,27 @@
 using Godot;
 using System;
 
-public partial class HotSlot : InventorySlot
+public partial class HotSlot : SlotBase
 {
-    [Export] private int index;
+    public override void _Ready()
+    {
+        base._Ready();
+        FocusMode = Control.FocusModeEnum.Click;
+    }
 
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey)
         {
             if (Input.IsActionPressed($"slot{index}"))
-                if (Item != null)
-                {
-                    Item.count++;
-                    UpdateSlot();
-                }
+            {
+                GrabFocus();
+            }
         }
+    }
+    
+    protected void UpdateHotSlot()
+    {
+        //Logic to update the contents of the hotbar slot
     }
 }
