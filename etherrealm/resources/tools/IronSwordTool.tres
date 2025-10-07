@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://caqcbilfimlna"]
+
+[ext_resource type="Script" uid="uid://bs641eiw7xnvp" path="res://scripts/resource/WeaponData.cs" id="1_j35tp"]
+[ext_resource type="Texture2D" uid="uid://dibxb5nc6jyjh" path="res://assets/items/swordtest.png" id="1_kngnr"]
+
+[resource]
+script = ExtResource("1_j35tp")
+StabDistance = 10.0
+AttackDamage = 10.0
+CritChance = 15.0
+CritDmgMult = 2.0
+Knockback = 200.0
+CritKbMult = 1.5
+Delay = 300.0
+Model = ExtResource("1_kngnr")

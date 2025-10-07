@@ -48,7 +48,7 @@ public partial class Enemy : Entity
         bool isCrit = false;
         Vector2 wepHitDir = weapon.hitDir;
         float wepKnockback = weapon.knockback;
-        float wepCritKBMult = weapon.critKBMult;
+        float wepCritKBMult = weapon.critKbMult;
         
         //attack type damage scaling
         if (weapon.attackType == "stab")

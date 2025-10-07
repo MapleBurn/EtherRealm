@@ -36,7 +36,7 @@ public partial class Entity : CharacterBody2D
     
     protected void SpawnDFT(bool isCrit, int damage, bool isPlayer)
     {
-        PackedScene damageTextScene = GD.Load<PackedScene>("res://scenes/floating_text.tscn");
+        PackedScene damageTextScene = GD.Load<PackedScene>("res://scenes/UI/floating_text.tscn");
         FloatingText damageText = damageTextScene.Instantiate<FloatingText>();
         GetParent().AddChild(damageText);
         

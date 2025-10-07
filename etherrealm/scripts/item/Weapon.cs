@@ -2,20 +2,24 @@ using Godot;
 using System;  
   
 public partial class Weapon : Node2D
-{  
+{
+	//resource and res variables
+	[Export] private WeaponData wepData;
 	public float damage;  
-	public float critChance; // chance in percent to do critical hit  
+	public float critChance;
 	public float critDmgMult;  
 	public float knockback;  
-	public float critKBMult;  
-	protected float delay;  
-	public Vector2 hitDir;  
-	protected Area2D hitbox;  
-	protected float stabDistance;  
-	protected Tween attackTween;  
-	protected CollisionPolygon2D attackCollider;  
-	protected AnimationPlayer animPlayer;  
+	public float critKbMult;  
+	private float delay;  
+	private float stabDistance; 
 	
+	//other nodes and children
+	private Area2D hitbox;  
+	private CollisionPolygon2D attackCollider;  
+	private Sprite2D sprite;
+	
+	private Tween attackTween;
+	public Vector2 hitDir;  
 	public bool isAttacking = false;
 	public string attackType;
 	private bool isCooldown = false;  
@@ -23,10 +27,24 @@ public partial class Weapon : Node2D
 	public override void _Ready()  
 	{  
 		// Initialize components  
-		hitbox = GetNode<Area2D>("Hitbox");  
-		attackCollider = GetNode<CollisionPolygon2D>("Hitbox/CollisionPolygon2D"); ;  
-	}  
-	  
+		hitbox = GetNode<Area2D>("hitbox");  
+		attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
+		sprite = GetNode<Sprite2D>("Sprite2D");
+		Initialize();
+	}
+
+	private void Initialize()
+	{
+		stabDistance = wepData.StabDistance;
+		damage = wepData.AttackDamage;
+		critChance = wepData.CritChance;
+		critDmgMult = wepData.CritDmgMult;
+		knockback = wepData.Knockback;
+		critKbMult  = wepData.CritKbMult;
+		delay = wepData.Delay;
+		sprite.Texture = wepData.Model;
+	}
+	
 	public override void _Process(double delta)  
 	{  
 		if (isAttacking)  
@@ -78,17 +96,6 @@ public partial class Weapon : Node2D
 		
 		attackType = "swing";
 		isAttacking = true;  
-		  
-		if (dir == 1)
-		{
-			animPlayer.Play("swingRight");
-			hitDir = Vector2.Right;
-		}
-		else
-		{
-			animPlayer.Play("swingLeft");
-			hitDir = Vector2.Left;
-		}
 	}  
 	
 	public void AttackFinished()  
@@ -100,6 +107,23 @@ public partial class Weapon : Node2D
 		{  
 			isCooldown = false;   
 		};  
+	}
+
+	public void PlayAnimation(int dir, AnimationPlayer animPlayer)
+	{
+		if (attackType == "swing")
+		{
+			if (dir == 1)
+			{
+				animPlayer.Play("swingRight");
+				hitDir = Vector2.Right;
+			}
+			else
+			{
+				animPlayer.Play("swingLeft");
+				hitDir = Vector2.Left;
+			}
+		}
 	}
 	  
 	public void SetRotationToTarget(Vector2 targetPosition)  

@@ -16,7 +16,7 @@ public partial class InventorySlot : Button
         if (CountLabel == null)
             CountLabel = GetNode<Label>("countLabel");
         
-        PackedScene itemScene = GD.Load<PackedScene>("res://scenes/items/test_item.tscn");
+        PackedScene itemScene = GD.Load<PackedScene>("res://scenes/items/item.tscn");
         Item item = itemScene.Instantiate<Item>();
         item.Initialize();
         SetSlot(item);

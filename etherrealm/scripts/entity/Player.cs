@@ -64,7 +64,8 @@ public partial class Player : Entity
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
 				// Swing based on player direction  
-				weapon.Swing(dir);  
+				weapon.Swing(dir);
+				weapon.PlayAnimation(dir, animPlayer);
 			}  
 		}  
 	}
