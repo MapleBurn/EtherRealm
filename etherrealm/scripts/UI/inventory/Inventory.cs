@@ -23,7 +23,7 @@ public partial class Inventory : Panel
         foreach (InventorySlot slot in grid.GetChildren())
         {
             if (item == null) return false;
-            if (slot.Item !=null && slot.Item.itemId == item.itemId)
+            if (slot.Item !=null && slot.Item.ItemId == item.ItemId)
             {
                 slot.AddToSlot(item);
                 return true;

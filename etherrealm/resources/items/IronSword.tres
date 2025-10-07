@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bk2dvl64laf41"]
+
+[ext_resource type="Script" uid="uid://dalq0k34x6ks1" path="res://scripts/resource/ItemData.cs" id="1_ik8k3"]
+
+[resource]
+script = ExtResource("1_ik8k3")
+ItemId = "iron_sword"
+DisplayName = "Iron sword"
