@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8m1jnxsntnbr"]
+
+[ext_resource type="Texture2D" uid="uid://bh6cx6jjtb86j" path="res://assets/UI/hotbarSlot.png" id="1_a2xxs"]
+[ext_resource type="Script" uid="uid://cbakw61dc65b5" path="res://scripts/UI/inventory/Slot.cs" id="2_x1gds"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a2xxs"]
+texture = ExtResource("1_a2xxs")
+
+[node name="slot" type="Panel"]
+custom_minimum_size = Vector2(40, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1102.0
+offset_bottom = -598.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_a2xxs")
+script = ExtResource("2_x1gds")
+
+[node name="icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="count" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -19.0
+offset_top = -23.0
+offset_right = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "25"
+horizontal_alignment = 2

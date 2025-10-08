@@ -1,43 +1,41 @@
 using Godot;
 using System;
 
-public partial class Item : CharacterBody2D
+public partial class ItemDrop : CharacterBody2D
 {
     //other nodes and children
     private CollisionShape2D collider;
     public Sprite2D sprite;
-    [Export] private ItemData itemData;
+    private ItemStack item;
+    [Export] private ItemData itemData; //export for testing
     
     //resource data
-    public string ItemId;
     public string DisplayName;
-    public int MaxStack;
-    public ActionEntityData EntityData;
 
-    public int count = 1;
+    public int count;
 
     public override void _Ready()
     {
-        Initialize();
+        Initialize(itemData);
         CollisionMask = 2;  //make it collide with ground (2)
     }
 
-    public void Initialize()
+    public void Initialize(ItemData iData)
     {
+        item.ItemData = itemData;   //temporarily use ItemData for testing, later switch to ItemStack
+        item.Count = 1;
         collider = GetNode<CollisionShape2D>("collider");
         sprite = GetNode<Sprite2D>("Sprite2D");
         
-        ItemId = itemData.ItemId;
-        DisplayName = itemData.DisplayName;
-        MaxStack = itemData.MaxStack;
-        sprite.Texture = itemData.Icon;
-        EntityData = itemData.EntityData;
+        DisplayName = item.ItemData.DisplayName;
+        sprite.Texture = item.ItemData.Texture;
+        count = item.Count;
     }
-
-    public void PickUp()
+    
+    public void TryPickUp()
     {
-        Inventory inventory = GetNode<Inventory>("../UI/inventory");
-        if (inventory.TryFit(this)) 
+        Inventory inventory = GetNode<Inventory>("/root/world/UI/inventory");
+        if (inventory.TryFit(item)) 
             QueueFree();
     }
 

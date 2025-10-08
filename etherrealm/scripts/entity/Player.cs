@@ -57,17 +57,29 @@ public partial class Player : Entity
 		{  
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
-				// Rotate weapon to mouse and stab  
+				//rotate weapon to mouse and stab  
 				weapon.SetRotationToTarget(GetGlobalMousePosition());  
 				weapon.Stab(GetGlobalMousePosition());  
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
-				// Swing based on player direction  
+				//swing based on player direction  
 				weapon.Swing(dir);
 				weapon.PlayAnimation(dir, animPlayer);
 			}  
 		}  
+		/*else if (@event is InputEventKey keyEvent && keyEvent.IsActionPressed("dropItem"))
+		{
+			if (SpawnedItem != null)
+				return;
+			
+			SpawnedItem = (ItemDrop)GD.Load<PackedScene>("res://scenes/item/ItemDrop.tscn").Instantiate();
+			SpawnedItem.Position = GlobalPosition + new Vector2(0, -16);
+			SpawnedItem.Initialize(GD.Load<ItemData>("res://data/items/test_item.tres")); //testing only - remove later
+			GetTree().CurrentScene.AddChild(SpawnedItem);
+			SpawnedItem.Velocity = new Vector2(dir * 100, -200); //give it some initial velocity
+			SpawnedItem = null; //reset for next drop
+		}*/
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -208,8 +220,8 @@ public partial class Player : Entity
 	{
 		if (body.IsInGroup("items"))
 		{
-			Item item = (Item)body;
-			item.PickUp();
+			ItemDrop item = (ItemDrop)body;
+			item.TryPickUp();
 		}
 	}
 	

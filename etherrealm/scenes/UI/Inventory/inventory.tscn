@@ -1,202 +1,127 @@
-[gd_scene load_steps=5 format=3 uid="uid://dtwf6oujrlhjq"]
+[gd_scene load_steps=4 format=3 uid="uid://c1y0om2bo6782"]
 
 [ext_resource type="Script" uid="uid://3134mnfq3rx" path="res://scripts/UI/inventory/Inventory.cs" id="1_8ovi3"]
-[ext_resource type="Texture2D" uid="uid://c1tywn5fmlba3" path="res://assets/UI/slot.png" id="1_rdjly"]
-[ext_resource type="Script" uid="uid://bohqq1doh433b" path="res://scripts/UI/inventory/InventorySlot.cs" id="2_rdjly"]
+[ext_resource type="PackedScene" uid="uid://b8m1jnxsntnbr" path="res://scenes/UI/inventory/slot.tscn" id="1_rslpu"]
+[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/inventory/hotbar.tscn" id="2_22sjf"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_lhpkj"]
-font_size = 13
-
-[node name="inventory" type="Panel" node_paths=PackedStringArray("grid")]
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
+[node name="inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -648.0
-offset_right = -807.0
-offset_bottom = -300.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 0
-size_flags_vertical = 8
-script = ExtResource("1_8ovi3")
-grid = NodePath("GridContainer")
-
-[node name="GridContainer" type="GridContainer" parent="."]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -163.0
-offset_right = 160.0
-offset_bottom = 163.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 275.0
+script = ExtResource("1_8ovi3")
+
+[node name="GridContainer" type="GridContainer" parent="panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_right = 130.0
+offset_bottom = 216.0
+grow_horizontal = 2
 columns = 6
 
-[node name="invSlot1" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot1"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
-
-[node name="countLabel" type="Label" parent="GridContainer/invSlot1"]
-z_index = 1
-layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
-
-[node name="invSlot2" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot2" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot2"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
-
-[node name="countLabel" type="Label" parent="GridContainer/invSlot2"]
-z_index = 1
-layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
-
-[node name="invSlot3" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot3" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot3"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
-
-[node name="countLabel" type="Label" parent="GridContainer/invSlot3"]
-z_index = 1
-layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
-
-[node name="invSlot4" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot4" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot4"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
-
-[node name="countLabel" type="Label" parent="GridContainer/invSlot4"]
-z_index = 1
-layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
-
-[node name="invSlot5" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot5" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot5"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
-
-[node name="countLabel" type="Label" parent="GridContainer/invSlot5"]
-z_index = 1
-layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
-
-[node name="invSlot6" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="slot6" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-icon = ExtResource("1_rdjly")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_rdjly")
 
-[node name="icon" type="TextureRect" parent="GridContainer/invSlot6"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 39.0
-offset_bottom = 39.0
-expand_mode = 1
+[node name="slot7" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
 
-[node name="countLabel" type="Label" parent="GridContainer/invSlot6"]
-z_index = 1
+[node name="slot8" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot9" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot10" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot11" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot12" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot13" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot14" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot15" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot16" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot17" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot18" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot19" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot20" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot21" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot22" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot23" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot24" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot25" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot26" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot27" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot28" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot29" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="slot30" parent="panel/GridContainer" instance=ExtResource("1_rslpu")]
+layout_mode = 2
+
+[node name="hotbar" parent="." instance=ExtResource("2_22sjf")]
 layout_mode = 0
-offset_left = 4.5
-offset_top = 27.0
-offset_right = 44.5
-offset_bottom = 45.0
-label_settings = SubResource("LabelSettings_lhpkj")
-horizontal_alignment = 2
+offset_left = 4.0
+offset_top = 225.0
+offset_right = 274.0
+offset_bottom = 269.0

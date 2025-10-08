@@ -18,22 +18,24 @@ public partial class Inventory : Panel
         }
     }
 
-    public bool TryFit(Item item)
+    public bool TryFit(ItemStack item)
     {
-        foreach (InventorySlot slot in grid.GetChildren())
+        if (item == null)
+            return false;
+        
+        foreach (Slot slot in grid.GetChildren())
         {
-            if (item == null) return false;
-            if (slot.Item !=null && slot.Item.ItemId == item.ItemId)
+            if (slot.Item !=null && slot.Item.ItemData.ItemId == item.ItemData.ItemId)
             {
                 slot.AddToSlot(item);
                 return true;
             }
         }
-        foreach (InventorySlot slot in grid.GetChildren())
+        foreach (Slot slot in grid.GetChildren())
         {
             if (slot.Item == null)
             {
-                slot.SetSlot(item);
+                slot.SetItem(item);
                 return true;
             }
         }
