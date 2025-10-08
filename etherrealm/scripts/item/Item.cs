@@ -12,6 +12,7 @@ public partial class Item : CharacterBody2D
     public string ItemId;
     public string DisplayName;
     public int MaxStack;
+    public ActionEntityData EntityData;
 
     public int count = 1;
 
@@ -30,6 +31,7 @@ public partial class Item : CharacterBody2D
         DisplayName = itemData.DisplayName;
         MaxStack = itemData.MaxStack;
         sprite.Texture = itemData.Icon;
+        EntityData = itemData.EntityData;
     }
 
     public void PickUp()

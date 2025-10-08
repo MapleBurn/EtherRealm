@@ -7,4 +7,6 @@ public partial class ItemData : Resource
     [Export] public string DisplayName { get; set; } = "";
     [Export] public Texture2D Icon { get; set; }
     [Export] public int MaxStack { get; set; } = 999;
+    [Export] public ActionEntityData EntityData { get; set; }
+    
 }

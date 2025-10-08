@@ -42,17 +42,14 @@ public partial class InventorySlot : Button
         {
             IconRect.Texture = Item.sprite.Texture;
             IconRect.Visible = true;
-            if (CountLabel != null)
-            {
-                CountLabel.Text = Item.count > 1 ? Item.count.ToString() : "";
-                CountLabel.Visible = true;
-            }
+            CountLabel.Text = Item.count > 1 ? Item.count.ToString() : "";
+            CountLabel.Visible = true;
+            EquipmentManager.LoadEntity(Item.EntityData);
         }
         else
         {
             IconRect.Visible = false;
-            if (CountLabel != null)
-                CountLabel.Visible = false;
+            CountLabel.Visible = false;
         }
     }
 
