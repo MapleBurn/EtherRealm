@@ -6,15 +6,21 @@ public partial class Hotbar : Panel
 {
     [Signal] public delegate void SlotSelectedEventHandler(ItemStack item);
     
+    //children
     private HBoxContainer container;
+    private Label activeLabel;
     
     private List<Slot> slots = new List<Slot>();
     private ItemStack currentlyEquipped;
+    private Timer textShowTimer =  new Timer();
     private int index = 0;
 
     public override void _Ready()
     {
         container = GetNode<HBoxContainer>("HBoxContainer");
+        activeLabel = GetNode<Label>("activeLabel");
+        textShowTimer.WaitTime = 3;
+        
         SetSlots();
     }
 
@@ -28,6 +34,7 @@ public partial class Hotbar : Panel
                     return;
                 index--;
                 currentlyEquipped = slots[index].Item;
+                ChangeActiveItemLabel();
                 EmitSignal(SignalName.SlotSelected, currentlyEquipped);
                 QueueRedraw(); //draws the rectangle around the selected slot
             }
@@ -37,6 +44,7 @@ public partial class Hotbar : Panel
                     return;
                 index++;
                 currentlyEquipped = slots[index].Item;
+                ChangeActiveItemLabel();
                 EmitSignal(SignalName.SlotSelected, currentlyEquipped);
                 QueueRedraw();
             }
@@ -61,6 +69,24 @@ public partial class Hotbar : Panel
         Vector2 offset = new Vector2(5, 2); //why this value? idk but it works
         DrawRect(new Rect2(slots[index].Position + offset, slots[index].Size), Color.Color8(255,255,255), false, 4);
     }
+
+    private void ChangeActiveItemLabel()
+    {
+        if (currentlyEquipped == null)
+        {
+            activeLabel.Visible = false;
+            return;
+        }
+        
+        activeLabel.Visible = true;
+        activeLabel.Text = currentlyEquipped.ItemData.DisplayName;
+        textShowTimer.Start();
+        textShowTimer.Timeout += () =>
+        {
+            activeLabel.Visible = false;
+        };
+    }
+    
     
     private void SetSlots()
     {

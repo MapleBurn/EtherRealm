@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=4 uid="uid://cai5nwc7qr6b2"]
+[gd_scene load_steps=11 format=4 uid="uid://cai5nwc7qr6b2"]
 
 [ext_resource type="PackedScene" uid="uid://d1528ohkmrre2" path="res://scenes/player.tscn" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://dxcbo7if727wr" path="res://assets/tilesets/template16.png" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://d4gu18mclw13j" path="res://scenes/testenemy.tscn" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://dtu87vw7d2n23" path="res://scenes/portal.tscn" id="4_k0juu"]
-[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/inventory/hotbar.tscn" id="5_71j4m"]
+[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/Inventory/hotbar.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/UI/healthbar.tscn" id="6_qfnet"]
-[ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/inventory/inventory.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/Inventory/inventory.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://c3coyy00cjjov" path="res://scenes/items/itemDrop.tscn" id="8_4mrxx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71j4m"]
 texture = ExtResource("2_k0juu")
@@ -173,3 +174,6 @@ offset_right = 286.0
 offset_bottom = 152.0
 
 [node name="items" type="Node2D" parent="."]
+
+[node name="itemDrop" parent="items" instance=ExtResource("8_4mrxx")]
+position = Vector2(132, 172)

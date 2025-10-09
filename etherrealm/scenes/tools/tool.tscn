@@ -5,8 +5,10 @@
 [node name="tool" type="Node2D"]
 script = ExtResource("1_57wes")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="hitbox"]
 position = Vector2(4, -1)
 polygon = PackedVector2Array(0, -9, 10, -9, 10, -1, 0, -1)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]

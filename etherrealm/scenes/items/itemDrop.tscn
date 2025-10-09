@@ -1,17 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3coyy00cjjov"]
+[gd_scene load_steps=5 format=3 uid="uid://c3coyy00cjjov"]
 
 [ext_resource type="Script" uid="uid://qbrnipikp8rv" path="res://scripts/item/ItemDrop.cs" id="1_mbmgs"]
 [ext_resource type="Resource" uid="uid://bc14iax8uyv0w" path="res://resources/items/TestItem.tres" id="2_i60jo"]
+[ext_resource type="Script" uid="uid://be7cu8t3t4pma" path="res://scripts/item/ItemStack.cs" id="3_i60jo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0ivm"]
 size = Vector2(12, 12)
 
-[node name="itemDrop" type="CharacterBody2D" groups=["items"]]
+[node name="itemDrop" type="CharacterBody2D" node_paths=PackedStringArray("item") groups=["items"]]
 script = ExtResource("1_mbmgs")
-itemData = ExtResource("2_i60jo")
+item = NodePath("tempItemstack")
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r0ivm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.09, 0.09)
+
+[node name="tempItemstack" type="Node" parent="."]
+script = ExtResource("3_i60jo")
+ItemData = ExtResource("2_i60jo")
