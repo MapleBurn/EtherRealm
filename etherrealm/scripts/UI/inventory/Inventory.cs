@@ -10,7 +10,7 @@ public partial class Inventory : Panel
     {
         if (@event is InputEventKey)
         {
-            if (Input.IsActionPressed($"inventory"))
+            if (Input.IsActionJustPressed($"inventory"))
             {
                 isInventoryOpen = !isInventoryOpen;
                 Visible = isInventoryOpen;
@@ -18,6 +18,11 @@ public partial class Inventory : Panel
         }
     }
 
+    public override void _Ready()
+    {
+        Visible = false;
+    }
+    
     public bool TryFit(ItemStack item)
     {
         if (item == null)

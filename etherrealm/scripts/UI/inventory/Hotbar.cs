@@ -11,7 +11,7 @@ public partial class Hotbar : Panel
     private Label activeLabel;
     
     private List<Slot> slots = new List<Slot>();
-    private ItemStack currentlyEquipped;
+    private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
     private Timer textShowTimer =  new Timer();
     private int index = 0;
 
@@ -33,9 +33,9 @@ public partial class Hotbar : Panel
                 if (index == 0)
                     return;
                 index--;
-                currentlyEquipped = slots[index].Item;
-                ChangeActiveItemLabel();
-                EmitSignal(SignalName.SlotSelected, currentlyEquipped);
+                var item = slots[index].Item;
+                ChangeActiveItemLabel(item);
+                EmitSignal(SignalName.SlotSelected, item);
                 QueueRedraw(); //draws the rectangle around the selected slot
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
@@ -43,9 +43,9 @@ public partial class Hotbar : Panel
                 if (index == slots.Count - 1)
                     return;
                 index++;
-                currentlyEquipped = slots[index].Item;
-                ChangeActiveItemLabel();
-                EmitSignal(SignalName.SlotSelected, currentlyEquipped);
+                var item = slots[index].Item;
+                ChangeActiveItemLabel(item);
+                EmitSignal(SignalName.SlotSelected, item);
                 QueueRedraw();
             }
         }
@@ -70,21 +70,27 @@ public partial class Hotbar : Panel
         DrawRect(new Rect2(slots[index].Position + offset, slots[index].Size), Color.Color8(255,255,255), false, 4);
     }
 
-    private void ChangeActiveItemLabel()
+    private void ChangeActiveItemLabel(ItemStack item)
     {
-        if (currentlyEquipped == null)
+        if (item == null)
         {
             activeLabel.Visible = false;
             return;
         }
         
         activeLabel.Visible = true;
-        activeLabel.Text = currentlyEquipped.ItemData.DisplayName;
-        textShowTimer.Start();
-        textShowTimer.Timeout += () =>
-        {
-            activeLabel.Visible = false;
-        };
+        activeLabel.Text = item.ItemData.DisplayName;
+        
+        //reset and start the timer
+        textShowTimer.Timeout -= HideActiveLabel;  
+        textShowTimer.Timeout += HideActiveLabel;  
+        textShowTimer.Start();  
+    }  
+  
+    private void HideActiveLabel()  
+    {  
+        activeLabel.Visible = false;  
+        textShowTimer.Timeout -= HideActiveLabel;  
     }
     
     

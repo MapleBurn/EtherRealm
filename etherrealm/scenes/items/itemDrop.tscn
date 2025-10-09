@@ -8,6 +8,8 @@
 size = Vector2(12, 12)
 
 [node name="itemDrop" type="CharacterBody2D" node_paths=PackedStringArray("item") groups=["items"]]
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("1_mbmgs")
 item = NodePath("tempItemstack")
 

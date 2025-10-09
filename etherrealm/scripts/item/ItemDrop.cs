@@ -16,7 +16,6 @@ public partial class ItemDrop : CharacterBody2D
     public override void _Ready()
     {
         Initialize(item);
-        CollisionMask = 2;  //make it collide with ground (2)
     }
 
     public void Initialize(ItemStack iData)
@@ -33,7 +32,9 @@ public partial class ItemDrop : CharacterBody2D
     public void TryPickUp()
     {
         Inventory inventory = GetNode<Inventory>("/root/world/UI/inventory");
-        if (inventory.TryFit(item)) 
+        
+        var stackCopy = item.Clone();
+        if (inventory.TryFit(stackCopy)) 
             QueueFree();
     }
 

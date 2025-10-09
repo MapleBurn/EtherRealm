@@ -78,7 +78,10 @@ public partial class Slot : Panel
 	{
 		if (data.Obj is Slot draggedSlot)
 		{
-			if (Item != null && draggedSlot.Item != null && Item.Name == draggedSlot.Item.Name)
+			if (draggedSlot == this)  
+				return;
+			
+			if (Item != null && draggedSlot.Item != null && Item.ItemData.ItemId == draggedSlot.Item.ItemData.ItemId)
 			{
 				AddToSlot(draggedSlot.Item);
 				draggedSlot.ClearItem();

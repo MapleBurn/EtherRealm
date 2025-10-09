@@ -846,6 +846,8 @@ color = Color(1, 0, 1, 1)
 [node name="pickupArea" type="Area2D" parent="."]
 visible = false
 position = Vector2(-10, -5)
+collision_layer = 0
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pickupArea"]
 shape = SubResource("CircleShape2D_qlg0r")
