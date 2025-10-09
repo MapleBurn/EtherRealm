@@ -16,6 +16,12 @@ public partial class Slot : Panel
 	public void SetItem(ItemStack value)
 	{
 		Item = value;
+		if (Item == null)
+		{
+			UpdateSlot();
+			return;
+		}
+
 		icon.Texture = value.ItemData.Texture;
 		UpdateSlot();
 	}
@@ -26,7 +32,8 @@ public partial class Slot : Panel
 		{
 			icon.Texture = Item.ItemData.Texture;
 			icon.Visible = true;
-			countLabel.Text = Item.Count > 1 ? Item.Count.ToString() : "";
+			countLabel.Text = Item.Count.ToString();
+			countLabel.Visible = (Item.Count > 1);
 		}
 		else
 		{
@@ -37,7 +44,7 @@ public partial class Slot : Panel
 	
 	public void AddToSlot(ItemStack item)
 	{
-		Item.Count = Item.Count + item.Count > Item.ItemData.MaxStack ? Item.ItemData.MaxStack : item.Count;
+		Item.Count = Item.Count + item.Count > Item.ItemData.MaxStack ? Item.ItemData.MaxStack : item.Count + Item.Count;
 		UpdateSlot();
 	}
 	

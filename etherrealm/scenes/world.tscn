@@ -177,3 +177,6 @@ offset_bottom = 152.0
 
 [node name="itemDrop" parent="items" instance=ExtResource("8_4mrxx")]
 position = Vector2(132, 172)
+
+[node name="itemDrop2" parent="items" instance=ExtResource("8_4mrxx")]
+position = Vector2(155, 169)

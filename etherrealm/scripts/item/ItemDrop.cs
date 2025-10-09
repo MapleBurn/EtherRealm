@@ -26,6 +26,7 @@ public partial class ItemDrop : CharacterBody2D
         
         DisplayName = item.ItemData.DisplayName;
         sprite.Texture = item.ItemData.Texture;
+        sprite.Visible = true;
         count = item.Count;
     }
     
