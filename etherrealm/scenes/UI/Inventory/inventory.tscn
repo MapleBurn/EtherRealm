@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://3134mnfq3rx" path="res://scripts/UI/inventory/Inventory.cs" id="1_8ovi3"]
 [ext_resource type="PackedScene" uid="uid://b8m1jnxsntnbr" path="res://scenes/UI/Inventory/slot.tscn" id="1_rslpu"]
-[ext_resource type="Script" uid="uid://cbakw61dc65b5" path="res://scripts/UI/Inventory/InventorySlot.cs" id="3_8ovi3"]
+[ext_resource type="Script" uid="uid://c7kbx43trq8ml" path="res://scripts/UI/inventory/CursorItem.cs" id="3_8ovi3"]
 
-[node name="inventory" type="Panel" node_paths=PackedStringArray("grid")]
+[node name="inventory" type="Panel" node_paths=PackedStringArray("grid", "cursorItem")]
 offset_right = 280.0
 offset_bottom = 275.0
 script = ExtResource("1_8ovi3")
 grid = NodePath("GridContainer")
+cursorItem = NodePath("InventoryCursor")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -27,48 +28,67 @@ columns = 6
 
 [node name="slot1" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot2" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot3" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot4" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot5" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot6" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot7" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot8" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot9" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot10" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot11" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
-script = ExtResource("3_8ovi3")
 
 [node name="slot12" parent="GridContainer" instance=ExtResource("1_rslpu")]
 layout_mode = 2
+
+[node name="InventoryCursor" type="Node2D" parent="."]
 script = ExtResource("3_8ovi3")
+
+[node name="icon" type="TextureRect" parent="InventoryCursor"]
+custom_minimum_size = Vector2(40, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="count" type="Label" parent="InventoryCursor"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 20.0
+offset_right = 46.0
+offset_bottom = 43.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 2

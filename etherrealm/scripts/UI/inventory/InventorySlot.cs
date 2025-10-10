@@ -31,80 +31,82 @@ public partial class InventorySlot : Slot
 
     private void LeftClick()
     {
-        if (!CursorItem.HasItem() && Item != null)
+        if (!inventory.cursorItem.HasItem() && Item != null)
         {
             // Pick up whole stack
-            CursorItem.HeldItem = Item;
+            inventory.cursorItem.HeldItem = Item;
             ClearItem();
         }
-        else if (CursorItem.HasItem())
+        else if (inventory.cursorItem.HasItem())
         {
             if (Item == null)
             {
                 // Place whole stack
-                SetItem(CursorItem.HeldItem);
-                CursorItem.Clear();
+                SetItem(inventory.cursorItem.HeldItem);
+                inventory.cursorItem.HeldItem = null;
             }
-            else if (Item.ItemData.ItemId == CursorItem.HeldItem.ItemData.ItemId && 
-                     Item.ItemData.DisplayName == CursorItem.HeldItem.ItemData.DisplayName)
+            else if (Item.ItemData.ItemId == inventory.cursorItem.HeldItem.ItemData.ItemId && 
+                     Item.ItemData.DisplayName == inventory.cursorItem.HeldItem.ItemData.DisplayName)
             {
                 //Add whole stack or as much as fits, no split since place whole stack is requested
                 int space = Item.ItemData.MaxStack - Item.Count;
-                int toAdd = Math.Min(space, CursorItem.HeldItem.Count);
+                int toAdd = Math.Min(space, inventory.cursorItem.HeldItem.Count);
                 Item.Count += toAdd;
-                CursorItem.HeldItem.Count -= toAdd;
-                if (CursorItem.HeldItem.Count <= 0)
-                    CursorItem.Clear();
+                inventory.cursorItem.HeldItem.Count -= toAdd;
+                if (inventory.cursorItem.HeldItem.Count <= 0)
+                    inventory.cursorItem.HeldItem = null;
                 UpdateSlot();
             }
             else
             {
                 //Swap stacks
                 var temp = Item;
-                SetItem(CursorItem.HeldItem);
-                CursorItem.HeldItem = temp;
+                SetItem(inventory.cursorItem.HeldItem);
+                inventory.cursorItem.HeldItem = temp;
                 UpdateSlot();
             }
         }
+        inventory.cursorItem.Refresh();
     }
 
     private void RightClick()
     {
-        if (!CursorItem.HasItem() && Item != null)
+        if (!inventory.cursorItem.HasItem() && Item != null)
         {
             //Pick up half stack
             int half = (Item.Count + 1) / 2;
-            CursorItem.HeldItem = new ItemStack(Item.ItemData, half);
+            inventory.cursorItem.HeldItem = new ItemStack(Item.ItemData, half);
             Item.Count -= half;
             if (Item.Count <= 0)
                 ClearItem();
             else
                 UpdateSlot();
         }
-        else if (CursorItem.HasItem())
+        else if (inventory.cursorItem.HasItem())
         {
             if (Item == null)
             {
                 //Place one item from cursor into empty slot
-                SetItem(new ItemStack(CursorItem.HeldItem.ItemData, 1));
-                CursorItem.HeldItem.Count--;
-                if (CursorItem.HeldItem.Count <= 0)
-                    CursorItem.Clear();
+                SetItem(new ItemStack(inventory.cursorItem.HeldItem.ItemData, 1));
+                inventory.cursorItem.HeldItem.Count--;
+                if (inventory.cursorItem.HeldItem.Count <= 0)
+                    inventory.cursorItem.HeldItem = null;
             }
-            else if (Item.ItemData.ItemId == CursorItem.HeldItem.ItemData.ItemId && 
-                     Item.ItemData.DisplayName == CursorItem.HeldItem.ItemData.DisplayName)
+            else if (Item.ItemData.ItemId == inventory.cursorItem.HeldItem.ItemData.ItemId && 
+                     Item.ItemData.DisplayName == inventory.cursorItem.HeldItem.ItemData.DisplayName)
             {
                 //Place one item if it can fit
                 if (Item.Count < Item.ItemData.MaxStack)
                 {
                     Item.Count++;
-                    CursorItem.HeldItem.Count--;
-                    if (CursorItem.HeldItem.Count <= 0)
-                        CursorItem.Clear();
+                    inventory.cursorItem.HeldItem.Count--;
+                    if (inventory.cursorItem.HeldItem.Count <= 0)
+                        inventory.cursorItem.HeldItem = null;
                     UpdateSlot();
                 }
             }
             //If different item, do nothing
         }
+        inventory.cursorItem.Refresh();
     }
 }

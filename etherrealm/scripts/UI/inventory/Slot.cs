@@ -17,7 +17,8 @@ public partial class Slot : Panel
 	{
 		icon = GetNode<TextureRect>("icon");
 		countLabel = GetNode<Label>("count");
-		int.TryParse(Name.ToString().Split("slot")[1], out index);
+		if (!int.TryParse(Name.ToString().Split("slot")[1], out index))
+			index = 0;
 	}
 	
 	public void SetItem(ItemStack value)
@@ -32,7 +33,7 @@ public partial class Slot : Panel
 		UpdateSlot();
 	}
 	
-	protected void ClearItem()
+	public void ClearItem()
 	{
 		Item = null;
 		UpdateSlot();
