@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dohq5nnlsi2vl"]
+[gd_scene load_steps=4 format=3 uid="uid://dohq5nnlsi2vl"]
 
 [ext_resource type="PackedScene" uid="uid://b8m1jnxsntnbr" path="res://scenes/UI/Inventory/slot.tscn" id="1_jnmjq"]
 [ext_resource type="Script" uid="uid://coba10wclbw26" path="res://scripts/UI/inventory/Hotbar.cs" id="1_p5gx3"]
+[ext_resource type="Script" uid="uid://s53bhg1c5ufv" path="res://scripts/UI/Inventory/Slot.cs" id="3_byvp6"]
 
 [node name="hotbar" type="Panel"]
 offset_right = 270.0
@@ -22,29 +23,35 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="slot" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
+[node name="slot1" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="slot2" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="slot3" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="slot4" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="slot5" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="slot6" parent="HBoxContainer" instance=ExtResource("1_jnmjq")]
 layout_mode = 2
 size_flags_horizontal = 0
+script = ExtResource("3_byvp6")
 
 [node name="activeLabel" type="Label" parent="."]
 layout_mode = 1

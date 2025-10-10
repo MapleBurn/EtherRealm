@@ -35,8 +35,8 @@ public partial class ItemDrop : CharacterBody2D
     {
         Inventory inventory = GetNode<Inventory>("/root/world/UI/inventory");
         
-        var stackCopy = item.Clone();
-        if (inventory.TryFit(stackCopy)) 
+        var stackCopy = new ItemStack(item.ItemData, item.Count);
+        if (inventory.TryFit(stackCopy) == 0) 
             QueueFree();
     }
 

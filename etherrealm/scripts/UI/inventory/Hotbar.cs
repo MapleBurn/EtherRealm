@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Hotbar : Panel
 {
@@ -9,18 +10,16 @@ public partial class Hotbar : Panel
     //children
     private HBoxContainer container;
     private Label activeLabel;
+    [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
-    private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
-    private Timer textShowTimer =  new Timer();
+    //private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
     private int index = 0;
 
     public override void _Ready()
     {
         container = GetNode<HBoxContainer>("HBoxContainer");
         activeLabel = GetNode<Label>("activeLabel");
-        textShowTimer.WaitTime = 3;
-        
         SetSlots();
     }
 
@@ -33,35 +32,33 @@ public partial class Hotbar : Panel
                 if (index == 0)
                     return;
                 index--;
-                var item = slots[index].Item;
-                ChangeActiveItemLabel(item);
-                //EmitSignal(SignalName.SlotSelected, item);
-                QueueRedraw(); //draws the rectangle around the selected slot
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
             {
                 if (index == slots.Count - 1)
                     return;
                 index++;
-                var item = slots[index].Item;
-                ChangeActiveItemLabel(item);
-                //EmitSignal(SignalName.SlotSelected, item);
-                QueueRedraw();
             }
+            var item = slots[index].Item;
+            ChangeActiveItemLabel(item);
+            //EmitSignal(SignalName.SlotSelected, item);
+            QueueRedraw(); //draws the rectangle around the selected slot
         }
-        /*else if (@event is InputEventKey keyEvent && keyEvent.IsPressed()) //consider adding switching slots using keys
+        else if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                if (Input.IsActionPressed($"slot{i + 1}")) //AI generated - check if this works
+                if (Input.IsActionPressed($"slot{i + 1}"))
                 {
                     index = i;
-                    currentlyEquipped = slots[index].item;
-                    EmitSignal(SignalName.SlotSelected, currentlyEquipped);
                     break;
                 }
             }
-        }*/
+            var item = slots[index].Item;
+            ChangeActiveItemLabel(item);
+            QueueRedraw();
+        }
+        
     }
 
     public override void _Draw()
@@ -80,32 +77,22 @@ public partial class Hotbar : Panel
         
         activeLabel.Visible = true;
         activeLabel.Text = item.ItemData.DisplayName;
-        
-        //reset and start the timer
-        textShowTimer.Timeout -= HideActiveLabel;  
-        textShowTimer.Timeout += HideActiveLabel;  
-        textShowTimer.Start();  
     }  
-  
-    private void HideActiveLabel()  
-    {  
-        activeLabel.Visible = false;  
-        textShowTimer.Timeout -= HideActiveLabel;  
-    }
     
     
     private void SetSlots()
     {
-        var s = container.GetChildren();
-        int count = container.GetChildren().Count;
-        for (int i = 0; i < count; i++)
-        {
-            if (s[i] is Slot slot)
-            {
-                slots.Add(slot);
-            }
-        }
+        slots = container.GetChildren().OfType<Slot>().ToList();
     }
 
+    
+    public void OnSlotUpdated(int slotIndex, ItemStack item)
+    {
+        if (slotIndex > 0 && slotIndex <= slots.Count)
+        {
+            slots[slotIndex-1].SetItem(item);
+            slots[slotIndex-1].UpdateSlot();
+        }
+    }
 
 }

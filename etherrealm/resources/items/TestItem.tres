@@ -8,3 +8,4 @@ script = ExtResource("1_e1fq7")
 ItemId = "test_item"
 DisplayName = "Test item"
 Texture = ExtResource("1_me7yi")
+MaxStack = 3
