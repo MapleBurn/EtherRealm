@@ -6,7 +6,8 @@ public partial class ItemDrop : CharacterBody2D
     //other nodes and children
     private CollisionShape2D collider;
     public Sprite2D sprite;
-    [Export] private ItemStack item;
+    private ItemStack item;
+    [Export] ItemData itemData;
     
     //resource data
     public string DisplayName;
@@ -15,10 +16,11 @@ public partial class ItemDrop : CharacterBody2D
 
     public override void _Ready()
     {
-        Initialize(item);
+        item = new ItemStack(itemData);
+        Initialize();
     }
 
-    public void Initialize(ItemStack iData)
+    public void Initialize()
     { 
         collider = GetNode<CollisionShape2D>("collider");
         sprite = GetNode<Sprite2D>("Sprite2D");

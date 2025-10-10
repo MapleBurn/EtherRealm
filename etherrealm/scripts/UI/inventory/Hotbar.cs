@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class Hotbar : Panel
 {
-    [Signal] public delegate void SlotSelectedEventHandler(ItemStack item);
+    //[Signal] public delegate void SlotSelectedEventHandler(ItemStack item);
     
     //children
     private HBoxContainer container;
@@ -35,7 +35,7 @@ public partial class Hotbar : Panel
                 index--;
                 var item = slots[index].Item;
                 ChangeActiveItemLabel(item);
-                EmitSignal(SignalName.SlotSelected, item);
+                //EmitSignal(SignalName.SlotSelected, item);
                 QueueRedraw(); //draws the rectangle around the selected slot
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
@@ -45,7 +45,7 @@ public partial class Hotbar : Panel
                 index++;
                 var item = slots[index].Item;
                 ChangeActiveItemLabel(item);
-                EmitSignal(SignalName.SlotSelected, item);
+                //EmitSignal(SignalName.SlotSelected, item);
                 QueueRedraw();
             }
         }
