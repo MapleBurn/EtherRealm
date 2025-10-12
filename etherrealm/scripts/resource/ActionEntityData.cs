@@ -8,5 +8,4 @@ public partial class ActionEntityData : Resource
     [Export] public Texture2D Model { get; set; }
     [Export] public Vector2 SpriteOffset { get; set; }
     [Export] public Vector2[] ColliderPoints { get; set; }
-    
 }

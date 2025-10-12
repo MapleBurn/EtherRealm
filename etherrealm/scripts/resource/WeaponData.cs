@@ -12,6 +12,6 @@ public partial class WeaponData : ActionEntityData
 
     public WeaponData()
     {
-        Type = "Weapon";
+        Type = "weapon";
     }
 }

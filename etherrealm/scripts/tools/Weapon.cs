@@ -18,7 +18,9 @@ public partial class Weapon : ActionEntity
 	  
 	public override void _Ready()  
 	{  
+		data = wepData;
 		Initialize();
+		SetChildNodes();
 	}
 
 	private void Initialize()
@@ -33,7 +35,7 @@ public partial class Weapon : ActionEntity
 	}
 	
 	public override void _Process(double delta)  
-	{  
+	{
 		if (isAttacking)  
 		{  
 			Visible = true;  

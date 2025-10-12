@@ -3,7 +3,7 @@ using System;
 
 public partial class ActionEntity : Node2D
 {
-    private ActionEntityData data;
+    protected ActionEntityData data;
     
     //other nodes and children
     protected Area2D hitbox;  
@@ -14,17 +14,14 @@ public partial class ActionEntity : Node2D
     protected bool isCooldown = false;  
     public bool isAttacking = false;
     protected float delay;  
-    
-    public override void _Ready()  
-    {  
+
+    protected void SetChildNodes()
+    {
         // Initialize components  
         hitbox = GetNode<Area2D>("hitbox");  
         attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
         sprite = GetNode<Sprite2D>("Sprite2D");
-    }
-
-    protected void SetChildNodes()
-    {
+        
         sprite.Offset = data.SpriteOffset;
         sprite.Texture = data.Model;
         attackCollider.Polygon = data.ColliderPoints;

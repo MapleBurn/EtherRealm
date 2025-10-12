@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class Hotbar : Panel
 {
-    //[Signal] public delegate void SlotSelectedEventHandler(ItemStack item);
+    [Signal] public delegate void SlotSelectedEventHandler(ItemData itemData, int count);
     
     //children
     private HBoxContainer container;
@@ -27,11 +27,15 @@ public partial class Hotbar : Panel
     {
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.IsPressed())
         {
+            var item = slots[index].Item;
+            
             if (mouseEvent.ButtonIndex == MouseButton.WheelUp)
             {
                 if (index == 0)
                     return;
                 index--;
+                ChangeActiveItem(item);
+                QueueRedraw(); //draws the rectangle around the selected slot
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
             {
@@ -39,10 +43,7 @@ public partial class Hotbar : Panel
                     return;
                 index++;
             }
-            var item = slots[index].Item;
-            ChangeActiveItemLabel(item);
-            //EmitSignal(SignalName.SlotSelected, item);
-            QueueRedraw(); //draws the rectangle around the selected slot
+            ChangeActiveItem(item);
         }
         else if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
         {
@@ -55,8 +56,7 @@ public partial class Hotbar : Panel
                 }
             }
             var item = slots[index].Item;
-            ChangeActiveItemLabel(item);
-            QueueRedraw();
+            ChangeActiveItem(item);
         }
         
     }
@@ -67,16 +67,20 @@ public partial class Hotbar : Panel
         DrawRect(new Rect2(slots[index].Position + offset, slots[index].Size), Color.Color8(255,255,255), false, 4);
     }
 
-    private void ChangeActiveItemLabel(ItemStack item)
+    private void ChangeActiveItem(ItemStack item)
     {
         if (item == null)
         {
             activeLabel.Visible = false;
+            QueueRedraw();
             return;
         }
         
         activeLabel.Visible = true;
         activeLabel.Text = item.ItemData.DisplayName;
+        
+        EmitSignal(SignalName.SlotSelected, item.ItemData, item.Count);
+        QueueRedraw(); //draws the rectangle around the selected slot
     }  
     
     
