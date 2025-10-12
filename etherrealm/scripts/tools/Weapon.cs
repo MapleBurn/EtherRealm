@@ -1,7 +1,7 @@
 using Godot;  
 using System;  
   
-public partial class Weapon : Node2D
+public partial class Weapon : ActionEntity
 {
 	//resource and res variables
 	[Export] private WeaponData wepData;
@@ -10,26 +10,14 @@ public partial class Weapon : Node2D
 	public float critDmgMult;  
 	public float knockback;  
 	public float critKbMult;  
-	private float delay;  
 	private float stabDistance; 
-	
-	//other nodes and children
-	private Area2D hitbox;  
-	private CollisionPolygon2D attackCollider;  
-	private Sprite2D sprite;
 	
 	private Tween attackTween;
 	public Vector2 hitDir;  
-	public bool isAttacking = false;
 	public string attackType;
-	private bool isCooldown = false;  
 	  
 	public override void _Ready()  
 	{  
-		// Initialize components  
-		hitbox = GetNode<Area2D>("hitbox");  
-		attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
-		sprite = GetNode<Sprite2D>("Sprite2D");
 		Initialize();
 	}
 
@@ -42,7 +30,6 @@ public partial class Weapon : Node2D
 		knockback = wepData.Knockback;
 		critKbMult  = wepData.CritKbMult;
 		delay = wepData.Delay;
-		sprite.Texture = wepData.Model;
 	}
 	
 	public override void _Process(double delta)  
@@ -57,11 +44,6 @@ public partial class Weapon : Node2D
 			Visible = false;  
 			attackCollider.Disabled = true;  
 		}  
-	}  
-	  
-	public bool CanAttack()  
-	{  
-		return !isAttacking && !isCooldown;  
 	}  
 	  
 	public void Stab(Vector2 targetPosition)  
@@ -97,19 +79,8 @@ public partial class Weapon : Node2D
 		attackType = "swing";
 		isAttacking = true;  
 	}  
-	
-	public void AttackFinished()  
-	{  
-		isAttacking = false;  
-		isCooldown = true;  
-  
-		GetTree().CreateTimer(0.8).Timeout += () =>  
-		{  
-			isCooldown = false;   
-		};  
-	}
 
-	public void PlayAnimation(int dir, AnimationPlayer animPlayer)
+	public override void PlayAnimation(int dir, AnimationPlayer animPlayer)
 	{
 		if (attackType == "swing")
 		{

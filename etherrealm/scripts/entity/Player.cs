@@ -8,6 +8,7 @@ public partial class Player : Entity
 	[Export] private Area2D _hurtbox;
 	[Export] private TileMapLayer tilemap;
 	[Export] private Healthbar _healthbar;
+	[Export] private Inventory inventory;
 	private RayCast2D raycast;
 	private ShapeCast2D shapecast;
 	[Export] private Weapon weapon;
@@ -50,7 +51,7 @@ public partial class Player : Entity
 	
 	public override void _Input(InputEvent @event)  
 	{  
-		if (isDead || !weapon.CanAttack())  
+		if (isDead || !weapon.CanAttack() || inventory.isInventoryOpen)
 			return;  
 		  
 		if (@event is InputEventMouseButton mouseEvent)  

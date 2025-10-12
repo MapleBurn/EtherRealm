@@ -131,10 +131,11 @@ position = Vector2(1584, 325)
 [node name="portal" parent="." instance=ExtResource("4_k0juu")]
 position = Vector2(1355, 361)
 
-[node name="player" parent="." node_paths=PackedStringArray("tilemap", "_healthbar") instance=ExtResource("1_rwgxs")]
+[node name="player" parent="." node_paths=PackedStringArray("tilemap", "_healthbar", "inventory") instance=ExtResource("1_rwgxs")]
 position = Vector2(66, 358)
 tilemap = NodePath("../map")
 _healthbar = NodePath("../UI/healthbar")
+inventory = NodePath("../UI/inventory")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(2, 2)

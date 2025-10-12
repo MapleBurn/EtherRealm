@@ -9,4 +9,9 @@ public partial class WeaponData : ActionEntityData
     [Export] public float CritDmgMult { get; set; }
     [Export] public float Knockback { get; set; }
     [Export] public float CritKbMult { get; set; }
+
+    public WeaponData()
+    {
+        Type = "Weapon";
+    }
 }

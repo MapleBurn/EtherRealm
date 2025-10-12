@@ -8,8 +8,8 @@ public partial class Inventory : Panel
     [Export] public Hotbar hotbar;
     [Export] public GridContainer grid;
     [Export] public CursorItem cursorItem;
-    private bool isInventoryOpen;
-    public List<InventorySlot> inventorySlots;
+    public bool isInventoryOpen;
+    private List<InventorySlot> inventorySlots;
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey)

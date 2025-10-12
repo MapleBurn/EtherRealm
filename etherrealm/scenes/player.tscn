@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://d1528ohkmrre2"]
+[gd_scene load_steps=28 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://5n8vccx2bmox" path="res://assets/character/SpriteSheet/testCharacter-idle.png" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://cdptssos0lehs" path="res://scenes/tools/weapon.tscn" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://5s1nm1tbf7hu" path="res://assets/character/SpriteSheet/testCharacter-swing.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://b152f1orjjpuu" path="res://assets/particles/slash.png" id="4_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://04lv7laaamwx" path="res://scenes/entity/action_entity.tscn" id="6_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
 atlas = ExtResource("2_dqkch")
@@ -856,6 +857,8 @@ shape = SubResource("CircleShape2D_qlg0r")
 
 [node name="weapon" parent="hand" instance=ExtResource("3_qhqgy")]
 position = Vector2(4, -6)
+
+[node name="ActionEntity" parent="hand" instance=ExtResource("6_tuyoq")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AnimationFinished"]
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]
