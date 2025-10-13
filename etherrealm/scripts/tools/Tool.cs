@@ -9,7 +9,7 @@ public partial class Tool : ActionEntity
         SetChildNodes();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         
     }

@@ -15,7 +15,7 @@ public partial class ActionEntity : Node2D
     public bool isAttacking = false;
     protected float delay;  
 
-    protected void SetChildNodes()
+    public void SetChildNodes()
     {
         // Initialize components  
         hitbox = GetNode<Area2D>("hitbox");  

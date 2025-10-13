@@ -19,12 +19,15 @@ public partial class Weapon : ActionEntity
 	public override void _Ready()  
 	{  
 		data = wepData;
-		Initialize();
 		SetChildNodes();
+		//Initialize(wepData);
 	}
 
-	private void Initialize()
+	public void Initialize(ActionEntityData d)
 	{
+		wepData = (WeaponData)d;
+		data = wepData;
+		
 		stabDistance = wepData.StabDistance;
 		damage = wepData.AttackDamage;
 		critChance = wepData.CritChance;

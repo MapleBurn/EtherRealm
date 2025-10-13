@@ -13,6 +13,7 @@ public partial class Player : Entity
 	private ShapeCast2D shapecast;
 	[Export] private Weapon weapon;
 	private Tween stepTween;
+	private EquipmentManager hand;
 	
 	//players properties
 	[Export] private float _acceleration = 600.0f;
@@ -47,6 +48,7 @@ public partial class Player : Entity
 		healthbar.Initialize(maxHealth);
 		raycast = GetNode<RayCast2D>("RayCast2D");
 		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
+		hand = GetNode<EquipmentManager>("hand");
 	}
 	
 	public override void _Input(InputEvent @event)  
@@ -232,6 +234,37 @@ public partial class Player : Entity
 		{  
 			weapon.AttackFinished();
 		}  
+	}
+
+	private void HotbarSlotSelected(ItemData iData, int count)
+	{
+		foreach (var child in hand.GetChildren())
+		{
+			child.QueueFree(); //flush the children into the toilet
+		}
+		
+		if (iData == null || iData.EntityData == null)
+			return;
+		
+		var entityData = iData.EntityData;
+		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
+		var entity = entityScene.Instantiate();
+		if (entityData.Type == "weapon")
+		{
+			Weapon weaponEntity;
+			weaponEntity = (Weapon)entity;
+			weaponEntity.SetChildNodes();
+			weaponEntity.Initialize(entityData);
+			hand.AddChild(weaponEntity);
+		}
+		else if (entityData.Type == "tool")
+		{
+			Tool toolEntity;
+			toolEntity = (Tool)entity;
+			toolEntity.SetChildNodes();
+			toolEntity.Initialize();
+			hand.AddChild(toolEntity);
+		}
 	}
 	
 	#endregion

@@ -15,3 +15,4 @@ Type = "weapon"
 Delay = 0.8
 Model = ExtResource("1_kngnr")
 ColliderPoints = PackedVector2Array(-5, 1, 1, 7, 17, -9, 11, -15)
+EntityScenePath = "res://scenes/tools/weapon.tscn"

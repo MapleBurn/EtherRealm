@@ -1,8 +1,12 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bk2dvl64laf41"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bk2dvl64laf41"]
 
-[ext_resource type="Script" uid="uid://dalq0k34x6ks1" path="res://scripts/resource/ItemData.cs" id="1_ik8k3"]
+[ext_resource type="Script" uid="uid://dalq0k34x6ks1" path="res://scripts/resource/item/ItemData.cs" id="1_ik8k3"]
+[ext_resource type="Resource" uid="uid://caqcbilfimlna" path="res://resources/tools/IronSwordTool.tres" id="1_mr3of"]
+[ext_resource type="Texture2D" uid="uid://bt0udtxw6i6sb" path="res://assets/items/sword.png" id="2_t0tdf"]
 
 [resource]
 script = ExtResource("1_ik8k3")
 ItemId = "iron_sword"
 DisplayName = "Iron sword"
+Texture = ExtResource("2_t0tdf")
+EntityData = ExtResource("1_mr3of")

@@ -10,7 +10,6 @@ public partial class Hotbar : Panel
     //children
     private HBoxContainer container;
     private Label activeLabel;
-    [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
     //private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
