@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class Hotbar : Panel
 {
-    [Signal] public delegate void SlotSelectedEventHandler(ItemData itemData, int count);
+    [Signal] public delegate void SlotSelectedEventHandler(ItemData itemData);
     
     //children
     private HBoxContainer container;
@@ -34,15 +34,14 @@ public partial class Hotbar : Panel
                     return;
                 index--;
                 ChangeActiveItem(item);
-                QueueRedraw(); //draws the rectangle around the selected slot
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
             {
                 if (index == slots.Count - 1)
                     return;
                 index++;
+                ChangeActiveItem(item);
             }
-            ChangeActiveItem(item);
         }
         else if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
         {
@@ -51,11 +50,11 @@ public partial class Hotbar : Panel
                 if (Input.IsActionPressed($"slot{i + 1}"))
                 {
                     index = i;
+                    var item = slots[index].Item;
+                    ChangeActiveItem(item);
                     break;
                 }
             }
-            var item = slots[index].Item;
-            ChangeActiveItem(item);
         }
         
     }
@@ -78,7 +77,7 @@ public partial class Hotbar : Panel
         activeLabel.Visible = true;
         activeLabel.Text = item.ItemData.DisplayName;
         
-        EmitSignal(SignalName.SlotSelected, item.ItemData, item.Count);
+        EmitSignal(SignalName.SlotSelected, item.ItemData);
         QueueRedraw(); //draws the rectangle around the selected slot
     }  
     

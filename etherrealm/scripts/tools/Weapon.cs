@@ -18,9 +18,9 @@ public partial class Weapon : ActionEntity
 	  
 	public override void _Ready()  
 	{  
-		data = wepData;
+		//data = wepData;
+		Initialize(wepData);
 		SetChildNodes();
-		//Initialize(wepData);
 	}
 
 	public void Initialize(ActionEntityData d)

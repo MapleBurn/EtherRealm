@@ -236,7 +236,7 @@ public partial class Player : Entity
 		}  
 	}
 
-	private void HotbarSlotSelected(ItemData iData, int count)
+	private void HotbarSlotSelected(ItemData iData)
 	{
 		foreach (var child in hand.GetChildren())
 		{
@@ -253,16 +253,16 @@ public partial class Player : Entity
 		{
 			Weapon weaponEntity;
 			weaponEntity = (Weapon)entity;
-			weaponEntity.SetChildNodes();
 			weaponEntity.Initialize(entityData);
+			weaponEntity.SetChildNodes();
 			hand.AddChild(weaponEntity);
 		}
 		else if (entityData.Type == "tool")
 		{
 			Tool toolEntity;
 			toolEntity = (Tool)entity;
-			toolEntity.SetChildNodes();
 			toolEntity.Initialize();
+			toolEntity.SetChildNodes();
 			hand.AddChild(toolEntity);
 		}
 	}
