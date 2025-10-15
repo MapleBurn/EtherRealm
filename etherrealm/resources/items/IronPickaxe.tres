@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://ios31qvegdrt"]
+
+[ext_resource type="Texture2D" uid="uid://26kv8o0xpybw" path="res://assets/items/iron_pickaxe.png" id="1_3pjs2"]
+[ext_resource type="Resource" uid="uid://cp3x5udeeslm8" path="res://resources/tools/IronPickaxeTool.tres" id="1_sdydf"]
+[ext_resource type="Script" uid="uid://dalq0k34x6ks1" path="res://scripts/resource/item/ItemData.cs" id="2_sdydf"]
+
+[resource]
+script = ExtResource("2_sdydf")
+ItemId = "iron_pickaxe"
+DisplayName = "Iron pickaxe"
+Texture = ExtResource("1_3pjs2")
+MaxStack = 1
+EntityData = ExtResource("1_sdydf")

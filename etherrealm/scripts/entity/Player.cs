@@ -11,7 +11,7 @@ public partial class Player : Entity
 	[Export] private Inventory inventory;
 	private RayCast2D raycast;
 	private ShapeCast2D shapecast;
-	[Export] private Weapon weapon;
+	private ActionEntity actionEntity;
 	private Tween stepTween;
 	private EquipmentManager hand;
 	
@@ -53,22 +53,22 @@ public partial class Player : Entity
 	
 	public override void _Input(InputEvent @event)  
 	{  
-		if (isDead || !weapon.CanAttack() || inventory.isInventoryOpen)
+		if (actionEntity == null)
+			return;
+		
+		if (isDead || !actionEntity.CanAttack() || inventory.isInventoryOpen)
 			return;  
 		  
 		if (@event is InputEventMouseButton mouseEvent)  
 		{  
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
-				//rotate weapon to mouse and stab  
-				weapon.SetRotationToTarget(GetGlobalMousePosition());  
-				weapon.Stab(GetGlobalMousePosition());  
+				actionEntity.UsePrimary();
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
-				//swing based on player direction  
-				weapon.Swing(dir);
-				weapon.PlayAnimation(dir, animPlayer);
+				actionEntity.UseSecondary(dir);
+				actionEntity.PlayAnimation(dir, animPlayer);
 			}  
 		}  
 		/*else if (@event is InputEventKey keyEvent && keyEvent.IsActionPressed("dropItem"))
@@ -145,8 +145,8 @@ public partial class Player : Entity
 				dir = 1;  
 			else if (direction.X < 0)  
 				dir = -1;  
-
-			if (!weapon.isAttacking)
+			
+			if (actionEntity != null && !actionEntity.isAttacking)
 				UpdateAnimation("walk");
 		}
 		else
@@ -154,7 +154,7 @@ public partial class Player : Entity
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
 
-			if (!weapon.isAttacking)
+			if (actionEntity != null && !actionEntity.isAttacking)
 				UpdateAnimation("idle");
 		}
 
@@ -232,12 +232,13 @@ public partial class Player : Entity
 	{  
 		if (animName == "swingRight" || animName == "swingLeft")  
 		{  
-			weapon.AttackFinished();
+			actionEntity.AttackFinished();
 		}  
 	}
 
 	private void HotbarSlotSelected(ItemData iData)
 	{
+		actionEntity = null;
 		foreach (var child in hand.GetChildren())
 		{
 			child.QueueFree(); //flush the children into the toilet
@@ -248,22 +249,28 @@ public partial class Player : Entity
 		
 		var entityData = iData.EntityData;
 		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
-		var entity = entityScene.Instantiate();
-		if (entityData.Type == "weapon")
+		var node = entityScene.Instantiate();
+		/*if (entityData.Type == "weapon")	//typed types
 		{
-			Weapon weaponEntity;
-			weaponEntity = (Weapon)entity;
+			Weapon weaponEntity = (Weapon)entity;
 			weaponEntity.Initialize(entityData);
 			weaponEntity.SetChildNodes();
 			hand.AddChild(weaponEntity);
 		}
 		else if (entityData.Type == "tool")
 		{
-			Tool toolEntity;
-			toolEntity = (Tool)entity;
-			toolEntity.Initialize();
+			Tool toolEntity = (Tool)entity;
+			toolEntity.Initialize(entityData);
 			toolEntity.SetChildNodes();
 			hand.AddChild(toolEntity);
+		}*/
+		
+		if (node is ActionEntity)
+		{
+			actionEntity = node as ActionEntity;
+			actionEntity.Initialize(entityData);
+			actionEntity.SetChildNodes();
+			hand.AddChild(actionEntity);
 		}
 	}
 	

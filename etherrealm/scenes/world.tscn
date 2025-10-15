@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cai5nwc7qr6b2"]
+[gd_scene load_steps=13 format=4 uid="uid://cai5nwc7qr6b2"]
 
 [ext_resource type="PackedScene" uid="uid://d1528ohkmrre2" path="res://scenes/player.tscn" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://dxcbo7if727wr" path="res://assets/tilesets/template16.png" id="2_k0juu"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/Inventory/inventory.tscn" id="7_i7141"]
 [ext_resource type="PackedScene" uid="uid://c3coyy00cjjov" path="res://scenes/items/itemDrop.tscn" id="8_4mrxx"]
 [ext_resource type="Resource" uid="uid://bk2dvl64laf41" path="res://resources/items/IronSword.tres" id="9_7r4gi"]
+[ext_resource type="Resource" uid="uid://ios31qvegdrt" path="res://resources/items/IronPickaxe.tres" id="10_w7kh3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71j4m"]
 texture = ExtResource("2_k0juu")
@@ -187,5 +188,9 @@ position = Vector2(155, 169)
 [node name="itemDrop3" parent="items" instance=ExtResource("8_4mrxx")]
 position = Vector2(179, 174)
 itemData = ExtResource("9_7r4gi")
+
+[node name="itemDrop4" parent="items" instance=ExtResource("8_4mrxx")]
+position = Vector2(179, 174)
+itemData = ExtResource("10_w7kh3")
 
 [connection signal="SlotSelected" from="UI/hotbar" to="player" method="HotbarSlotSelected"]

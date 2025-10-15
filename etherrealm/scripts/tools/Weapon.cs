@@ -4,7 +4,7 @@ using System;
 public partial class Weapon : ActionEntity
 {
 	//resource and res variables
-	[Export] private WeaponData wepData;
+	private WeaponData wepData;
 	public float damage;  
 	public float critChance;
 	public float critDmgMult;  
@@ -23,7 +23,7 @@ public partial class Weapon : ActionEntity
 		SetChildNodes();
 	}
 
-	public void Initialize(ActionEntityData d)
+	public override void Initialize(ActionEntityData d)
 	{
 		wepData = (WeaponData)d;
 		data = wepData;
@@ -49,14 +49,27 @@ public partial class Weapon : ActionEntity
 			Visible = false;  
 			attackCollider.Disabled = true;  
 		}  
-	}  
-	  
+	}
+
+	public override void UsePrimary()
+	{
+		//rotate weapon to mouse and stab  
+		SetRotationToTarget(GetGlobalMousePosition());  
+		Stab(GetGlobalMousePosition());
+	}
+
+	public override void UseSecondary(int dir)
+	{
+		//swing based on player direction  
+		Swing(dir);
+	}
+
 	public void Stab(Vector2 targetPosition)  
 	{  
 		//let the stab finish so 1) no spamming 2) the sword doesn't fly off  
 		if (attackTween != null || isCooldown)  
 			return;
-
+		
 		attackType = "stab";
 		var origin = Position;  
 		var mouseDir = (targetPosition - GlobalPosition).Normalized();  
@@ -72,7 +85,8 @@ public partial class Weapon : ActionEntity
 		attackTween.Finished += () =>  
 		{  
 			isAttacking = false;  
-			attackTween = null;  
+			attackTween = null;
+			Rotation = 0;
 		};  
 	}  
   

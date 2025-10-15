@@ -26,13 +26,12 @@ public partial class Hotbar : Panel
     {
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.IsPressed())
         {
-            var item = slots[index].Item;
-            
             if (mouseEvent.ButtonIndex == MouseButton.WheelUp)
             {
                 if (index == 0)
                     return;
                 index--;
+                var item = slots[index].Item;
                 ChangeActiveItem(item);
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
@@ -40,6 +39,7 @@ public partial class Hotbar : Panel
                 if (index == slots.Count - 1)
                     return;
                 index++;
+                var item = slots[index].Item;
                 ChangeActiveItem(item);
             }
         }
@@ -70,6 +70,7 @@ public partial class Hotbar : Panel
         if (item == null)
         {
             activeLabel.Visible = false;
+            EmitSignal(SignalName.SlotSelected, new ItemData());
             QueueRedraw();
             return;
         }

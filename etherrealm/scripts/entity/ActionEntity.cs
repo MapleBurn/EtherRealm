@@ -26,6 +26,9 @@ public partial class ActionEntity : Node2D
         sprite.Texture = data.Model;
         attackCollider.Polygon = data.ColliderPoints;
     }
+    
+    public virtual void Initialize(ActionEntityData data)
+    { }
 
     public bool CanAttack()
     {
@@ -41,6 +44,16 @@ public partial class ActionEntity : Node2D
         {  
             isCooldown = false;   
         };  
+    }
+
+    public virtual void UsePrimary()
+    {
+        
+    }
+
+    public virtual void UseSecondary(int dir)
+    {
+        
     }
     
     public virtual void PlayAnimation(int dir, AnimationPlayer animPlayer)

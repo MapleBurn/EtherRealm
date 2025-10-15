@@ -3,13 +3,14 @@ using System;
 
 public partial class Tool : ActionEntity
 {
+    private ActionEntityData data;
     public override void _Ready()  
-    {  
-        Initialize();
+    {
+        Initialize(data);
         SetChildNodes();
     }
 
-    public void Initialize()
+    public override void Initialize(ActionEntityData d)
     {
         
     }

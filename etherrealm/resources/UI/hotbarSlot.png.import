@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1tywn5fmlba3"
-path="res://.godot/imported/slot.png-77dc29d549a7f47ec3db8b7cbaa7ee83.ctex"
+uid="uid://bh6cx6jjtb86j"
+path="res://.godot/imported/hotbarSlot.png-909b331ec0c72ed80baca545eb3af6e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/UI/slot.png"
-dest_files=["res://.godot/imported/slot.png-77dc29d549a7f47ec3db8b7cbaa7ee83.ctex"]
+source_file="res://resources/UI/hotbarSlot.png"
+dest_files=["res://.godot/imported/hotbarSlot.png-909b331ec0c72ed80baca545eb3af6e6.ctex"]
 
 [params]
 
