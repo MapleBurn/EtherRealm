@@ -13,7 +13,7 @@ public partial class Player : Entity
 	private ShapeCast2D shapecast;
 	private ActionEntity actionEntity;
 	private Tween stepTween;
-	private EquipmentManager hand;
+	private Node2D hand;
 	
 	//players properties
 	[Export] private float _acceleration = 600.0f;
@@ -48,7 +48,7 @@ public partial class Player : Entity
 		healthbar.Initialize(maxHealth);
 		raycast = GetNode<RayCast2D>("RayCast2D");
 		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
-		hand = GetNode<EquipmentManager>("hand");
+		hand = GetNode<Node2D>("hand");
 	}
 	
 	public override void _Input(InputEvent @event)  

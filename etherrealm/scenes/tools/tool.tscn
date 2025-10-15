@@ -1,14 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://pxjy3foj7g84"]
+[gd_scene load_steps=3 format=3 uid="uid://pxjy3foj7g84"]
 
 [ext_resource type="Script" uid="uid://b0bspkt4rr3p4" path="res://scripts/tools/Tool.cs" id="1_57wes"]
+[ext_resource type="Texture2D" uid="uid://cmf16vg75klbt" path="res://assets/action-entity/tools/iron-pickaxe.png" id="2_qpfdw"]
 
 [node name="tool" type="Node2D"]
 script = ExtResource("1_57wes")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qpfdw")
 
 [node name="hitbox" type="Area2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="hitbox"]
-position = Vector2(4, -1)
-polygon = PackedVector2Array(0, -9, 10, -9, 10, -1, 0, -1)
+[node name="collider" type="CollisionPolygon2D" parent="hitbox"]
+polygon = PackedVector2Array(0, -17, 12, -16, 16, -12, 16, 0, 12, 0, 0, -12)

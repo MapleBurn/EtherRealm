@@ -13,8 +13,6 @@ public partial class Weapon : ActionEntity
 	private float stabDistance; 
 	
 	private Tween attackTween;
-	public Vector2 hitDir;  
-	public string attackType;
 	  
 	public override void _Ready()  
 	{  
@@ -64,13 +62,13 @@ public partial class Weapon : ActionEntity
 		Swing(dir);
 	}
 
-	public void Stab(Vector2 targetPosition)  
+	private void Stab(Vector2 targetPosition)  
 	{  
 		//let the stab finish so 1) no spamming 2) the sword doesn't fly off  
 		if (attackTween != null || isCooldown)  
 			return;
 		
-		attackType = "stab";
+		actionType = "stab";
 		var origin = Position;  
 		var mouseDir = (targetPosition - GlobalPosition).Normalized();  
 		hitDir = mouseDir;  
@@ -90,18 +88,18 @@ public partial class Weapon : ActionEntity
 		};  
 	}  
   
-	public void Swing(int dir)  
+	private void Swing(int dir)  
 	{  
 		if (isAttacking || isCooldown)  
 			return;  
 		
-		attackType = "swing";
+		actionType = "swing";
 		isAttacking = true;  
 	}  
 
 	public override void PlayAnimation(int dir, AnimationPlayer animPlayer)
 	{
-		if (attackType == "swing")
+		if (actionType == "swing")
 		{
 			if (dir == 1)
 			{
@@ -116,7 +114,7 @@ public partial class Weapon : ActionEntity
 		}
 	}
 	  
-	public void SetRotationToTarget(Vector2 targetPosition)  
+	private void SetRotationToTarget(Vector2 targetPosition)  
 	{  
 		LookAt(targetPosition);  
 		Rotation += Mathf.DegToRad(45);  

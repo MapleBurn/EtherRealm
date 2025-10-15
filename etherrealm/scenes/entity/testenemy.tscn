@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://d4gu18mclw13j"]
 
 [ext_resource type="Script" uid="uid://n3ffxbi1o3pj" path="res://scripts/entity/enemies/TestEnemy.cs" id="1_5sw1c"]
-[ext_resource type="Resource" uid="uid://q3d8jpr3qplh" path="res://resources/TestEnemyRes.tres" id="2_ijs0m"]
+[ext_resource type="Resource" uid="uid://q3d8jpr3qplh" path="res://resources/entity/TestEnemyRes.tres" id="2_ijs0m"]
 [ext_resource type="Texture2D" uid="uid://dk5mid5iqegt4" path="res://assets/NPC/Globber.png" id="2_iwkm5"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/UI/healthbar.tscn" id="3_iwkm5"]
 [ext_resource type="Script" uid="uid://d4hamr2ewn6p6" path="res://scripts/entity/enemies/states/StateMachine.cs" id="4_u8gne"]

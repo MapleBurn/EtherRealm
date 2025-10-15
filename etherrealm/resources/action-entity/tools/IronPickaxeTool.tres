@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cp3x5udeeslm8"]
+
+[ext_resource type="Texture2D" uid="uid://cmf16vg75klbt" path="res://assets/action-entity/tools/iron-pickaxe.png" id="1_m6h3m"]
+[ext_resource type="Script" uid="uid://ch65ueb2aqani" path="res://scripts/resource/ToolData.cs" id="2_ghd27"]
+
+[resource]
+script = ExtResource("2_ghd27")
+Type = "Tool"
+Delay = 0.5
+Model = ExtResource("1_m6h3m")
+SpriteOffset = Vector2(6, -5)
+ColliderPoints = PackedVector2Array(0, -17, 12, -16, 16, -12, 16, 0, 12, 0, 0, -12)
+EntityScenePath = "res://scenes/tools/tool.tscn"

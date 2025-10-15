@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdptssos0lehs"]
+[gd_scene load_steps=2 format=3 uid="uid://cdptssos0lehs"]
 
 [ext_resource type="Script" uid="uid://dii2blkgl4avc" path="res://scripts/tools/Weapon.cs" id="1_kytt4"]
-[ext_resource type="Resource" uid="uid://caqcbilfimlna" path="res://resources/tools/IronSwordTool.tres" id="2_5t3uq"]
 
 [node name="weapon" type="Node2D"]
 z_index = 1
 script = ExtResource("1_kytt4")
-wepData = ExtResource("2_5t3uq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
@@ -15,3 +13,4 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="collider" type="CollisionPolygon2D" parent="hitbox"]
+polygon = PackedVector2Array(-1, -2, 2, -2, 1, 1)

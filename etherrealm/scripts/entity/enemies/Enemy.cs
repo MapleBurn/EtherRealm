@@ -51,12 +51,12 @@ public partial class Enemy : Entity
         float wepCritKBMult = weapon.critKbMult;
         
         //attack type damage scaling
-        if (weapon.attackType == "stab")
+        if (weapon.actionType == "stab")
         {
             wepDamage *= 1.0f;
             wepKnockback *= 0.8f;
         }
-        else if (weapon.attackType == "swing")
+        else if (weapon.actionType == "swing")
         {
             wepDamage *= 1.5f;
             wepKnockback *= 1.2f;

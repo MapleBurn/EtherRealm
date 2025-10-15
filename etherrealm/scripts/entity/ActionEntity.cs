@@ -14,6 +14,8 @@ public partial class ActionEntity : Node2D
     protected bool isCooldown = false;  
     public bool isAttacking = false;
     protected float delay;  
+    public string actionType; //swing, stab, shoot, etc.
+    public Vector2 hitDir;
 
     public void SetChildNodes()
     {
