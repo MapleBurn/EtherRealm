@@ -96,6 +96,11 @@ public partial class Hotbar : Panel
             slots[slotIndex-1].SetItem(item);
             slots[slotIndex-1].UpdateSlot();
         }
+
+        if (slotIndex-1 == index)
+        {
+            ChangeActiveItem(slots[index].Item);
+        }
     }
 
 }

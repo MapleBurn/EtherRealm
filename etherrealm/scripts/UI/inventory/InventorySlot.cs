@@ -91,6 +91,7 @@ public partial class InventorySlot : Slot
                 inventory.cursorItem.HeldItem.Count--;
                 if (inventory.cursorItem.HeldItem.Count <= 0)
                     inventory.cursorItem.HeldItem = null;
+                UpdateSlot();
             }
             else if (Item.ItemData.ItemId == inventory.cursorItem.HeldItem.ItemData.ItemId && 
                      Item.ItemData.DisplayName == inventory.cursorItem.HeldItem.ItemData.DisplayName)

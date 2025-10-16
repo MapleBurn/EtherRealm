@@ -18,7 +18,6 @@ public partial class Inventory : Panel
             {
                 isInventoryOpen = !isInventoryOpen;
                 Visible = isInventoryOpen;
-                // Add UpdateActionEntity(ItemData iData) from player moved to hotbar on inventory close here
             }
         }
     }
