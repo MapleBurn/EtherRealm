@@ -64,6 +64,7 @@ public partial class Player : Entity
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
 				actionEntity.UsePrimary();
+				actionEntity.PlayAnimation(dir, animPlayer);
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
@@ -238,6 +239,11 @@ public partial class Player : Entity
 
 	private void HotbarSlotSelected(ItemData iData)
 	{
+		UpdateActionEntity(iData);
+	}
+
+	public void UpdateActionEntity(ItemData iData)
+	{
 		actionEntity = null;
 		foreach (var child in hand.GetChildren())
 		{
@@ -250,21 +256,6 @@ public partial class Player : Entity
 		var entityData = iData.EntityData;
 		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
 		var node = entityScene.Instantiate();
-		/*if (entityData.Type == "weapon")	//typed types
-		{
-			Weapon weaponEntity = (Weapon)entity;
-			weaponEntity.Initialize(entityData);
-			weaponEntity.SetChildNodes();
-			hand.AddChild(weaponEntity);
-		}
-		else if (entityData.Type == "tool")
-		{
-			Tool toolEntity = (Tool)entity;
-			toolEntity.Initialize(entityData);
-			toolEntity.SetChildNodes();
-			hand.AddChild(toolEntity);
-		}*/
-		
 		if (node is ActionEntity)
 		{
 			actionEntity = node as ActionEntity;

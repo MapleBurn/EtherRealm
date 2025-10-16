@@ -4,6 +4,7 @@ using System;
 public partial class Tool : ActionEntity
 {
     private ToolData toolData;
+    
     public override void _Ready()  
     {
         Initialize(toolData);

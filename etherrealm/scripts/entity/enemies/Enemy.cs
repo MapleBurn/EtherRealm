@@ -8,7 +8,7 @@ public partial class Enemy : Entity
     
     //Enemy attack stats
     public float damage;
-    public float critChance; // chance in percent to do critical hit
+    public float critChance; //chance in percent to do critical hit
     public float critDmgMult;
     public float knockback;
     public float critKnockMult;

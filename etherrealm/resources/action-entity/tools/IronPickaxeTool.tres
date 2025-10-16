@@ -5,8 +5,14 @@
 
 [resource]
 script = ExtResource("2_ghd27")
-Type = "Tool"
-Delay = 0.5
+AttackDamage = 2.0
+CritChance = 5.0
+CritDmgMult = 1.2
+Knockback = 50.0
+CritKbMult = 1.2
+MiningLevel = 2
+Type = "tool"
+Delay = 0.1
 Model = ExtResource("1_m6h3m")
 SpriteOffset = Vector2(6, -5)
 ColliderPoints = PackedVector2Array(0, -17, 12, -16, 16, -12, 16, 0, 12, 0, 0, -12)
