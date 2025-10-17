@@ -147,7 +147,9 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (actionEntity != null && !actionEntity.isAttacking)
+			if (actionEntity == null)
+				UpdateAnimation("walk");
+			else if (!actionEntity.isAttacking)
 				UpdateAnimation("walk");
 		}
 		else
@@ -155,7 +157,9 @@ public partial class Player : Entity
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
 
-			if (actionEntity != null && !actionEntity.isAttacking)
+			if (actionEntity == null)
+				UpdateAnimation("idle");
+			else if (!actionEntity.isAttacking)
 				UpdateAnimation("idle");
 		}
 
