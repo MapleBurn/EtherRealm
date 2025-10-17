@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using EtherRealm.scripts.resource.item;
+using EtherRealm.scripts.UI.inventory;
 
+namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ItemDrop : CharacterBody2D
 {
     //other nodes and children

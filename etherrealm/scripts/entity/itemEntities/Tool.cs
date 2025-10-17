@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using EtherRealm.scripts.entity;
+using EtherRealm.scripts.resource;
 
+namespace EtherRealm.scripts.entity.itemEntities;
 public partial class Tool : ActionEntity
 {
     private ToolData toolData;

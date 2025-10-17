@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace EtherRealm.scripts.resource;
 public partial class ActionEntityData : Resource
 {
     [Export] public string Type { get; set; }

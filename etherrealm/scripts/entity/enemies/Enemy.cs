@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using EtherRealm.scripts.entity.enemies.states;
+using EtherRealm.scripts.entity.itemEntities;
 
+namespace EtherRealm.scripts.entity.enemies;
 public partial class Enemy : Entity
 {
     public Player player;

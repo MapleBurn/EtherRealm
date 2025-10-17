@@ -1,7 +1,8 @@
 using Godot;
 using System;
 
-public partial class ItemStack
+namespace EtherRealm.scripts.resource.item;
+public class ItemStack
 {
     [Export] public ItemData ItemData { get; set; }
     public int Count { get; set; } = 5;

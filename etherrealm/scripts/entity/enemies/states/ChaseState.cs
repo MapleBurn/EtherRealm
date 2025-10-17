@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 
+namespace EtherRealm.scripts.entity.enemies.states;
 public partial class ChaseState : State
 {
     [Export] private Enemy enemy;

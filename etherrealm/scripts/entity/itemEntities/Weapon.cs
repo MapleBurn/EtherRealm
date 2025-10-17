@@ -1,6 +1,9 @@
 using Godot;  
-using System;  
-  
+using System;
+using EtherRealm.scripts.entity;
+using EtherRealm.scripts.resource;
+
+namespace EtherRealm.scripts.entity.itemEntities;
 public partial class Weapon : ActionEntity
 {
 	//resource and res variables

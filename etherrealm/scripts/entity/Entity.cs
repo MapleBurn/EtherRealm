@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using EtherRealm.scripts.UI;
 
+namespace EtherRealm.scripts.entity;
 public partial class Entity : CharacterBody2D
 {
     protected AnimationPlayer animPlayer;

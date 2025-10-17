@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace EtherRealm.scripts.UI;
 public partial class FloatingText : Label
 {
 	private float floatSpeed = 50f;

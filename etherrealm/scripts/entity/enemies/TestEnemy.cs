@@ -1,7 +1,9 @@
-using EtherRealm.Enemies.States;
+using EtherRealm.scripts.entity.enemies.states;
+using EtherRealm.scripts.resource;
+using EtherRealm.scripts.UI;
 using Godot;
 
-namespace EtherRealm.Enemies;
+namespace EtherRealm.scripts.entity.enemies;
 
 public partial class TestEnemy : Enemy
 {

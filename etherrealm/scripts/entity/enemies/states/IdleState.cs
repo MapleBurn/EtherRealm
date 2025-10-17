@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace EtherRealm.Enemies.States;
+namespace EtherRealm.scripts.entity.enemies.states;
 
 public partial class IdleState : State
 {

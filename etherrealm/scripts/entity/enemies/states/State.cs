@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace EtherRealm.scripts.entity.enemies.states;
 public abstract partial class State : Node
 {
     [Signal] public delegate void StateChangedEventHandler(State requestingState, string newStateName);

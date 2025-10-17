@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace EtherRealm.scripts.resource;
 public partial class WeaponData : ActionEntityData
 {
     [Export] public float StabDistance { get; set; }

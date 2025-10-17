@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using EtherRealm.scripts.resource;
 
+namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D
 {
     protected ActionEntityData data;

@@ -1,8 +1,11 @@
 using Godot;
 using System;
+using EtherRealm.scripts.resource.item;
 
+namespace EtherRealm.scripts.UI.inventory;
 public partial class CursorItem : Node2D
 {
+    
     public ItemStack HeldItem = null;
 
     public bool HasItem()

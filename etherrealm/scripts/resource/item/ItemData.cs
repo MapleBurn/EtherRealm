@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace EtherRealm.scripts.resource.item;
 public partial class ItemData : Resource
 {
     [Export] public string ItemId { get; set; } = "";

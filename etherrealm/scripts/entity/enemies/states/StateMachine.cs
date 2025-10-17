@@ -2,6 +2,8 @@ using Godot;
 using System;
 using Godot.Collections;
 
+namespace EtherRealm.scripts.entity.enemies.states;
+
 public partial class StateMachine : Node
 {
     [Export] private State inicialState;

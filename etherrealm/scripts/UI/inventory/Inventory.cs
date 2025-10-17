@@ -2,7 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EtherRealm.scripts.resource.item;
 
+namespace EtherRealm.scripts.UI.inventory;
 public partial class Inventory : Panel
 {
     [Export] public Hotbar hotbar;

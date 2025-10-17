@@ -1,8 +1,7 @@
 using Godot;
 using System;
 
-namespace EtherRealm.Enemies;
-
+namespace EtherRealm.scripts.resource;
 public partial class TestEnemyStats : Resource
 {
     //basic Enemy stats

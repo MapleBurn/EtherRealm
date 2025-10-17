@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using EtherRealm.scripts.resource.item;
 
+namespace EtherRealm.scripts.UI.inventory;
 public partial class Slot : Panel
 {
 	public ItemStack Item;
