@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using EtherRealm.scripts.resource;
+using EtherRealm.scripts.util;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D
@@ -11,6 +12,7 @@ public partial class ActionEntity : Node2D
     protected Area2D hitbox;  
     protected CollisionPolygon2D attackCollider;  
     protected Sprite2D sprite;
+    protected Map tilemap;
     
     //variables
     protected bool isCooldown = false;  
@@ -25,6 +27,7 @@ public partial class ActionEntity : Node2D
         hitbox = GetNode<Area2D>("hitbox");  
         attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
         sprite = GetNode<Sprite2D>("Sprite2D");
+        tilemap = GetNode<Map>("/root/world/map");
         
         sprite.Offset = data.SpriteOffset;
         sprite.Texture = data.Model;

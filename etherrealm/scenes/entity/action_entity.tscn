@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://04lv7laaamwx"]
 
-[ext_resource type="Script" path="res://scripts/entity/ActionEntity.cs" id="1_mb7dy"]
+[ext_resource type="Script" uid="uid://b08k35staha1k" path="res://scripts/entity/itemEntities/ActionEntity.cs" id="1_mb7dy"]
 
 [node name="ActionEntity" type="Node2D"]
 script = ExtResource("1_mb7dy")

@@ -2,10 +2,14 @@ using Godot;
 using System;
 using EtherRealm.scripts.entity;
 using EtherRealm.scripts.resource;
+using EtherRealm.scripts.util;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class Tool : ActionEntity
 {
+    //children and other nodes
+    
+    //variables
     private ToolData toolData;
     
     public override void _Ready()  
@@ -53,7 +57,11 @@ public partial class Tool : ActionEntity
         
         actionType = "swing";
         isAttacking = true;
-        GD.Print("Mining with tool");
+        
+        var mousePos = GetGlobalMousePosition();
+        var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
+        //tilemap.BreakBlock(tilePos);
+        tilemap.ClearCellFromPosition(tilePos);
     }
     
     public override void PlayAnimation(int dir, AnimationPlayer animPlayer)

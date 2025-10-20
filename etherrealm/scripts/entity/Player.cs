@@ -12,7 +12,6 @@ public partial class Player : Entity
 	//other nodes
 	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
-	[Export] private TileMapLayer tilemap;
 	[Export] private Healthbar _healthbar;
 	[Export] private Inventory inventory;
 	private RayCast2D raycast;
@@ -251,18 +250,20 @@ public partial class Player : Entity
 	{
 		UpdateActionEntity(iData);
 	}
+	
+	#endregion
 
-	public void UpdateActionEntity(ItemData iData)
+	private void UpdateActionEntity(ItemData iData)
 	{
 		actionEntity = null;
 		foreach (var child in hand.GetChildren())
 		{
 			child.QueueFree(); //flush the children into the toilet
 		}
-		
+
 		if (iData == null || iData.EntityData == null)
 			return;
-		
+
 		var entityData = iData.EntityData;
 		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
 		var node = entityScene.Instantiate();
@@ -270,12 +271,10 @@ public partial class Player : Entity
 		{
 			actionEntity = node as ActionEntity;
 			actionEntity.Initialize(entityData);
-			actionEntity.SetChildNodes();
 			hand.AddChild(actionEntity);
+			actionEntity.SetChildNodes();
 		}
 	}
-	
-	#endregion
 
 	private void UpdateAnimation(string animName)
 	{
