@@ -112,7 +112,7 @@ public partial class Player : Entity
 		}
 		
 		// Handle Jump
-		if (Input.IsActionPressed("space") && (IsOnFloor() || remJumpTimer < 0.1f))
+		if (Input.IsActionPressed("space") && (IsOnFloor() || remJumpTimer < 0.15f))
 		{
 			velocity.Y = jumpVelocity;
 		}

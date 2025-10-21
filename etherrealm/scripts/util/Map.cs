@@ -66,40 +66,17 @@ public partial class Map : TileMapLayer
     
     public void ClearCellFromPosition(Vector2I cell)
     {
-        Vector2I[] ADJ_VECS = {
-            new(-1, -1), new(0, -1), new(1, -1),
-            new(-1, 0),              new(1, 0),
-            new(-1, 1),  new(0, 1),  new(1, 1)
-        };
-        
-        // In C#, Vector2I is a struct (not nullable). Check tile presence via tile data.
         var tileData = GetCellTileData(cell);
         if (tileData != null)
         {
-            GD.Print("Cell found ", cell);
-
-            GD.Print(tileData);
             // Clear the cell on layer 0 by setting source id to -1.
-            SetCell(cell, -1);
-            GD.Print(GetCellTileData(cell));
-            GD.Print(GetSurroundingCells(cell));
-
+            //SetCell(cell, -1);
             var cellsToUpdate = new Godot.Collections.Array<Vector2I>();
-            foreach (var nb in ADJ_VECS)
-            {
-                var nbData = GetCellTileData(cell + nb);
-                if (nbData != null)
-                    cellsToUpdate.Add(cell + nb);
-            }
-
-            GD.Print(cellsToUpdate);
-
+            cellsToUpdate.Add(cell);
+            
+            
             // Reconnect terrain for the single cleared cell (terrain_set = 0, terrain = -1).
             SetCellsTerrainConnect(cellsToUpdate, 0, -1, true);
-        }
-        else
-        {
-            GD.Print("No Cell Found at ", cell);
         }
     }
 }

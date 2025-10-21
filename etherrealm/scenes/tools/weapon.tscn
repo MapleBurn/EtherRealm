@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdptssos0lehs"]
 
-[ext_resource type="Script" uid="uid://dii2blkgl4avc" path="res://scripts/tools/Weapon.cs" id="1_kytt4"]
+[ext_resource type="Script" uid="uid://dii2blkgl4avc" path="res://scripts/entity/itemEntities/Weapon.cs" id="1_kytt4"]
 
 [node name="weapon" type="Node2D"]
 z_index = 1
