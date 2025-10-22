@@ -1,9 +1,13 @@
-[gd_scene load_steps=26 format=3 uid="uid://d1528ohkmrre2"]
+[gd_scene load_steps=30 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://5n8vccx2bmox" path="res://assets/character/SpriteSheet/testCharacter-idle.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://5s1nm1tbf7hu" path="res://assets/character/SpriteSheet/testCharacter-swing.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://b152f1orjjpuu" path="res://assets/particles/slash.png" id="4_tuyoq"]
+[ext_resource type="Script" uid="uid://dnkfbbifjqind" path="res://scripts/UI/inventory/Hand.cs" id="5_4y4uh"]
+[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/Inventory/hotbar.tscn" id="6_k4nkw"]
+[ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/UI/healthbar.tscn" id="7_bee8u"]
+[ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/Inventory/inventory.tscn" id="8_ksla3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
 atlas = ExtResource("2_dqkch")
@@ -754,11 +758,12 @@ size = Vector2(21, 45)
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
 radius = 44.011364
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("_animPlayer", "_hurtbox")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("_animPlayer", "_hurtbox", "_healthbar")]
 collision_mask = 2
 script = ExtResource("1_g2els")
 _animPlayer = NodePath("AnimationPlayer")
 _hurtbox = NodePath("hurtbox")
+_healthbar = NodePath("UI/healthbar")
 
 [node name="sprites" type="Node2D" parent="."]
 
@@ -850,7 +855,45 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pickupArea"]
 shape = SubResource("CircleShape2D_qlg0r")
 
-[node name="hand" type="Node2D" parent="."]
+[node name="hand" type="Node2D" parent="." node_paths=PackedStringArray("inventory")]
+script = ExtResource("5_4y4uh")
+inventory = NodePath("../UI/inventory")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="hotbar" parent="UI" node_paths=PackedStringArray("hand") instance=ExtResource("6_k4nkw")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -399.0
+offset_top = 5.0
+offset_right = -129.0
+offset_bottom = 49.0
+grow_horizontal = 2
+hand = NodePath("../../hand")
+
+[node name="healthbar" parent="UI" instance=ExtResource("7_bee8u")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 173.0
+offset_bottom = 41.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="inventory" parent="UI" node_paths=PackedStringArray("hotbar") instance=ExtResource("8_ksla3")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -196.0
+offset_right = 286.0
+offset_bottom = 152.0
+hotbar = NodePath("../hotbar")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AnimationFinished"]
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]

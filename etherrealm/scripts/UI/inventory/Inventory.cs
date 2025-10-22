@@ -11,7 +11,7 @@ public partial class Inventory : Panel
     [Export] public GridContainer grid;
     [Export] public CursorItem cursorItem;
     public bool isInventoryOpen;
-    private List<InventorySlot> inventorySlots;
+    public List<InventorySlot> inventorySlots;
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey)
@@ -31,17 +31,7 @@ public partial class Inventory : Panel
         
         foreach (var slot in inventorySlots)
         {
-            slot.Connect(InventorySlot.SignalName.SlotUpdated, new Callable(this, nameof(OnSlotUpdated)));
-        }
-    }
-    
-    private void OnSlotUpdated(int slotIndex)
-    {
-        // Only update hotbar if the updated slot is in the first row
-        if (slotIndex <= grid.Columns)
-        {
-            // Pass updated item to hotbar slot
-            hotbar.OnSlotUpdated(slotIndex, inventorySlots[slotIndex-1].Item);
+            slot.Connect(InventorySlot.SignalName.SlotUpdated, new Callable(hotbar, nameof(hotbar.OnSlotUpdated)));
         }
     }
     

@@ -2,13 +2,14 @@ using Godot;
 using System;
 using EtherRealm.scripts.resource;
 using EtherRealm.scripts.resource.item;
+using EtherRealm.scripts.UI.inventory;
 using EtherRealm.scripts.util;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D
 {
     protected ActionEntityData data;
-    private ItemStack itemStack;
+    public InventorySlot itemSlot;
     
     //other nodes and children
     protected Area2D hitbox;  
@@ -22,7 +23,7 @@ public partial class ActionEntity : Node2D
     protected float delay;  
     public string actionType; //swing, stab, shoot, etc.
     public Vector2 hitDir;
-
+    
     public void SetChildNodes()
     {
         // Initialize components  

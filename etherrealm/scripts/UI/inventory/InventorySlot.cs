@@ -6,7 +6,7 @@ namespace EtherRealm.scripts.UI.inventory;
 public partial class InventorySlot : Slot
 {
 	[Signal]
-	public delegate void SlotUpdatedEventHandler(int slotIndex);
+	public delegate void SlotUpdatedEventHandler(InventorySlot slot);
 
 	private static Inventory inventory;
 	public override void _Ready()
@@ -17,7 +17,7 @@ public partial class InventorySlot : Slot
 	public override void UpdateSlot()
 	{
 		base.UpdateSlot();
-		if (index <= inventory.grid.Columns) EmitSignal(SignalName.SlotUpdated, index);
+		if (index <= inventory.grid.Columns) EmitSignal(SignalName.SlotUpdated, this);
 	}
 	
     public override void _GuiInput(InputEvent @event)

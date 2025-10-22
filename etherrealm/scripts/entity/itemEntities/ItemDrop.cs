@@ -36,7 +36,7 @@ public partial class ItemDrop : CharacterBody2D
     
     public void TryPickUp()
     {
-        Inventory inventory = GetNode<Inventory>("/root/world/UI/inventory");
+        Inventory inventory = GetNode<Inventory>("/root/world/player/UI/inventory");
         
         var stackCopy = new ItemStack(item.ItemData, item.Count);
         if (inventory.TryFit(stackCopy) == 0) 

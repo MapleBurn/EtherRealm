@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b8m1jnxsntnbr" path="res://scenes/UI/Inventory/slot.tscn" id="1_jnmjq"]
 [ext_resource type="Script" uid="uid://coba10wclbw26" path="res://scripts/UI/inventory/Hotbar.cs" id="1_p5gx3"]
-[ext_resource type="Script" uid="uid://s53bhg1c5ufv" path="res://scripts/UI/Inventory/Slot.cs" id="3_byvp6"]
+[ext_resource type="Script" uid="uid://s53bhg1c5ufv" path="res://scripts/UI/inventory/Slot.cs" id="3_byvp6"]
 
 [node name="hotbar" type="Panel"]
 offset_right = 270.0

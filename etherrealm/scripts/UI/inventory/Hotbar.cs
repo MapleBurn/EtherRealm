@@ -7,11 +7,10 @@ using EtherRealm.scripts.resource.item;
 namespace EtherRealm.scripts.UI.inventory;
 public partial class Hotbar : Panel
 {
-    [Signal] public delegate void SlotSelectedEventHandler(ItemData itemData);
-    
     //children
     private HBoxContainer container;
     private Label activeLabel;
+    [Export] private Hand hand;
     
     private List<Slot> slots = new List<Slot>();
     //private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
@@ -21,6 +20,7 @@ public partial class Hotbar : Panel
     {
         container = GetNode<HBoxContainer>("HBoxContainer");
         activeLabel = GetNode<Label>("activeLabel");
+        hand =  GetNode<Hand>("../../hand");
         SetSlots();
     }
 
@@ -33,16 +33,16 @@ public partial class Hotbar : Panel
                 if (index == 0)
                     return;
                 index--;
-                var item = slots[index].Item;
-                ChangeActiveItem(item);
+                var slot = slots[index];
+                ChangeActiveItem(slot);
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
             {
                 if (index == slots.Count - 1)
                     return;
                 index++;
-                var item = slots[index].Item;
-                ChangeActiveItem(item);
+                var slot = slots[index];
+                ChangeActiveItem(slot);
             }
         }
         else if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
@@ -52,8 +52,8 @@ public partial class Hotbar : Panel
                 if (Input.IsActionPressed($"slot{i + 1}"))
                 {
                     index = i;
-                    var item = slots[index].Item;
-                    ChangeActiveItem(item);
+                    var slot = slots[index];
+                    ChangeActiveItem(slot);
                     break;
                 }
             }
@@ -67,20 +67,21 @@ public partial class Hotbar : Panel
         DrawRect(new Rect2(slots[index].Position + offset, slots[index].Size), Color.Color8(255,255,255), false, 4);
     }
 
-    private void ChangeActiveItem(ItemStack item)
+    private void ChangeActiveItem(Slot slot)
     {
-        if (item == null)
+        if (slot.Item == null)
         {
             activeLabel.Visible = false;
-            EmitSignal(SignalName.SlotSelected, new ItemData());
+            hand.UpdateActionEntity(new Slot());
             QueueRedraw();
             return;
         }
         
         activeLabel.Visible = true;
-        activeLabel.Text = item.ItemData.DisplayName;
+        activeLabel.Text = slot.Item.ItemData.DisplayName;
         
-        EmitSignal(SignalName.SlotSelected, item.ItemData);
+        hand.UpdateActionEntity(slot);
+        
         QueueRedraw(); //draws the rectangle around the selected slot
     }  
     
@@ -91,17 +92,20 @@ public partial class Hotbar : Panel
     }
 
     
-    public void OnSlotUpdated(int slotIndex, ItemStack item)
+    public void OnSlotUpdated(InventorySlot slot)
     {
-        if (slotIndex > 0 && slotIndex <= slots.Count)
+        if (slot.index > slots.Count)
+            return;
+        
+        if (slot.index > 0 && slot.index <= slots.Count)
         {
-            slots[slotIndex-1].SetItem(item);
-            slots[slotIndex-1].UpdateSlot();
+            slots[slot.index-1].SetItem(slot.Item);
+            slots[slot.index-1].UpdateSlot();
         }
 
-        if (slotIndex-1 == index)
+        if (slot.index-1 == index)
         {
-            ChangeActiveItem(slots[index].Item);
+            ChangeActiveItem(slots[index]);
         }
     }
 

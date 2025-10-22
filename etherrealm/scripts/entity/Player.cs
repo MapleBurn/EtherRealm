@@ -14,12 +14,12 @@ public partial class Player : Entity
 	[Export] private AnimationPlayer _animPlayer;
 	[Export] private Area2D _hurtbox;
 	[Export] private Healthbar _healthbar;
-	[Export] private Inventory inventory;
 	private RayCast2D raycast;
 	private ShapeCast2D shapecast;
-	private ActionEntity actionEntity;
 	private Tween stepTween;
-	private Node2D hand;
+	
+	private Inventory inventory;
+	private Hand hand;
 	
 	//players properties
 	[Export] private float _acceleration = 600.0f;
@@ -54,42 +54,32 @@ public partial class Player : Entity
 		healthbar.Initialize(maxHealth);
 		raycast = GetNode<RayCast2D>("RayCast2D");
 		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
-		hand = GetNode<Node2D>("hand");
+		
+		inventory = GetNode<Inventory>("UI/inventory");
+		hand = GetNode<Hand>("hand");
 	}
 	
 	public override void _Input(InputEvent @event)  
 	{  
-		if (actionEntity == null)
+		if (hand.actionEntity == null)
 			return;
 		
-		if (isDead || !actionEntity.CanAttack() || inventory.isInventoryOpen)
+		if (isDead || !hand.actionEntity.CanAttack() || inventory.isInventoryOpen)
 			return;  
 		  
 		if (@event is InputEventMouseButton mouseEvent)  
 		{  
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
-				actionEntity.UsePrimary();
-				actionEntity.PlayAnimation(dir, animPlayer);
+				hand.actionEntity.UsePrimary();
+				hand.actionEntity.PlayAnimation(dir, animPlayer);
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
-				actionEntity.UseSecondary(dir);
-				actionEntity.PlayAnimation(dir, animPlayer);
+				hand.actionEntity.UseSecondary(dir);
+				hand.actionEntity.PlayAnimation(dir, animPlayer);
 			}  
 		}  
-		/*else if (@event is InputEventKey keyEvent && keyEvent.IsActionPressed("dropItem"))
-		{
-			if (SpawnedItem != null)
-				return;
-			
-			SpawnedItem = (ItemDrop)GD.Load<PackedScene>("res://scenes/item/ItemDrop.tscn").Instantiate();
-			SpawnedItem.Position = GlobalPosition + new Vector2(0, -16);
-			SpawnedItem.Initialize(GD.Load<ItemData>("res://data/items/test_item.tres")); //testing only - remove later
-			GetTree().CurrentScene.AddChild(SpawnedItem);
-			SpawnedItem.Velocity = new Vector2(dir * 100, -200); //give it some initial velocity
-			SpawnedItem = null; //reset for next drop
-		}*/
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -153,9 +143,9 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (actionEntity == null)
+			if (hand.actionEntity == null)
 				UpdateAnimation("walk");
-			else if (!actionEntity.isAttacking)
+			else if (!hand.actionEntity.isAttacking)
 				UpdateAnimation("walk");
 		}
 		else
@@ -163,9 +153,9 @@ public partial class Player : Entity
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
 
-			if (actionEntity == null)
+			if (hand.actionEntity == null)
 				UpdateAnimation("idle");
-			else if (!actionEntity.isAttacking)
+			else if (!hand.actionEntity.isAttacking)
 				UpdateAnimation("idle");
 		}
 
@@ -243,42 +233,12 @@ public partial class Player : Entity
 	{  
 		if (animName == "swingRight" || animName == "swingLeft")  
 		{  
-			actionEntity.AttackFinished();
+			hand.actionEntity.AttackFinished();
 		}  
-	}
-
-	private void HotbarSlotSelected(ItemData iData)
-	{
-		UpdateActionEntity(iData);
 	}
 	
 	#endregion
-
-	private void UpdateActionEntity(ItemData iData)
-	{
-		actionEntity = null;
-		foreach (var child in hand.GetChildren())
-		{
-			child.QueueFree(); //flush the children into the toilet
-		}
-
-		if (iData == null || iData.EntityData == null)
-			return;
-
-		var entityData = iData.EntityData;
-		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
-		var node = entityScene.Instantiate();
-		if (node is ActionEntity)
-			CallDeferred("SpawnEntity", node, entityData);
-	}
-
-	private void SpawnEntity(Node2D node, ActionEntityData entityData)
-	{
-		actionEntity = node as ActionEntity;
-		actionEntity.Initialize(entityData);
-		hand.AddChild(actionEntity);
-		actionEntity.SetChildNodes();
-	}
+	
 
 	private void UpdateAnimation(string animName)
 	{
