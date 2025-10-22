@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://csamh5s4xv5vg"]
+
+[ext_resource type="Script" path="res://scripts/entity/itemEntities/Placeable.cs" id="1_fbt8b"]
+
+[node name="placeable" type="Node2D"]
+script = ExtResource("1_fbt8b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="collider" type="CollisionPolygon2D" parent="hitbox"]
+polygon = PackedVector2Array(5, -5, -3, -4, 7, -1)

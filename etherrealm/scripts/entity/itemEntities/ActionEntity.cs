@@ -1,12 +1,14 @@
 using Godot;
 using System;
 using EtherRealm.scripts.resource;
+using EtherRealm.scripts.resource.item;
 using EtherRealm.scripts.util;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D
 {
     protected ActionEntityData data;
+    private ItemStack itemStack;
     
     //other nodes and children
     protected Area2D hitbox;  
@@ -32,6 +34,7 @@ public partial class ActionEntity : Node2D
         sprite.Offset = data.SpriteOffset;
         sprite.Texture = data.Model;
         attackCollider.Polygon = data.ColliderPoints;
+        
     }
     
     public virtual void Initialize(ActionEntityData data)

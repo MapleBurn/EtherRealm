@@ -2,6 +2,7 @@ using Godot;
 using System;
 using EtherRealm.scripts.entity.enemies;
 using EtherRealm.scripts.entity.itemEntities;
+using EtherRealm.scripts.resource;
 using EtherRealm.scripts.resource.item;
 using EtherRealm.scripts.UI;
 using EtherRealm.scripts.UI.inventory;
@@ -268,12 +269,15 @@ public partial class Player : Entity
 		var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
 		var node = entityScene.Instantiate();
 		if (node is ActionEntity)
-		{
-			actionEntity = node as ActionEntity;
-			actionEntity.Initialize(entityData);
-			hand.AddChild(actionEntity);
-			actionEntity.SetChildNodes();
-		}
+			CallDeferred("SpawnEntity", node, entityData);
+	}
+
+	private void SpawnEntity(Node2D node, ActionEntityData entityData)
+	{
+		actionEntity = node as ActionEntity;
+		actionEntity.Initialize(entityData);
+		hand.AddChild(actionEntity);
+		actionEntity.SetChildNodes();
 	}
 
 	private void UpdateAnimation(string animName)

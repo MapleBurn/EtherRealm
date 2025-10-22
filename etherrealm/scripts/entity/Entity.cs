@@ -100,7 +100,7 @@ public partial class Entity : CharacterBody2D
     private int ComputeDamage(float overSpeed, float scale)
     {
         var raw = overSpeed * scale;
-        return Mathf.Clamp(Mathf.RoundToInt(raw), 1, health); //makes sure that it's not more than health
+        return Mathf.RoundToInt(raw);
     }
     
     protected virtual void ApplyHealing(int healAmount)

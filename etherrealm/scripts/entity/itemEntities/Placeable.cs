@@ -1,29 +1,29 @@
 using Godot;
 using System;
-using EtherRealm.scripts.entity;
+using EtherRealm.scripts.entity.itemEntities;
 using EtherRealm.scripts.resource;
-using EtherRealm.scripts.util;
 
-namespace EtherRealm.scripts.entity.itemEntities;
-public partial class Tool : ActionEntity
+public partial class Placeable : ActionEntity
 {
     //children and other nodes
     
     //variables
-    private ToolData toolData;
+    private PlaceableData placeableData;
+    private int terrain;
     
     public override void _Ready()  
     {
-        Initialize(toolData);
+        Initialize(placeableData);
         SetChildNodes();
     }
 
     public override void Initialize(ActionEntityData d)
     {
-        toolData = (ToolData)d;
-        data = toolData;
-        
-        delay = toolData.Delay;
+        placeableData = (PlaceableData)d;
+        data = placeableData;
+
+        terrain = placeableData.Terrain;
+        delay = placeableData.Delay;
     }
     
     public override void _Process(double delta)  
@@ -31,18 +31,18 @@ public partial class Tool : ActionEntity
         if (isAttacking)  
         {  
             Visible = true;  
-            attackCollider.Disabled = false;  
+            //attackCollider.Disabled = false;  
         }  
         else  
         {  
             Visible = false;  
-            attackCollider.Disabled = true;  
+            //attackCollider.Disabled = true;  
         }  
     }
     
     public override void UsePrimary()
     {
-        Mine();
+        PlaceBlock();
     }
 
     public override void UseSecondary(int dir)
@@ -50,7 +50,7 @@ public partial class Tool : ActionEntity
         
     }
     
-    private void Mine()
+    private void PlaceBlock()
     {
         if (isAttacking || isCooldown)  
             return;
@@ -60,8 +60,8 @@ public partial class Tool : ActionEntity
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-        //tilemap.BreakBlock(tilePos);
-        tilemap.BreakBlock(tilePos);
+
+        tilemap.PlaceBlock(tilePos, terrain);
     }
     
     public override void PlayAnimation(int dir, AnimationPlayer animPlayer)

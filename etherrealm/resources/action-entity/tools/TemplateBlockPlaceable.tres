@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://t4uoudpwigx1"]
+
+[ext_resource type="Texture2D" uid="uid://detwa84b8w1kb" path="res://assets/action-entity/blocks/templateBlockItem.png" id="1_dhnwd"]
+[ext_resource type="Script" path="res://scripts/resource/PlaceableData.cs" id="1_glwwc"]
+
+[resource]
+script = ExtResource("1_glwwc")
+Terrain = 0
+Type = "placeable"
+Model = ExtResource("1_dhnwd")
+ColliderPoints = PackedVector2Array(0, 0, 1, 0, 2, 2)
+EntityScenePath = "res://scenes/tools/placeable.tscn"

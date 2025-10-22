@@ -29,9 +29,11 @@ public partial class Slot : Panel
 		UpdateSlot();
 	}
 	
-	public void AddToSlot(ItemStack item)
+	public void RemoveFromSlot(int count)
 	{
-		Item.Count = Math.Min(Item.Count + item.Count, Item.ItemData.MaxStack);
+		Item.Count = Item.Count - count;
+		if (Item.Count <= 0)
+			ClearItem();
 		UpdateSlot();
 	}
 	
