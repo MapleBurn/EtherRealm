@@ -73,11 +73,15 @@ public partial class Player : Entity
 			{  
 				hand.actionEntity.UsePrimary();
 				hand.actionEntity.PlayAnimation(dir, animPlayer);
+				if (hand.actionEntity.consumeOnUse)
+					hand.actionEntity.itemSlot.RemoveFromSlot(1); //change to check if is consumable
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
 				hand.actionEntity.UseSecondary(dir);
 				hand.actionEntity.PlayAnimation(dir, animPlayer);
+				if (hand.actionEntity.consumeOnUse)
+					hand.actionEntity.itemSlot.RemoveFromSlot(1); //change to check if is consumable
 			}  
 		}  
 	}

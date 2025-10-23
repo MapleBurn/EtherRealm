@@ -15,6 +15,7 @@ public partial class Placeable : ActionEntity
     {
         Initialize(placeableData);
         SetChildNodes();
+        consumeOnUse = true;
     }
 
     public override void Initialize(ActionEntityData d)
@@ -62,7 +63,6 @@ public partial class Placeable : ActionEntity
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
 
         tilemap.PlaceBlock(tilePos, terrain);
-        itemSlot.RemoveFromSlot(1);
     }
     
     public override void PlayAnimation(int dir, AnimationPlayer animPlayer)

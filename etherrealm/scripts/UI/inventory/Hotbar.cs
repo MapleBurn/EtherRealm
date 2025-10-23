@@ -11,6 +11,7 @@ public partial class Hotbar : Panel
     private HBoxContainer container;
     private Label activeLabel;
     [Export] private Hand hand;
+    [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
     //private ItemStack currentItem => (index >= 0 && index < slots.Count) ? slots[index].Item : null;
@@ -69,10 +70,11 @@ public partial class Hotbar : Panel
 
     private void ChangeActiveItem(Slot slot)
     {
+        var invSlot = inventory.inventorySlots.Where(a => a.index == slot.index).FirstOrDefault();
         if (slot.Item == null)
         {
             activeLabel.Visible = false;
-            hand.UpdateActionEntity(new Slot());
+            hand.UpdateActionEntity(invSlot);
             QueueRedraw();
             return;
         }
@@ -80,7 +82,7 @@ public partial class Hotbar : Panel
         activeLabel.Visible = true;
         activeLabel.Text = slot.Item.ItemData.DisplayName;
         
-        hand.UpdateActionEntity(slot);
+        hand.UpdateActionEntity(invSlot);
         
         QueueRedraw(); //draws the rectangle around the selected slot
     }  

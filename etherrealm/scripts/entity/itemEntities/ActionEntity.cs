@@ -23,7 +23,8 @@ public partial class ActionEntity : Node2D
     protected float delay;  
     public string actionType; //swing, stab, shoot, etc.
     public Vector2 hitDir;
-    
+
+    public bool consumeOnUse = false;
     public void SetChildNodes()
     {
         // Initialize components  

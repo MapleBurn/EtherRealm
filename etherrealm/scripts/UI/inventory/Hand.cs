@@ -9,8 +9,7 @@ namespace EtherRealm.scripts.UI.inventory;
 public partial class Hand : Node2D
 {
     public ActionEntity actionEntity;
-    [Export] private Inventory inventory;
-    public void UpdateActionEntity(Slot slot)
+    public void UpdateActionEntity(InventorySlot slot)
     {
         actionEntity = null;
         foreach (var child in GetChildren())
@@ -18,22 +17,25 @@ public partial class Hand : Node2D
             child.QueueFree(); //flush the children into the toilet
         }
 
-        if (slot.Item.ItemData == null || slot.Item.ItemData.EntityData == null)
+        if (slot.Item == null || slot.Item.ItemData == null || slot.Item.ItemData.EntityData == null)
             return;
 
         var entityData = slot.Item.ItemData.EntityData;
         var entityScene = GD.Load<PackedScene>(entityData.EntityScenePath);
         var node = entityScene.Instantiate();
         if (node is ActionEntity)
-            CallDeferred("SpawnEntity", node, slot);
+        {
+            actionEntity = node as ActionEntity;
+            actionEntity.Initialize(slot.Item.ItemData.EntityData);
+            actionEntity.itemSlot = slot;
+            CallDeferred("SpawnEntity", slot);
+        }
+            
     }
 
-    private void SpawnEntity(Node2D node, Slot slot)
+    private void SpawnEntity(InventorySlot slot)
     {
-        actionEntity = node as ActionEntity;
-        actionEntity.Initialize(slot.Item.ItemData.EntityData);
         AddChild(actionEntity);
         actionEntity.SetChildNodes();
-        actionEntity.itemSlot = inventory.inventorySlots.Where(a => a.index == slot.index).FirstOrDefault();
     }
 }
