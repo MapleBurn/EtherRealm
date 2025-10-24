@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EtherRealm.scripts.entity;
 using EtherRealm.scripts.resource.item;
 
 namespace EtherRealm.scripts.UI.inventory;
@@ -10,7 +11,8 @@ public partial class Hotbar : Panel
     //children
     private HBoxContainer container;
     private Label activeLabel;
-    [Export] private Hand hand;
+    [Export] private Player player;
+    private Hand hand;
     [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
@@ -21,7 +23,7 @@ public partial class Hotbar : Panel
     {
         container = GetNode<HBoxContainer>("HBoxContainer");
         activeLabel = GetNode<Label>("activeLabel");
-        hand =  GetNode<Hand>("../../hand");
+        hand = player.hand;
         SetSlots();
     }
 

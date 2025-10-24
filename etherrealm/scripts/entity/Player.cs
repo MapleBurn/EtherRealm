@@ -18,8 +18,8 @@ public partial class Player : Entity
 	private ShapeCast2D shapecast;
 	private Tween stepTween;
 	
-	private Inventory inventory;
-	private Hand hand;
+	[Export] private Inventory inventory;
+	public Hand hand;
 	
 	//players properties
 	[Export] private float _acceleration = 600.0f;
@@ -54,8 +54,7 @@ public partial class Player : Entity
 		healthbar.Initialize(maxHealth);
 		raycast = GetNode<RayCast2D>("RayCast2D");
 		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
-		
-		inventory = GetNode<Inventory>("UI/inventory");
+
 		hand = GetNode<Hand>("hand");
 	}
 	
