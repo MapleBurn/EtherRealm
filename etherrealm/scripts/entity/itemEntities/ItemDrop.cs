@@ -10,7 +10,7 @@ public partial class ItemDrop : CharacterBody2D
     private CollisionShape2D collider;
     private Sprite2D sprite;
     private ItemStack item;
-    [Export] ItemData itemData;
+    [Export] public ItemData itemData;
     
     //resource data
     private string DisplayName;
@@ -19,7 +19,7 @@ public partial class ItemDrop : CharacterBody2D
 
     public override void _Ready()
     {
-        item = new ItemStack(itemData);
+        item = new ItemStack(itemData, 1);
         Initialize();
     }
 

@@ -15,7 +15,7 @@ public partial class Tool : ActionEntity
     public override void _Ready()  
     {
         Initialize(toolData);
-        SetChildNodes();
+        //SetChildNodes();
     }
 
     public override void Initialize(ActionEntityData d)
@@ -60,25 +60,6 @@ public partial class Tool : ActionEntity
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-        //tilemap.BreakBlock(tilePos);
         tilemap.BreakBlock(tilePos);
     }
-    
-    public override void PlayAnimation(int dir, AnimationPlayer animPlayer)
-    {
-        if (actionType == "swing")
-        {
-            if (dir == 1)
-            {
-                animPlayer.Play("swingRight");
-                hitDir = Vector2.Right;
-            }
-            else
-            {
-                animPlayer.Play("swingLeft");
-                hitDir = Vector2.Left;
-            }
-        }
-    }
-    
 }

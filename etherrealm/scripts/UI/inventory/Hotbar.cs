@@ -72,7 +72,7 @@ public partial class Hotbar : Panel
 
     private void ChangeActiveItem(Slot slot)
     {
-        var invSlot = inventory.inventorySlots.Where(a => a.index == slot.index).FirstOrDefault();
+        var invSlot = inventory.inventorySlots.FirstOrDefault(a => a.index == slot.index);
         if (slot.Item == null)
         {
             activeLabel.Visible = false;
@@ -83,7 +83,8 @@ public partial class Hotbar : Panel
         
         activeLabel.Visible = true;
         activeLabel.Text = slot.Item.ItemData.DisplayName;
-        
+
+
         hand.UpdateActionEntity(invSlot);
         
         QueueRedraw(); //draws the rectangle around the selected slot
@@ -104,7 +105,7 @@ public partial class Hotbar : Panel
         if (slot.index > 0 && slot.index <= slots.Count)
         {
             slots[slot.index-1].SetItem(slot.Item);
-            slots[slot.index-1].UpdateSlot();
+            //slots[slot.index-1].UpdateSlot();
         }
 
         if (slot.index-1 == index)

@@ -14,7 +14,6 @@ public partial class Placeable : ActionEntity
     public override void _Ready()  
     {
         Initialize(placeableData);
-        SetChildNodes();
         consumeOnUse = true;
     }
 
@@ -56,30 +55,15 @@ public partial class Placeable : ActionEntity
         if (isAttacking || isCooldown)  
             return;
         
-        actionType = "swing";
+        actionType = "place";
         isAttacking = true;
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-
-        tilemap.PlaceBlock(tilePos, terrain);
+        
+        if (tilemap.IsEntityOverlapping(tilePos))
+            return;
+        if (tilemap.TryPlaceBlock(tilePos, terrain))
+            ConsumeItem();
     }
-    
-    public override void PlayAnimation(int dir, AnimationPlayer animPlayer)
-    {
-        if (actionType == "swing")
-        {
-            if (dir == 1)
-            {
-                animPlayer.Play("swingRight");
-                hitDir = Vector2.Right;
-            }
-            else
-            {
-                animPlayer.Play("swingLeft");
-                hitDir = Vector2.Left;
-            }
-        }
-    }
-    
 }

@@ -11,7 +11,7 @@ public partial class InventorySlot : Slot
 	private static Inventory inventory;
 	public override void _Ready()
 	{
-		Inicialize();
+		Initialize();
 		if (inventory == null) inventory = (Inventory)GetParent().GetParent();
 	}
 	public override void UpdateSlot()
@@ -65,7 +65,7 @@ public partial class InventorySlot : Slot
                 var temp = Item;
                 SetItem(inventory.cursorItem.HeldItem);
                 inventory.cursorItem.HeldItem = temp;
-                UpdateSlot();
+                //UpdateSlot();
             }
         }
         inventory.cursorItem.Refresh();
@@ -93,7 +93,7 @@ public partial class InventorySlot : Slot
                 inventory.cursorItem.HeldItem.Count--;
                 if (inventory.cursorItem.HeldItem.Count <= 0)
                     inventory.cursorItem.HeldItem = null;
-                UpdateSlot();
+                //UpdateSlot();
             }
             else if (Item.ItemData.ItemId == inventory.cursorItem.HeldItem.ItemData.ItemId && 
                      Item.ItemData.DisplayName == inventory.cursorItem.HeldItem.ItemData.DisplayName)

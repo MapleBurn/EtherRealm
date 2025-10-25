@@ -5,11 +5,12 @@ namespace EtherRealm.scripts.resource.item;
 public class ItemStack
 {
     [Export] public ItemData ItemData { get; set; }
-    public int Count { get; set; } = 5;
+    public int Count { get; set; }
 
-    public ItemStack(ItemData iData)
+    public ItemStack(ItemData iData, int count)
     {
         ItemData = iData;
+        Count = count;
     }
     public ItemStack(ItemData iData, int? count)
     {

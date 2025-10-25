@@ -12,10 +12,10 @@ public partial class Slot : Panel
 
 	public override void _Ready()
 	{
-		Inicialize();
+		Initialize();
 	}
 
-	public void Inicialize()
+	public void Initialize()
 	{
 		icon = GetNode<TextureRect>("icon");
 		countLabel = GetNode<Label>("count");
@@ -33,7 +33,10 @@ public partial class Slot : Panel
 	{
 		Item.Count = Item.Count - count;
 		if (Item.Count <= 0)
+		{
 			ClearItem();
+			return;
+		}
 		UpdateSlot();
 	}
 	

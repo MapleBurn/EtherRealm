@@ -71,18 +71,14 @@ public partial class Player : Entity
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
 				hand.actionEntity.UsePrimary();
-				hand.actionEntity.PlayAnimation(dir, animPlayer);
-				if (hand.actionEntity.consumeOnUse)
-					hand.actionEntity.itemSlot.RemoveFromSlot(1); //change to check if is consumable
+				hand.PlayAnimation(dir, animPlayer);
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
 				hand.actionEntity.UseSecondary(dir);
-				hand.actionEntity.PlayAnimation(dir, animPlayer);
-				if (hand.actionEntity.consumeOnUse)
-					hand.actionEntity.itemSlot.RemoveFromSlot(1); //change to check if is consumable
+				hand.PlayAnimation(dir, animPlayer);
 			}  
-		}  
+		}
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -146,20 +142,25 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (hand.actionEntity == null)
-				UpdateAnimation("walk");
-			else if (!hand.actionEntity.isAttacking)
-				UpdateAnimation("walk");
+			if (!animPlayer.IsPlaying())
+			{
+				if (hand.actionEntity == null)
+					UpdateAnimation("walk");
+				else if (!hand.actionEntity.isAttacking)
+					UpdateAnimation("walk");
+			}
 		}
 		else
 		{
 			//slow down when no input
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-
-			if (hand.actionEntity == null)
-				UpdateAnimation("idle");
-			else if (!hand.actionEntity.isAttacking)
-				UpdateAnimation("idle");
+			if (!animPlayer.IsPlaying())
+			{
+				if (hand.actionEntity == null)
+					UpdateAnimation("idle");
+				else if (!hand.actionEntity.isAttacking)
+					UpdateAnimation("idle");
+			}
 		}
 
 		Velocity = velocity;
@@ -237,6 +238,7 @@ public partial class Player : Entity
 		if (animName == "swingRight" || animName == "swingLeft")  
 		{  
 			hand.actionEntity.AttackFinished();
+			hand.actionEntity.TryClear(); //if item is consumable and the last one was used, clear the hand
 		}  
 	}
 	

@@ -23,6 +23,7 @@ public partial class ActionEntity : Node2D
     protected float delay;  
     public string actionType; //swing, stab, shoot, etc.
     public Vector2 hitDir;
+    public bool pendingClear;
 
     public bool consumeOnUse = false;
     public void SetChildNodes()
@@ -68,8 +69,31 @@ public partial class ActionEntity : Node2D
         
     }
     
-    public virtual void PlayAnimation(int dir, AnimationPlayer animPlayer)
+    protected void ConsumeItem()
+    {
+        if (consumeOnUse)
+        {
+            if (itemSlot.Item.Count == 1)
+            {
+                pendingClear = true;
+                return;
+            }
+            
+            itemSlot.RemoveFromSlot(1);
+        }
+    }
+
+    public void TryClear()
+    {
+        if (pendingClear)
+        {
+            itemSlot.RemoveFromSlot(1);
+            pendingClear = false;
+        }
+    }
+    
+    /*public virtual void PlayAnimation(int dir, AnimationPlayer animPlayer)
     {
         //will be always overriden for now
-    }
+    }*/
 }

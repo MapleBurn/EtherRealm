@@ -38,4 +38,26 @@ public partial class Hand : Node2D
         AddChild(actionEntity);
         actionEntity.SetChildNodes();
     }
+    
+    public void PlayAnimation(int dir, AnimationPlayer animPlayer)
+    {
+        if (actionEntity.actionType == "swing")
+        {
+            if (dir == 1)
+            {
+                animPlayer.Play("swingRight");
+                actionEntity.hitDir = Vector2.Right;
+            }
+            else
+            {
+                animPlayer.Play("swingLeft");
+                actionEntity.hitDir = Vector2.Left;
+            }
+        }
+        else if (actionEntity.actionType == "place")
+        {
+            animPlayer.Play(dir == 1 ? "placeRight" : "placeLeft");
+        }
+    }
+    
 }

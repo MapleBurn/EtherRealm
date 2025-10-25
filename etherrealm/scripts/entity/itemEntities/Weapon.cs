@@ -98,24 +98,7 @@ public partial class Weapon : ActionEntity
 		
 		actionType = "swing";
 		isAttacking = true;  
-	}  
-
-	public override void PlayAnimation(int dir, AnimationPlayer animPlayer)
-	{
-		if (actionType == "swing")
-		{
-			if (dir == 1)
-			{
-				animPlayer.Play("swingRight");
-				hitDir = Vector2.Right;
-			}
-			else
-			{
-				animPlayer.Play("swingLeft");
-				hitDir = Vector2.Left;
-			}
-		}
-	}
+	} 
 	  
 	private void SetRotationToTarget(Vector2 targetPosition)  
 	{  
