@@ -3,6 +3,7 @@ using System;
 using EtherRealm.scripts.entity;
 using EtherRealm.scripts.resource;
 using EtherRealm.scripts.util;
+using ActionEntityData = EtherRealm.scripts.resource.action_entity.ActionEntityData;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class Tool : ActionEntity
@@ -60,6 +61,6 @@ public partial class Tool : ActionEntity
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-        tilemap.BreakBlock(tilePos);
+        tilemap.TryBreakBlock(tilePos);
     }
 }

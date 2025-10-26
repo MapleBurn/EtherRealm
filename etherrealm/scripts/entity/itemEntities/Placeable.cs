@@ -2,6 +2,7 @@ using Godot;
 using System;
 using EtherRealm.scripts.entity.itemEntities;
 using EtherRealm.scripts.resource;
+using ActionEntityData = EtherRealm.scripts.resource.action_entity.ActionEntityData;
 
 public partial class Placeable : ActionEntity
 {

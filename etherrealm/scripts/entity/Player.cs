@@ -142,25 +142,16 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (!animPlayer.IsPlaying())
-			{
-				if (hand.actionEntity == null)
-					UpdateAnimation("walk");
-				else if (!hand.actionEntity.isAttacking)
-					UpdateAnimation("walk");
-			}
-		}
-		else
-		{
-			//slow down when no input
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);
-			if (!animPlayer.IsPlaying())
-			{
-				if (hand.actionEntity == null)
-					UpdateAnimation("idle");
-				else if (!hand.actionEntity.isAttacking)
-					UpdateAnimation("idle");
-			}
+			if (hand.actionEntity == null || !hand.actionEntity.isAttacking)  
+				UpdateAnimation("walk");
+		}  
+		else  
+		{  
+			//slow down when no input  
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);  
+      
+			if (hand.actionEntity == null || !hand.actionEntity.isAttacking)  
+				UpdateAnimation("idle");
 		}
 
 		Velocity = velocity;
@@ -235,7 +226,7 @@ public partial class Player : Entity
 	
 	private void AnimationFinished(StringName animName)  
 	{  
-		if (animName == "swingRight" || animName == "swingLeft")  
+		if (animName == "swingRight" || animName == "swingLeft" || animName == "placeRight" || animName == "placeLeft")
 		{  
 			hand.actionEntity.AttackFinished();
 			hand.actionEntity.TryClear(); //if item is consumable and the last one was used, clear the hand
@@ -247,10 +238,9 @@ public partial class Player : Entity
 
 	private void UpdateAnimation(string animName)
 	{
-		if (dir == 1)
-			animPlayer.Play(animName + "Right");
-		else
-			animPlayer.Play(animName + "Left");
+		string targetAnim = dir == 1 ? animName + "Right" : animName + "Left";  
+		if (animPlayer.CurrentAnimation != targetAnim)  
+			animPlayer.Play(targetAnim);  
 	}
 
 	private bool CanStepUp()

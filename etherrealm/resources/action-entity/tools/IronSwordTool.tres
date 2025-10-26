@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://caqcbilfimlna"]
 
-[ext_resource type="Script" uid="uid://bs641eiw7xnvp" path="res://scripts/resource/WeaponData.cs" id="1_j35tp"]
+[ext_resource type="Script" uid="uid://bs641eiw7xnvp" path="res://scripts/resource/action-entity/WeaponData.cs" id="1_j35tp"]
 [ext_resource type="Texture2D" uid="uid://dibxb5nc6jyjh" path="res://assets/items/swordtest.png" id="1_kngnr"]
 
 [resource]

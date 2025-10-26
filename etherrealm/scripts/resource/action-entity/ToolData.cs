@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 namespace EtherRealm.scripts.resource;
-public partial class ToolData : ActionEntityData
+public partial class ToolData : action_entity.ActionEntityData
 {
     [Export] public int MiningLevel { get; set; }
     

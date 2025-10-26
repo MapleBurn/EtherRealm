@@ -1,59 +1,71 @@
-[gd_scene load_steps=12 format=3 uid="uid://d4gu18mclw13j"]
+[gd_scene load_steps=13 format=3 uid="uid://d4gu18mclw13j"]
 
-[ext_resource type="Script" uid="uid://n3ffxbi1o3pj" path="res://scripts/entity/enemies/TestEnemy.cs" id="1_5sw1c"]
-[ext_resource type="Resource" uid="uid://q3d8jpr3qplh" path="res://resources/entity/TestEnemyRes.tres" id="2_ijs0m"]
-[ext_resource type="Texture2D" uid="uid://dk5mid5iqegt4" path="res://assets/NPC/Globber.png" id="2_iwkm5"]
+[ext_resource type="Script" uid="uid://br2m2dm0grrnj" path="res://scripts/entity/enemies/Enemy.cs" id="1_jsmfe"]
+[ext_resource type="Resource" uid="uid://q3d8jpr3qplh" path="res://resources/entity/TestEnemyRes.tres" id="2_wmotb"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/UI/healthbar.tscn" id="3_iwkm5"]
 [ext_resource type="Script" uid="uid://d4hamr2ewn6p6" path="res://scripts/entity/enemies/states/StateMachine.cs" id="4_u8gne"]
 [ext_resource type="Script" uid="uid://wjpmwttbkar5" path="res://scripts/entity/enemies/states/IdleState.cs" id="6_e7now"]
 [ext_resource type="Script" uid="uid://by1qhu4l42kgv" path="res://scripts/entity/enemies/states/ChaseState.cs" id="7_xhbj7"]
 [ext_resource type="Script" uid="uid://ck3luvwlclqh2" path="res://scripts/entity/enemies/states/WanderState.cs" id="8_xhbj7"]
+[ext_resource type="Texture2D" uid="uid://cm4vdk7iqp18g" path="res://assets/particles/hurt-particles.png" id="8_ycxw0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sw1c"]
-size = Vector2(17, 28)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffrjq"]
+radius = 3.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwkm5"]
-size = Vector2(17, 28)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wmotb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iwkm5"]
 radius = 211.116
 
-[node name="testEnemy" type="CharacterBody2D" node_paths=PackedStringArray("_hurtbox", "_healthbar", "_stateMachine")]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k8nrj"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -10, 0)
+emission_shape_scale = Vector3(2, 1, 1)
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(1, -1, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 2.0
+hue_variation_min = -0.030000022
+hue_variation_max = 0.029999977
+
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("stateMachine", "hurtbox", "healthbar")]
 collision_mask = 2
-script = ExtResource("1_5sw1c")
-_hurtbox = NodePath("hurtbox")
-_healthbar = NodePath("healthbar")
-testEnemyStats = ExtResource("2_ijs0m")
-_stateMachine = NodePath("stateMachine")
+script = ExtResource("1_jsmfe")
+stateMachine = NodePath("stateMachine")
+hurtbox = NodePath("hurtbox")
+healthbar = NodePath("healthbar")
+enemyStats = ExtResource("2_wmotb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 3)
-shape = SubResource("RectangleShape2D_5sw1c")
+shape = SubResource("CircleShape2D_ffrjq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 2)
-texture = ExtResource("2_iwkm5")
 
 [node name="hurtbox" type="Area2D" parent="." groups=["enemies"]]
 collision_layer = 12
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(-0.5, 3)
-shape = SubResource("RectangleShape2D_iwkm5")
+[node name="collider" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("CapsuleShape2D_wmotb")
 
 [node name="healthbar" parent="." instance=ExtResource("3_iwkm5")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -16.0
-offset_top = 19.0
-offset_right = 13.0
-offset_bottom = 27.0
+offset_left = -15.0
+offset_top = 21.0
+offset_right = 14.0
+offset_bottom = 29.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="detectionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 
@@ -75,6 +87,15 @@ enemy = NodePath("../..")
 [node name="WanderState" type="Node" parent="stateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("8_xhbj7")
 enemy = NodePath("../..")
+
+[node name="hurtParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 5
+texture = ExtResource("8_ycxw0")
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.67
+process_material = SubResource("ParticleProcessMaterial_k8nrj")
 
 [connection signal="area_entered" from="hurtbox" to="." method="HurtboxAreaEntered"]
 [connection signal="area_entered" from="detectionArea" to="." method="DetectionAreaPlayerEntered"]

@@ -4,6 +4,7 @@ using EtherRealm.scripts.resource;
 using EtherRealm.scripts.resource.item;
 using EtherRealm.scripts.UI.inventory;
 using EtherRealm.scripts.util;
+using ActionEntityData = EtherRealm.scripts.resource.action_entity.ActionEntityData;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D

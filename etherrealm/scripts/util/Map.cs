@@ -6,6 +6,9 @@ using Godot.Collections;
 namespace EtherRealm.scripts.util;
 public partial class Map : TileMapLayer
 {
+    private float maxPlaceDistance = 100f;
+    private float maxBreakDistance = 100f;
+    
     public override void _Ready()  
     {  
     }  
@@ -13,7 +16,7 @@ public partial class Map : TileMapLayer
     public bool TryPlaceBlock(Vector2I tilePos, int terrain)  
     {  
         // Check if tile already exists  
-        if (GetCellSourceId(tilePos) != -1)  
+        if (GetCellSourceId(tilePos) != -1 || !IsWithinPlayerReach(tilePos, "place")) 
             return false;
         
         // Place tile and let autotiling handle it  
@@ -24,13 +27,13 @@ public partial class Map : TileMapLayer
         return true;
     }
       
-    public void BreakBlock(Vector2I tilePos)  
+    public bool TryBreakBlock(Vector2I tilePos)  
     {  
         var tileId = GetCellSourceId(tilePos);
         
         //Check if tile exists  
-        if (tileId == -1)  
-            return;
+        if (tileId == -1 || !IsWithinPlayerReach(tilePos, "break"))  
+            return false;
             
         //Update surrounding tiles for autotiling  
         UpdateTiles(tilePos, -1);
@@ -42,6 +45,7 @@ public partial class Map : TileMapLayer
             var pos = ToGlobal(MapToLocal(tilePos));
             CallDeferred("SpawnItemDrop", pos, iData);
         }
+        return true;
     }  
     
     private void UpdateTiles(Vector2I cell, int terrain)
@@ -100,5 +104,24 @@ public partial class Map : TileMapLayer
         itemDrop.GlobalPosition = position;
         itemDrop.itemData = itemData;
         GetTree().CurrentScene.AddChild(itemDrop);
+    }
+    
+    private bool IsWithinPlayerReach(Vector2I tilePos, string action)  
+    {  
+        // Get player node (adjust the path/group name as needed)  
+        var player = GetTree().GetFirstNodeInGroup("player") as Node2D;  
+          
+        if (player == null)  
+            return false;  
+          
+        // Convert tile position to world position  
+        Vector2 worldPos = ToGlobal(MapToLocal(tilePos));  
+          
+        // Check distance  
+        float distance = player.GlobalPosition.DistanceTo(worldPos);  
+        
+        if (action == "break")
+            return distance <= maxBreakDistance;
+        return distance <= maxPlaceDistance;
     }
 }

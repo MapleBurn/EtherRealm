@@ -2,6 +2,7 @@ using Godot;
 using System;
 using EtherRealm.scripts.entity;
 using EtherRealm.scripts.resource;
+using ActionEntityData = EtherRealm.scripts.resource.action_entity.ActionEntityData;
 
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class Weapon : ActionEntity

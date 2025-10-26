@@ -41,7 +41,8 @@ public partial class Hand : Node2D
     
     public void PlayAnimation(int dir, AnimationPlayer animPlayer)
     {
-        if (actionEntity.actionType == "swing")
+        var action = actionEntity.actionType;
+        if (action == "swing")
         {
             if (dir == 1)
             {
@@ -54,7 +55,7 @@ public partial class Hand : Node2D
                 actionEntity.hitDir = Vector2.Left;
             }
         }
-        else if (actionEntity.actionType == "place")
+        else if (action == "place")
         {
             animPlayer.Play(dir == 1 ? "placeRight" : "placeLeft");
         }
