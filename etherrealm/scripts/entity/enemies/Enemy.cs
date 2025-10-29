@@ -79,10 +79,19 @@ public partial class Enemy : Entity
         {
             Die();
         }
+
+        var velocity = Velocity;
+        var direction = velocity.Normalized();
+
         
         if (!IsOnFloor())
         {
             Velocity += GetGravity() * (float)delta;
+        }
+        
+        if (direction.X != 0)
+        {
+            sprite.FlipH = direction.X > 0;
         }
     }
 
@@ -149,6 +158,9 @@ public partial class Enemy : Entity
     
     private void SpawnHurtParticles(Vector2 hitDir)
     {
+        ParticleProcessMaterial material = (ParticleProcessMaterial)hurtParticles.ProcessMaterial;
+        var dir = hitDir.Normalized();
+        material.Direction = new Vector3(dir.X, dir.Y, 0);
         hurtParticles.Emitting = true;
     }
     
