@@ -1,17 +1,40 @@
-using System.Linq;
 using EtherRealm.scripts.entity.itemEntities;
-using EtherRealm.scripts.resource;
-using EtherRealm.scripts.resource.item;
+using EtherRealm.scripts.UI.inventory;
 using Godot;
 
-namespace EtherRealm.scripts.UI.inventory;
+namespace EtherRealm.scripts.entity;
 
 public partial class Hand : Node2D
 {
     public ActionEntity actionEntity;
-    public void UpdateActionEntity(InventorySlot slot)
+    public bool isAnimPlaying = false;
+    public bool isEntityInitialized = false;
+    
+    private bool isPendingUpdate = false;
+    private InventorySlot invSlot;
+
+    public void QueueUpdate(InventorySlot slot)
+    {
+        isPendingUpdate = true;
+        invSlot = slot;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (isPendingUpdate)
+        {
+            if (!isEntityInitialized || actionEntity.CanAttack())
+            {
+                UpdateActionEntity(invSlot);
+                isPendingUpdate = false;
+            }
+        }
+    }
+    
+    private void UpdateActionEntity(InventorySlot slot)
     {
         actionEntity = null;
+        isEntityInitialized = false;
         foreach (var child in GetChildren())
         {
             child.QueueFree(); //flush the children into the toilet
@@ -30,7 +53,6 @@ public partial class Hand : Node2D
             actionEntity.itemSlot = slot;
             CallDeferred("SpawnEntity", slot);
         }
-            
     }
 
     private void SpawnEntity(InventorySlot slot)
@@ -59,6 +81,13 @@ public partial class Hand : Node2D
         {
             animPlayer.Play(dir == 1 ? "placeRight" : "placeLeft");
         }
+    }
+
+    public void AnimationFinished()
+    {
+        isAnimPlaying = false;  
+        if (isEntityInitialized)
+            actionEntity.AttackFinished();
     }
     
 }

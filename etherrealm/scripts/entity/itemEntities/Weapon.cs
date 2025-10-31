@@ -41,7 +41,7 @@ public partial class Weapon : ActionEntity
 	
 	public override void _Process(double delta)  
 	{
-		if (isAttacking)  
+		if (hand.isAnimPlaying)  
 		{  
 			Visible = true;  
 			attackCollider.Disabled = false;  
@@ -81,12 +81,12 @@ public partial class Weapon : ActionEntity
 		attackTween.TweenProperty(this, "position", origin + (mouseDir * stabDistance), 0.1f);  
 		attackTween.TweenProperty(this, "position", origin, 0.1f).SetDelay(0.1f);  
           
-		isAttacking = true;  
+		hand.isAnimPlaying = true;  
           
 		//make it null after finishing  
 		attackTween.Finished += () =>  
 		{  
-			isAttacking = false;  
+			hand.isAnimPlaying = false;  
 			attackTween = null;
 			Rotation = 0;
 		};  
@@ -94,11 +94,11 @@ public partial class Weapon : ActionEntity
   
 	private void Swing(int dir)  
 	{  
-		if (isAttacking || isCooldown)  
+		if (hand.isAnimPlaying || isCooldown)  
 			return;  
 		
 		actionType = "swing";
-		isAttacking = true;  
+		hand.isAnimPlaying = true;  
 	} 
 	  
 	private void SetRotationToTarget(Vector2 targetPosition)  

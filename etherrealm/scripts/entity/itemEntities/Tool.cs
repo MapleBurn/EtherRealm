@@ -29,7 +29,7 @@ public partial class Tool : ActionEntity
     
     public override void _Process(double delta)  
     {
-        if (isAttacking)  
+        if (hand.isAnimPlaying)  
         {  
             Visible = true;  
             attackCollider.Disabled = false;  
@@ -53,11 +53,11 @@ public partial class Tool : ActionEntity
     
     private void Mine()
     {
-        if (isAttacking || isCooldown)  
+        if (hand.isAnimPlaying || isCooldown)  
             return;
         
         actionType = "swing";
-        isAttacking = true;
+        hand.isAnimPlaying = true;
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));

@@ -12,7 +12,7 @@ public partial class Hotbar : Panel
     private HBoxContainer container;
     private Label activeLabel;
     [Export] private Player player;
-    private Hand hand;
+    private entity.Hand hand;
     [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
@@ -76,7 +76,7 @@ public partial class Hotbar : Panel
         if (slot.Item == null)
         {
             activeLabel.Visible = false;
-            hand.UpdateActionEntity(invSlot);
+            hand.QueueUpdate(invSlot);
             QueueRedraw();
             return;
         }
@@ -85,7 +85,7 @@ public partial class Hotbar : Panel
         activeLabel.Text = slot.Item.ItemData.DisplayName;
 
 
-        hand.UpdateActionEntity(invSlot);
+        hand.QueueUpdate(invSlot);
         
         QueueRedraw(); //draws the rectangle around the selected slot
     }  

@@ -60,7 +60,7 @@ public partial class Player : Entity
 	
 	public override void _Input(InputEvent @event)  
 	{  
-		if (hand.actionEntity == null)
+		if (!hand.isEntityInitialized)
 			return;
 		
 		if (isDead || !hand.actionEntity.CanAttack() || inventory.isInventoryOpen)
@@ -130,6 +130,8 @@ public partial class Player : Entity
 					stepTween?.Kill();
 					stepTween = CreateTween();
 					stepTween.TweenProperty(this, "position", stepTarget, duration);
+
+					shapecast.Enabled = false;
 				}
 			}
 			
@@ -142,7 +144,7 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (hand.actionEntity == null || !hand.actionEntity.isAttacking)  
+			if (hand.actionEntity == null || !hand.isAnimPlaying)  
 				UpdateAnimation("walk");
 		}  
 		else  
@@ -150,7 +152,7 @@ public partial class Player : Entity
 			//slow down when no input  
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);  
       
-			if (hand.actionEntity == null || !hand.actionEntity.isAttacking)  
+			if (hand.actionEntity == null || !hand.isAnimPlaying)  
 				UpdateAnimation("idle");
 		}
 
@@ -228,8 +230,7 @@ public partial class Player : Entity
 	{  
 		if (animName == "swingRight" || animName == "swingLeft" || animName == "placeRight" || animName == "placeLeft")
 		{  
-			hand.actionEntity.AttackFinished();
-			hand.actionEntity.TryClear(); //if item is consumable and the last one was used, clear the hand
+			hand.AnimationFinished();
 		}  
 	}
 	

@@ -26,19 +26,10 @@ public partial class Placeable : ActionEntity
         terrain = placeableData.Terrain;
         delay = placeableData.Delay;
     }
-    
-    public override void _Process(double delta)  
+
+    public override void _Process(double delta)
     {
-        if (isAttacking)  
-        {  
-            Visible = true;  
-            //attackCollider.Disabled = false;  
-        }  
-        else  
-        {  
-            Visible = false;  
-            //attackCollider.Disabled = true;  
-        }  
+        Visible = false;
     }
     
     public override void UsePrimary()
@@ -53,11 +44,11 @@ public partial class Placeable : ActionEntity
     
     private void PlaceBlock()
     {
-        if (isAttacking || isCooldown)  
+        if (hand.isAnimPlaying || isCooldown)  
             return;
         
         actionType = "place";
-        isAttacking = true;
+        hand.isAnimPlaying = true;
         
         var mousePos = GetGlobalMousePosition();
         var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
