@@ -16,6 +16,7 @@ public partial class Placeable : ActionEntity
     {
         Initialize(placeableData);
         consumeOnUse = true;
+        Visible = false;
     }
 
     public override void Initialize(ActionEntityData d)
@@ -29,12 +30,15 @@ public partial class Placeable : ActionEntity
 
     public override void _Process(double delta)
     {
-        Visible = false;
     }
     
     public override void UsePrimary()
     {
-        PlaceBlock();
+        var mousePos = GetGlobalMousePosition();
+        var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
+        
+        if (tilemap.CanPlaceBlock(tilePos))
+            PlaceBlock();
     }
 
     public override void UseSecondary(int dir)
@@ -50,12 +54,6 @@ public partial class Placeable : ActionEntity
         actionType = "place";
         hand.isAnimPlaying = true;
         
-        var mousePos = GetGlobalMousePosition();
-        var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-        
-        if (tilemap.IsEntityOverlapping(tilePos))
-            return;
-        if (tilemap.TryPlaceBlock(tilePos, terrain))
-            ConsumeItem();
+        ConsumeItem();
     }
 }

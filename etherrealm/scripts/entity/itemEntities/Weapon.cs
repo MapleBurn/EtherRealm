@@ -22,7 +22,8 @@ public partial class Weapon : ActionEntity
 	{  
 		//data = wepData;
 		Initialize(wepData);
-		SetChildNodes();
+		//SetChildNodes();
+		Visible = false;
 	}
 
 	public override void Initialize(ActionEntityData d)

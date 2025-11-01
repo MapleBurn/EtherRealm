@@ -13,12 +13,19 @@ public partial class Map : TileMapLayer
     {  
     }  
       
-    public bool TryPlaceBlock(Vector2I tilePos, int terrain)  
+    public bool CanPlaceBlock(Vector2I tilePos)  
     {  
         // Check if tile already exists  
         if (GetCellSourceId(tilePos) != -1 || !IsWithinPlayerReach(tilePos, "place")) 
             return false;
-        
+        // Check for entity overlap
+        if (IsEntityOverlapping(tilePos))
+            return false;
+        return true;
+    }
+    
+    public bool PlaceBlock(Vector2I tilePos, int terrain)  
+    {  
         // Place tile and let autotiling handle it  
         SetCell(tilePos, 1, new Vector2I(9, 4), 0);  
           

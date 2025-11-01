@@ -88,7 +88,15 @@ public partial class Hotbar : Panel
         hand.QueueUpdate(invSlot);
         
         QueueRedraw(); //draws the rectangle around the selected slot
-    }  
+    }
+    
+    private void UpdateActiveItem(Slot slot)
+    {
+        activeLabel.Visible = true;
+        activeLabel.Text = slot.Item.ItemData.DisplayName;
+        
+        //QueueRedraw(); //draws the rectangle around the selected slot
+    }
     
     
     private void SetSlots()
@@ -110,7 +118,12 @@ public partial class Hotbar : Panel
 
         if (slot.index-1 == index)
         {
-            ChangeActiveItem(slots[index]);
+            if (slot.Item == null)
+            {
+                ChangeActiveItem(slots[index]);
+                return;
+            }
+            UpdateActiveItem(slots[index]);
         }
     }
 

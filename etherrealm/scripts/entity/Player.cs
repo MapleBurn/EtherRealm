@@ -115,25 +115,7 @@ public partial class Player : Entity
 		if (direction != Vector2.Zero)
 		{
 			//step-up logic
-			raycast.ForceRaycastUpdate();
-			if (raycast.IsColliding())
-			{
-				if (CanStepUp())
-				{
-					Vector2 stepUpOffset = new Vector2(dir * 16, -16);
-					Vector2 stepTarget = GlobalPosition + stepUpOffset;
-					
-					float duration = MathF.Abs(stepUpOffset.X / maxSpeed) * 1.5f;
-					if (duration > 0.1f)
-						duration = 0.1f;
-					
-					stepTween?.Kill();
-					stepTween = CreateTween();
-					stepTween.TweenProperty(this, "position", stepTarget, duration);
-
-					shapecast.Enabled = false;
-				}
-			}
+			HandleStepUp();
 			
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
@@ -244,6 +226,30 @@ public partial class Player : Entity
 			animPlayer.Play(targetAnim);  
 	}
 
+	#region  Step-Up Logic
+	private void HandleStepUp()
+	{
+		raycast.ForceRaycastUpdate();
+		if (raycast.IsColliding())
+		{
+			if (CanStepUp())
+			{
+				Vector2 stepUpOffset = new Vector2(dir * 16, -16);
+				Vector2 stepTarget = GlobalPosition + stepUpOffset;
+					
+				float duration = MathF.Abs(stepUpOffset.X / maxSpeed) * 1.5f;
+				if (duration > 0.1f)
+					duration = 0.1f;
+					
+				stepTween?.Kill();
+				stepTween = CreateTween();
+				stepTween.TweenProperty(this, "position", stepTarget, duration);
+
+				shapecast.Enabled = false;
+			}
+		}
+	}
+
 	private bool CanStepUp()
 	{
 		if (!IsOnFloor())
@@ -253,6 +259,7 @@ public partial class Player : Entity
 		shapecast.ForceShapecastUpdate();
 		return !shapecast.IsColliding();	//return true if the shape cast doesn't detect anything
 	}
+	#endregion
 	
 	protected override void ProcessDamage(float damage, bool isCrit)
 	{

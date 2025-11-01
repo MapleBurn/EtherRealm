@@ -17,6 +17,7 @@ public partial class Tool : ActionEntity
     {
         Initialize(toolData);
         //SetChildNodes();
+        Visible = false;
     }
 
     public override void Initialize(ActionEntityData d)

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://5s1nm1tbf7hu" path="res://assets/character/SpriteSheet/testCharacter-swing.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://bcqclm2w1u0n8" path="res://assets/character/SpriteSheet/testCharacter-place.png" id="3_t8xyy"]
 [ext_resource type="Texture2D" uid="uid://b152f1orjjpuu" path="res://assets/particles/slash.png" id="4_tuyoq"]
-[ext_resource type="Script" uid="uid://dnkfbbifjqind" path="res://scripts/UI/inventory/Hand.cs" id="5_4y4uh"]
+[ext_resource type="Script" uid="uid://dnkfbbifjqind" path="res://scripts/entity/Hand.cs" id="5_4y4uh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
 atlas = ExtResource("2_dqkch")
