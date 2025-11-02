@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d1528ohkmrre2"]
+[gd_scene load_steps=41 format=3 uid="uid://d1528ohkmrre2"]
 
 [ext_resource type="Script" uid="uid://dt1jts3m30x0u" path="res://scripts/entity/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://5n8vccx2bmox" path="res://assets/character/SpriteSheet/testCharacter-idle.png" id="2_dqkch"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bcqclm2w1u0n8" path="res://assets/character/SpriteSheet/testCharacter-place.png" id="3_t8xyy"]
 [ext_resource type="Texture2D" uid="uid://b152f1orjjpuu" path="res://assets/particles/slash.png" id="4_tuyoq"]
 [ext_resource type="Script" uid="uid://dnkfbbifjqind" path="res://scripts/entity/Hand.cs" id="5_4y4uh"]
+[ext_resource type="Texture2D" uid="uid://3umomxua384g" path="res://assets/character/SpriteSheet/testCharacter-run.png" id="5_j8jve"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
 atlas = ExtResource("2_dqkch")
@@ -47,9 +48,37 @@ region = Rect2(32, 0, 32, 48)
 atlas = ExtResource("3_qlg0r")
 region = Rect2(64, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
-atlas = ExtResource("2_dqkch")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksla3"]
+atlas = ExtResource("5_j8jve")
 region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo118"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sfp8"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4rq5"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwm7e"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mrcak"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ucpq"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vt2c5"]
+atlas = ExtResource("5_j8jve")
+region = Rect2(224, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ur7pv"]
 animations = [{
@@ -100,11 +129,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dqkch")
+"texture": SubResource("AtlasTexture_ksla3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo118")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sfp8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4rq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwm7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mrcak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ucpq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vt2c5")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="Animation" id="Animation_qlg0r"]
@@ -664,6 +714,7 @@ tracks/8/keys = {
 
 [sub_resource type="Animation" id="Animation_ur7pv"]
 resource_name = "walkLeft"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -671,10 +722,10 @@ tracks/0/path = NodePath("sprites/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -751,6 +802,7 @@ tracks/6/keys = {
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "walk"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -758,10 +810,10 @@ tracks/0/path = NodePath("sprites/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
