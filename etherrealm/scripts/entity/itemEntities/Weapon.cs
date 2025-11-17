@@ -56,9 +56,7 @@ public partial class Weapon : ActionEntity
 
 	public override void UsePrimary()
 	{
-		//rotate weapon to mouse and stab  
-		SetRotationToTarget(GetGlobalMousePosition());  
-		Stab(GetGlobalMousePosition());
+		Attack();
 	}
 
 	public override void UseSecondary(int dir)
@@ -67,32 +65,15 @@ public partial class Weapon : ActionEntity
 		Swing(dir);
 	}
 
-	private void Stab(Vector2 targetPosition)  
-	{  
-		//let the stab finish so 1) no spamming 2) the sword doesn't fly off  
-		if (attackTween != null || isCooldown)  
-			return;
+	private void Attack()
+	{
+		if (hand.isAnimPlaying || isCooldown)  
+			return;  
 		
-		actionType = "stab";
-		var origin = Position;  
-		var mouseDir = (targetPosition - GlobalPosition).Normalized();  
-		hitDir = mouseDir;  
-  
-		attackTween = GetTree().CreateTween().BindNode(this);  
-		attackTween.TweenProperty(this, "position", origin + (mouseDir * stabDistance), 0.1f);  
-		attackTween.TweenProperty(this, "position", origin, 0.1f).SetDelay(0.1f);  
-          
-		hand.isAnimPlaying = true;  
-          
-		//make it null after finishing  
-		attackTween.Finished += () =>  
-		{  
-			hand.isAnimPlaying = false;  
-			attackTween = null;
-			Rotation = 0;
-		};  
-	}  
-  
+		actionType = "attack";
+		hand.isAnimPlaying = true;
+	}
+	
 	private void Swing(int dir)  
 	{  
 		if (hand.isAnimPlaying || isCooldown)  
@@ -101,10 +82,4 @@ public partial class Weapon : ActionEntity
 		actionType = "swing";
 		hand.isAnimPlaying = true;  
 	} 
-	  
-	private void SetRotationToTarget(Vector2 targetPosition)  
-	{  
-		LookAt(targetPosition);  
-		Rotation += Mathf.DegToRad(45);  
-	}  
 }

@@ -77,6 +77,19 @@ public partial class Hand : Node2D
                 actionEntity.hitDir = Vector2.Left;
             }
         }
+        else if (action == "attack")
+        {
+            if (dir == 1)
+            {
+                animPlayer.Play("attackRight");
+                actionEntity.hitDir = Vector2.Right;
+            }
+            else
+            {
+                animPlayer.Play("attackLeft");
+                actionEntity.hitDir = Vector2.Left;
+            }
+        }
         else if (action == "place")
         {
             animPlayer.Play(dir == 1 ? "placeRight" : "placeLeft");

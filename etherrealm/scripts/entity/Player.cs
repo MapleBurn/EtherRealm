@@ -210,7 +210,7 @@ public partial class Player : Entity
 	
 	private void AnimationFinished(StringName animName)  
 	{  
-		if (animName == "swingRight" || animName == "swingLeft" || animName == "placeRight" || animName == "placeLeft")
+		if (animName == "swingRight" || animName == "swingLeft" || animName == "placeRight" || animName == "placeLeft" || animName == "attackRight" || animName == "attackLeft")
 		{  
 			hand.AnimationFinished();
 		}  
