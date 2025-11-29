@@ -16,7 +16,9 @@ public partial class Weapon : ActionEntity
 	public float critKbMult;  
 	private float stabDistance; 
 	
-	private Tween attackTween;
+	//variables
+	private double comboTime;
+	private bool isCombo = true;
 	  
 	public override void _Ready()  
 	{  
@@ -51,7 +53,12 @@ public partial class Weapon : ActionEntity
 		{  
 			Visible = false;  
 			attackCollider.Disabled = true;  
-		}  
+		}
+
+		if (comboTime < 1)
+			comboTime += delta;
+		else
+			isCombo = true;
 	}
 
 	public override void UsePrimary()
@@ -72,6 +79,8 @@ public partial class Weapon : ActionEntity
 		
 		actionType = "attack";
 		hand.isAnimPlaying = true;
+		isCombo = true;
+		comboTime = 0;
 	}
 	
 	private void Swing(int dir)  
@@ -82,4 +91,21 @@ public partial class Weapon : ActionEntity
 		actionType = "swing";
 		hand.isAnimPlaying = true;  
 	} 
+	
+	public override void AttackFinished()  
+	{  
+		isCooldown = true;  
+		hand.isAnimPlaying = false;  
+		
+		if (isCombo)
+		{
+			 isCooldown = false;
+			 return;
+		}
+		
+		GetTree().CreateTimer(delay).Timeout += () =>  
+		{  
+			isCooldown = false;   
+		};  
+	}
 }

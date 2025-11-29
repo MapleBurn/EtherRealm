@@ -51,7 +51,7 @@ public partial class ActionEntity : Node2D
         return !hand.isAnimPlaying && !isCooldown;
     }
     
-    public void AttackFinished()  
+    public virtual void AttackFinished()  
     {  
         isCooldown = true;
         hand.isAnimPlaying = false;

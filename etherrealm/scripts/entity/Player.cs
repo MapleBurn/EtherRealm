@@ -108,9 +108,10 @@ public partial class Player : Entity
 		}
 		if (Input.IsActionJustReleased("space") && velocity.Y < 0)
 			velocity.Y = jumpVelocity * cutJumpHeight;
-		
+
+		var maxspeed = hand.isAnimPlaying ? maxSpeed * 0.5f : maxSpeed;
 		Vector2 direction = Input.GetVector("left", "right", "deadkey", "deadkey");
-		float targetX = direction.X * maxSpeed;
+		float targetX = direction.X * maxspeed;
 		
 		if (direction != Vector2.Zero)
 		{
