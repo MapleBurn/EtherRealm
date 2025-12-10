@@ -71,12 +71,12 @@ public partial class Player : Entity
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
 				hand.actionEntity.UsePrimary();
-				hand.PlayAnimation(dir, animPlayer);
+				//hand.PlayAnimation(dir, animPlayer);
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
 				hand.actionEntity.UseSecondary(dir);
-				hand.PlayAnimation(dir, animPlayer);
+				//hand.PlayAnimation(dir, animPlayer);
 			}  
 		}
 	}
@@ -225,6 +225,13 @@ public partial class Player : Entity
 		string targetAnim = dir == 1 ? animName + "Right" : animName + "Left";  
 		if (animPlayer.CurrentAnimation != targetAnim)  
 			animPlayer.Play(targetAnim);  
+		/*animPlayer.CurrentAnimation = animName;
+		if (animPlayer.CurrentAnimation != animName)  
+			animPlayer.Play(animName); 
+		if (dir == -1)
+			Scale = new Vector2(-1, 1);
+		else
+			Scale = new Vector2(1, 1);*/
 	}
 
 	#region  Step-Up Logic
