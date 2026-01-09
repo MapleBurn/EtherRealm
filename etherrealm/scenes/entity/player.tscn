@@ -1887,24 +1887,24 @@ texture = SubResource("AtlasTexture_b6txc")
 [node name="upArmF" type="Sprite2D" parent="kinematics/sprites"]
 z_index = 5
 position = Vector2(-14.000249, -16.00047)
-rotation = 0.088360205
-scale = Vector2(0.99999547, 0.99999547)
+rotation = 0.0883602
+scale = Vector2(0.9999954, 0.9999954)
 texture = SubResource("AtlasTexture_lqdkl")
 offset = Vector2(0, 2)
 
 [node name="armF" type="Sprite2D" parent="kinematics/sprites"]
 z_index = 5
-position = Vector2(-16.521908, -10.200394)
-rotation = 0.2449621
-scale = Vector2(0.9999948, 0.9999948)
+position = Vector2(-16.521908, -10.200395)
+rotation = 0.24496208
+scale = Vector2(0.99999475, 0.99999475)
 texture = SubResource("AtlasTexture_v1usl")
 offset = Vector2(0, 3)
 
 [node name="handF" type="Sprite2D" parent="kinematics/sprites"]
 z_index = 5
-position = Vector2(-18.947159, -4.6220627)
-rotation = 0.28918025
-scale = Vector2(0.99999404, 0.99999404)
+position = Vector2(-18.947159, -4.622064)
+rotation = 0.2891804
+scale = Vector2(0.9999939, 0.9999939)
 texture = SubResource("AtlasTexture_44md8")
 offset = Vector2(0, 2)
 
@@ -1941,7 +1941,7 @@ offset = Vector2(1, 3)
 [node name="handB" type="Sprite2D" parent="kinematics/sprites"]
 position = Vector2(0.43610382, -4.1277914)
 rotation = -0.073393404
-scale = Vector2(0.99999774, 0.99999774)
+scale = Vector2(0.9999977, 0.9999977)
 texture = SubResource("AtlasTexture_rvqoh")
 offset = Vector2(-1.0034046, 1.050931)
 
@@ -1956,8 +1956,8 @@ offset = Vector2(0, 4)
 [node name="shinB" type="Sprite2D" parent="kinematics/sprites"]
 z_index = 1
 position = Vector2(-4.6127787, 6.458666)
-rotation = -0.20539543
-scale = Vector2(0.9999994, 0.9999994)
+rotation = -0.20539549
+scale = Vector2(0.99999934, 0.99999934)
 texture = SubResource("AtlasTexture_mpqdt")
 offset = Vector2(0, 4)
 
@@ -1971,9 +1971,9 @@ offset = Vector2(1, 2)
 
 [node name="footB" type="Sprite2D" parent="kinematics/sprites"]
 z_index = 1
-position = Vector2(-2.9811454, 14.290504)
+position = Vector2(-2.981145, 14.290504)
 rotation = 0.0028101446
-scale = Vector2(0.9999981, 0.9999981)
+scale = Vector2(0.99999803, 0.99999803)
 texture = SubResource("AtlasTexture_jy32m")
 offset = Vector2(1, 2)
 
@@ -2025,15 +2025,15 @@ metadata/_local_pose_override_enabled_ = true
 
 [node name="shinB" type="Bone2D" parent="kinematics/Skeleton2D/hip/legB"]
 position = Vector2(4, 11)
-rotation = -0.3487711
-scale = Vector2(0.99999994, 0.99999994)
+rotation = -0.34877115
+scale = Vector2(0.9999999, 0.9999999)
 rest = Transform2D(1, 0, 0, 1, 4, 11)
 metadata/_local_pose_override_enabled_ = true
 
 [node name="footB" type="Bone2D" parent="kinematics/Skeleton2D/hip/legB/shinB"]
 position = Vector2(0, 8)
-rotation = 0.20820557
-scale = Vector2(0.9999987, 0.9999987)
+rotation = 0.20820563
+scale = Vector2(0.9999986, 0.9999986)
 rest = Transform2D(1, 0, 0, 1, 0, 8)
 auto_calculate_length_and_angle = false
 length = 2.0
@@ -2058,20 +2058,20 @@ metadata/_local_pose_override_enabled_ = true
 [node name="upArmF" type="Bone2D" parent="kinematics/Skeleton2D/hip/torso"]
 position = Vector2(-5.0002494, -8.000471)
 rotation = 0.088360205
-scale = Vector2(0.9999955, 0.9999955)
+scale = Vector2(0.99999547, 0.99999547)
 rest = Transform2D(1, 0, 0, 1, -5, -8)
 metadata/_local_pose_override_enabled_ = true
 
 [node name="armF" type="Bone2D" parent="kinematics/Skeleton2D/hip/torso/upArmF"]
 position = Vector2(-2, 6)
-rotation = 0.1566019
+rotation = 0.15660189
 scale = Vector2(0.99999934, 0.99999934)
 rest = Transform2D(1, 0, 0, 1, -2, 6)
 metadata/_local_pose_override_enabled_ = true
 
 [node name="handF" type="Bone2D" parent="kinematics/Skeleton2D/hip/torso/upArmF/armF"]
 position = Vector2(-1, 6)
-rotation = 0.04421818
+rotation = 0.04421833
 scale = Vector2(0.99999917, 0.99999917)
 rest = Transform2D(1, 0, 0, 1, -1, 6)
 auto_calculate_length_and_angle = false
@@ -2105,7 +2105,7 @@ metadata/_local_pose_override_enabled_ = true
 [node name="handB" type="Bone2D" parent="kinematics/Skeleton2D/hip/torso/upArmB/armB"]
 position = Vector2(3, 5)
 rotation = -0.15016524
-scale = Vector2(0.99999857, 0.99999857)
+scale = Vector2(0.9999985, 0.9999985)
 rest = Transform2D(1, 0, 0, 1, 3, 5)
 auto_calculate_length_and_angle = false
 length = 2.0
