@@ -105,6 +105,8 @@ public partial class Player : Entity
 		if (Input.IsActionPressed("space") && (IsOnFloor() || remJumpTimer < 0.15f))
 		{
 			velocity.Y = jumpVelocity;
+			if (hand.actionEntity == null || !hand.isAnimPlaying)  
+				UpdateAnimation("fall");
 		}
 		if (Input.IsActionJustReleased("space") && velocity.Y < 0)
 			velocity.Y = jumpVelocity * cutJumpHeight;
@@ -127,7 +129,7 @@ public partial class Player : Entity
 			else if (direction.X < 0)  
 				dir = -1;  
 			
-			if (hand.actionEntity == null || !hand.isAnimPlaying)  
+			if ((hand.actionEntity == null || !hand.isAnimPlaying) && IsOnFloor())  
 				UpdateAnimation("walk");
 		}  
 		else  
