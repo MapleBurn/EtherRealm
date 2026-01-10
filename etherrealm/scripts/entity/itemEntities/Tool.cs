@@ -23,22 +23,22 @@ public partial class Tool : ActionEntity
     public override void Initialize(ActionEntityData d)
     {
         toolData = (ToolData)d;
-        data = toolData;
+        Data = toolData;
         
-        delay = toolData.Delay;
+        Delay = toolData.Delay;
     }
     
     public override void _Process(double delta)  
     {
-        if (hand.isAnimPlaying)  
+        if (ItemHandler.IsAnimPlaying)  
         {  
             Visible = true;  
-            attackCollider.Disabled = false;  
+            AttackCollider.Disabled = false;  
         }  
         else  
         {  
             Visible = false;  
-            attackCollider.Disabled = true;  
+            AttackCollider.Disabled = true;  
         }  
     }
     
@@ -54,14 +54,14 @@ public partial class Tool : ActionEntity
     
     private void Mine()
     {
-        if (hand.isAnimPlaying || isCooldown)  
+        if (ItemHandler.IsAnimPlaying || IsCooldown)  
             return;
         
-        actionType = "swing";
-        hand.isAnimPlaying = true;
+        ActionType = "swing";
+        ItemHandler.IsAnimPlaying = true;
         
         var mousePos = GetGlobalMousePosition();
-        var tilePos = tilemap.LocalToMap(tilemap.ToLocal(mousePos));
-        tilemap.TryBreakBlock(tilePos);
+        var tilePos = Tilemap.LocalToMap(Tilemap.ToLocal(mousePos));
+        Tilemap.TryBreakBlock(tilePos);
     }
 }

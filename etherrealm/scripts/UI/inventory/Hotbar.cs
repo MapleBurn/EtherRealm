@@ -12,7 +12,7 @@ public partial class Hotbar : Panel
     private HBoxContainer container;
     private Label activeLabel;
     [Export] private Player player;
-    private entity.Hand hand;
+    private entity.HeldItemHandler hand;
     [Export] private Inventory inventory;
     
     private List<Slot> slots = new List<Slot>();
@@ -23,7 +23,7 @@ public partial class Hotbar : Panel
     {
         container = GetNode<HBoxContainer>("HBoxContainer");
         activeLabel = GetNode<Label>("activeLabel");
-        hand = player.hand;
+        hand = player.ItemHandler;
         SetSlots();
     }
 

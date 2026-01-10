@@ -11,15 +11,14 @@ namespace EtherRealm.scripts.entity;
 public partial class Player : Entity
 {
 	//other nodes
-	[Export] private AnimationPlayer _animPlayer;
-	[Export] private Area2D _hurtbox;
 	[Export] private Healthbar _healthbar;
-	private RayCast2D raycast;
-	private ShapeCast2D shapecast;
-	private Tween stepTween;
+	[Export] private Label _debugLabel;
+	private RayCast2D _raycast;
+	private ShapeCast2D _shapecast;
+	private Tween _stepTween;
 	
-	[Export] private Inventory inventory;
-	public Hand hand;
+	[Export] private Inventory _inventory;
+	public HeldItemHandler ItemHandler;
 	
 	//players properties
 	[Export] private float _acceleration = 600.0f;
@@ -39,8 +38,8 @@ public partial class Player : Entity
 
 	public override void _Ready()
 	{
-		hurtbox = _hurtbox;
-		animPlayer = _animPlayer;
+		hurtbox = GetNode<Area2D>("hurtbox");
+		animPlayer = GetNode<AnimationPlayer>("animationPlayer");
 		
 		acceleration = _acceleration;
 		friction =  _friction;
@@ -52,31 +51,30 @@ public partial class Player : Entity
 		
 		healthbar = _healthbar;
 		healthbar.Initialize(maxHealth);
-		raycast = GetNode<RayCast2D>("RayCast2D");
-		shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
+		_raycast = GetNode<RayCast2D>("RayCast2D");
+		_shapecast = GetNode<ShapeCast2D>("ShapeCast2D");
 
-		hand = GetNode<Hand>("hand");
+		ItemHandler = GetNode<HeldItemHandler>("heldItem");
 	}
 	
 	public override void _Input(InputEvent @event)  
 	{  
-		if (!hand.isEntityInitialized)
+		if (!ItemHandler.IsEntityInitialized)
 			return;
 		
-		if (isDead || !hand.actionEntity.CanAttack() || inventory.isInventoryOpen)
+		if (isDead || !ItemHandler.actionEntity.CanAttack() || _inventory.isInventoryOpen)
 			return;  
 		  
 		if (@event is InputEventMouseButton mouseEvent)  
 		{  
 			if (mouseEvent.IsActionPressed("MouseLeftButton"))  
 			{  
-				hand.actionEntity.UsePrimary();
-				//hand.PlayAnimation(dir, animPlayer);
+				ItemHandler.actionEntity.UsePrimary();
+				ItemHandler.PlayAnimation(dir, animPlayer);
 			}  
 			else if (mouseEvent.IsActionPressed("MouseRightButton"))  
 			{  
-				hand.actionEntity.UseSecondary(dir);
-				//hand.PlayAnimation(dir, animPlayer);
+				//hand.actionEntity.UseSecondary(dir);
 			}  
 		}
 	}
@@ -87,9 +85,7 @@ public partial class Player : Entity
 			return;
 		
 		if (health <= 0)
-		{
 			Die();
-		}
 		
 		TimerProcess((float)delta);	//does all the time stuff
 			
@@ -105,13 +101,11 @@ public partial class Player : Entity
 		if (Input.IsActionPressed("space") && (IsOnFloor() || remJumpTimer < 0.15f))
 		{
 			velocity.Y = jumpVelocity;
-			if (hand.actionEntity == null || !hand.isAnimPlaying)  
-				UpdateAnimation("fall");
 		}
 		if (Input.IsActionJustReleased("space") && velocity.Y < 0)
 			velocity.Y = jumpVelocity * cutJumpHeight;
-
-		var maxspeed = hand.isAnimPlaying ? maxSpeed * 0.5f : maxSpeed;
+		
+		var maxspeed = ItemHandler.IsAnimPlaying ? maxSpeed * 0.5f : maxSpeed;
 		Vector2 direction = Input.GetVector("left", "right", "deadkey", "deadkey");
 		float targetX = direction.X * maxspeed;
 		
@@ -123,59 +117,70 @@ public partial class Player : Entity
 			//Accelerate to target speed
 			velocity.X = Mathf.MoveToward(Velocity.X, targetX, acceleration * (float)delta);
 			
-			//direction and animation
-			if (direction.X > 0)  
-				dir = 1;  
-			else if (direction.X < 0)  
-				dir = -1;  
-			
-			if ((hand.actionEntity == null || !hand.isAnimPlaying) && IsOnFloor())  
-				UpdateAnimation("walk");
+			//direction for animation
+			if (direction.X > 0)
+			{
+				Scale = new Vector2(1, 1);
+				RotationDegrees = 0f;
+				dir = 1;
+			} 
+			else
+			{
+				Scale = new Vector2(1, -1);
+				RotationDegrees = 180f;
+				dir = -1;
+			}
 		}  
 		else  
 		{  
 			//slow down when no input  
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, friction * (float)delta);  
-      
-			if (hand.actionEntity == null || !hand.isAnimPlaying)  
-				UpdateAnimation("idle");
 		}
 
+		HandleAnimation(direction);
+		
 		Velocity = velocity;
 		Vector2 prevV = velocity;
+		_debugLabel.Text = "Rotation: " + RotationDegrees + "\nScale: " + Scale;
 		MoveAndSlide();
 
 		//fall and collision damage
 		ApplyImpactDamage(prevV); 
 	}
-	
-	private void TimerProcess(float delta)
-	{
-		if (!hurtbox.Monitoring)
-		{
-			if (invTimer < 0.5f)
-				invTimer += delta;
-			else
-			{
-				invTimer = 0;
-				hurtbox.Monitoring = true;
-			}
-		}
 
-		if (heTimer < 5.0f)
-			heTimer += delta;
+	#region Animation
+	private void HandleAnimation(Vector2 direction)
+	{
+		if ((ItemHandler.actionEntity != null && ItemHandler.IsAnimPlaying))
+			return;
+		
+		if (!IsOnFloor())
+		{
+			UpdateAnimation("fall");
+		}
 		else
 		{
-			ApplyHealing(2);	//passive healing
-			heTimer = 0;
+			if (direction != Vector2.Zero)
+				UpdateAnimation("walk");
+			else
+				UpdateAnimation("idle");
 		}
-		
-		//jump memory - for smoothness
-		if (IsOnFloor())
-			remJumpTimer = 0;
-		else
-			remJumpTimer += delta;
 	}
+	
+	private void UpdateAnimation(string animName)
+	{
+		const float blendDuration = 0.5f;
+		const float walkBlendDuration = 0.08f;
+		
+		if (animPlayer.CurrentAnimation != animName)
+		{
+			if (animName == "walk")
+				animPlayer.Play(animName, walkBlendDuration);
+			animPlayer.Play(animName, blendDuration);
+		}
+	}
+	
+	#endregion
 	
 	#region Signals
 	protected override void HurtboxAreaEntered(Area2D area)
@@ -213,34 +218,26 @@ public partial class Player : Entity
 	
 	private void AnimationFinished(StringName animName)  
 	{  
-		if (animName == "swingRight" || animName == "swingLeft" || animName == "placeRight" || animName == "placeLeft" || animName == "attackRight" || animName == "attackLeft")
+		if (animName == "stab" || animName == "place")
 		{  
-			hand.AnimationFinished();
-		}  
+			ItemHandler.AnimationFinished();
+		}
+		/*else
+		{
+			if (animName == "startFallRight" || animName == "startFallLeft")
+			{
+				playFall = true;
+			}
+		}*/
 	}
 	
 	#endregion
-	
-
-	private void UpdateAnimation(string animName)
-	{
-		string targetAnim = dir == 1 ? animName + "Right" : animName + "Left";  
-		if (animPlayer.CurrentAnimation != targetAnim)  
-			animPlayer.Play(targetAnim);  
-		/*animPlayer.CurrentAnimation = animName;
-		if (animPlayer.CurrentAnimation != animName)  
-			animPlayer.Play(animName); 
-		if (dir == -1)
-			Scale = new Vector2(-1, 1);
-		else
-			Scale = new Vector2(1, 1);*/
-	}
 
 	#region  Step-Up Logic
 	private void HandleStepUp()
 	{
-		raycast.ForceRaycastUpdate();
-		if (raycast.IsColliding())
+		_raycast.ForceRaycastUpdate();
+		if (_raycast.IsColliding())
 		{
 			if (CanStepUp())
 			{
@@ -251,11 +248,11 @@ public partial class Player : Entity
 				if (duration > 0.1f)
 					duration = 0.1f;
 					
-				stepTween?.Kill();
-				stepTween = CreateTween();
-				stepTween.TweenProperty(this, "position", stepTarget, duration);
+				_stepTween?.Kill();
+				_stepTween = CreateTween();
+				_stepTween.TweenProperty(this, "position", stepTarget, duration);
 
-				shapecast.Enabled = false;
+				_shapecast.Enabled = false;
 			}
 		}
 	}
@@ -265,11 +262,39 @@ public partial class Player : Entity
 		if (!IsOnFloor())
 			return false;
 		
-		shapecast.Enabled = true;
-		shapecast.ForceShapecastUpdate();
-		return !shapecast.IsColliding();	//return true if the shape cast doesn't detect anything
+		_shapecast.Enabled = true;
+		_shapecast.ForceShapecastUpdate();
+		return !_shapecast.IsColliding();	//return true if the shape cast doesn't detect anything
 	}
 	#endregion
+	
+	private void TimerProcess(float delta)
+	{
+		if (!hurtbox.Monitoring)
+		{
+			if (invTimer < 0.5f)
+				invTimer += delta;
+			else
+			{
+				invTimer = 0;
+				hurtbox.Monitoring = true;
+			}
+		}
+
+		if (heTimer < 5.0f)
+			heTimer += delta;
+		else
+		{
+			ApplyHealing(2);	//passive healing
+			heTimer = 0;
+		}
+		
+		//jump memory - for smoothness
+		if (IsOnFloor())
+			remJumpTimer = 0;
+		else
+			remJumpTimer += delta;
+	}
 	
 	protected override void ProcessDamage(float damage, bool isCrit)
 	{

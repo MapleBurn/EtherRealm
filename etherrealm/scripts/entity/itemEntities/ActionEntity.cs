@@ -9,38 +9,37 @@ using ActionEntityData = EtherRealm.scripts.resource.action_entity.ActionEntityD
 namespace EtherRealm.scripts.entity.itemEntities;
 public partial class ActionEntity : Node2D
 {
-    protected ActionEntityData data;
-    public InventorySlot itemSlot;
+    protected ActionEntityData Data;
+    public InventorySlot ItemSlot;
     
     //other nodes and children
-    protected Area2D hitbox;  
-    protected CollisionPolygon2D attackCollider;  
-    protected Sprite2D sprite;
-    protected Map tilemap;
-    protected Hand hand;
+    private Area2D hitbox;  
+    protected CollisionPolygon2D AttackCollider;  
+    private Sprite2D sprite;
+    protected Map Tilemap;
+    protected HeldItemHandler ItemHandler;
     
     //variables
-    protected bool isCooldown = false;  
-    protected float delay;  
-    public string actionType; //swing, stab, shoot, etc.
-    public Vector2 hitDir;
-    public bool pendingClear;
+    protected bool IsCooldown = false;  
+    protected float Delay;  
+    public string ActionType; //swing, stab, shoot, etc.
+    public Vector2 HitDir;
 
-    public bool consumeOnUse = false;
+    protected bool ConsumeOnUse = false;
     public void SetChildNodes()
     {
         // Initialize components  
         hitbox = GetNode<Area2D>("hitbox");  
-        attackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
+        AttackCollider = GetNode<CollisionPolygon2D>("hitbox/collider");
         sprite = GetNode<Sprite2D>("Sprite2D");
-        tilemap = GetNode<Map>("/root/world/map");
-        hand = GetParent<Hand>();
+        Tilemap = GetNode<Map>("/root/world/map");
+        ItemHandler = GetParent<HeldItemHandler>();
         
-        sprite.Offset = data.SpriteOffset;
-        sprite.Texture = data.Model;
-        attackCollider.Polygon = data.ColliderPoints;
+        sprite.Offset = Data.SpriteOffset;
+        sprite.Texture = Data.Model;
+        AttackCollider.Polygon = Data.ColliderPoints;
 
-        hand.isEntityInitialized = true;
+        ItemHandler.IsEntityInitialized = true;
     }
     
     public virtual void Initialize(ActionEntityData data)
@@ -48,17 +47,17 @@ public partial class ActionEntity : Node2D
 
     public bool CanAttack()
     {
-        return !hand.isAnimPlaying && !isCooldown;
+        return !ItemHandler.IsAnimPlaying && !IsCooldown;
     }
     
     public virtual void AttackFinished()  
     {  
-        isCooldown = true;
-        hand.isAnimPlaying = false;
+        IsCooldown = true;
+        ItemHandler.IsAnimPlaying = false;
   
-        GetTree().CreateTimer(delay).Timeout += () =>  
+        GetTree().CreateTimer(Delay).Timeout += () =>  
         {  
-            isCooldown = false;   
+            IsCooldown = false;   
         };  
     }
 
@@ -74,15 +73,15 @@ public partial class ActionEntity : Node2D
     
     protected void ConsumeItem()
     {
-        if (consumeOnUse)
+        if (ConsumeOnUse)
         {
-            if (itemSlot.Item.Count == 1)
+            if (ItemSlot.Item.Count == 1)
             {
-                hand.QueueUpdate(itemSlot);
+                ItemHandler.QueueUpdate(ItemSlot);
                 return;
             }
             
-            itemSlot.RemoveFromSlot(1);
+            ItemSlot.RemoveFromSlot(1);
         }
     }
 }
