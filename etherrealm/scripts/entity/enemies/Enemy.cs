@@ -107,17 +107,17 @@ public partial class Enemy : Entity
         float wepCritDmgMult = weapon.critDmgMult;
         float wepCritChance = weapon.critChance;
         bool isCrit = false;
-        Vector2 wepHitDir = weapon.hitDir;
+        Vector2 wepHitDir = weapon.HitDir;
         float wepKnockback = weapon.knockback;
         float wepCritKBMult = weapon.critKbMult;
         
         //attack type damage scaling
-        if (weapon.actionType == "stab")
+        if (weapon.ActionType == "stab")
         {
             wepDamage *= 1.0f;
             wepKnockback *= 0.8f;
         }
-        else if (weapon.actionType == "swing")
+        else if (weapon.ActionType == "swing")
         {
             wepDamage *= 1.5f;
             wepKnockback *= 1.2f;

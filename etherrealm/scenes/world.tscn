@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://dtu87vw7d2n23" path="res://scenes/entity/portal.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://c3coyy00cjjov" path="res://scenes/items/itemDrop.tscn" id="8_4mrxx"]
 [ext_resource type="Resource" uid="uid://bk2dvl64laf41" path="res://resources/items/IronSword.tres" id="9_7r4gi"]
-[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/Inventory/hotbar.tscn" id="10_q5onr"]
+[ext_resource type="PackedScene" uid="uid://dohq5nnlsi2vl" path="res://scenes/UI/inventory/hotbar.tscn" id="10_q5onr"]
 [ext_resource type="Resource" uid="uid://ios31qvegdrt" path="res://resources/items/tools/IronPickaxe.tres" id="10_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://bmjl7ptiif8uh" path="res://scenes/UI/healthbar.tscn" id="11_jhx03"]
-[ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/Inventory/inventory.tscn" id="12_o8fc1"]
+[ext_resource type="PackedScene" uid="uid://c1y0om2bo6782" path="res://scenes/UI/inventory/inventory.tscn" id="12_o8fc1"]
 [ext_resource type="Resource" uid="uid://xgr41d0byli1" path="res://resources/items/blocks/TemplateBlock.tres" id="12_q5onr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71j4m"]
@@ -423,10 +423,10 @@ position = Vector2(1929, 335)
 [node name="portal" parent="." instance=ExtResource("4_k0juu")]
 position = Vector2(1362, 363)
 
-[node name="player" parent="." node_paths=PackedStringArray("_healthbar", "inventory") instance=ExtResource("1_rwgxs")]
+[node name="player" parent="." node_paths=PackedStringArray("_healthbar", "_inventory") instance=ExtResource("1_rwgxs")]
 position = Vector2(66, 358)
 _healthbar = NodePath("../UI/healthbar")
-inventory = NodePath("../UI/inventory")
+_inventory = NodePath("../UI/inventory")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(2, 2)

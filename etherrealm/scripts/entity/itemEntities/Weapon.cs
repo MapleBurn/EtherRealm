@@ -16,20 +16,20 @@ public partial class Weapon : ActionEntity
 	public float critKbMult;  
 	private float stabDistance; 
 	
-	private Tween attackTween;
+	//variables
+	//private double comboTime;
+	//private bool isCombo = true;
 	  
 	public override void _Ready()  
 	{  
-		//data = wepData;
 		Initialize(wepData);
-		//SetChildNodes();
 		Visible = false;
 	}
 
-	public override void Initialize(ActionEntityData d)
+	public override void Initialize(ActionEntityData data)
 	{
-		wepData = (WeaponData)d;
-		data = wepData;
+		wepData = (WeaponData)data;
+		Data = wepData;
 		
 		stabDistance = wepData.StabDistance;
 		damage = wepData.AttackDamage;
@@ -37,26 +37,35 @@ public partial class Weapon : ActionEntity
 		critDmgMult = wepData.CritDmgMult;
 		knockback = wepData.Knockback;
 		critKbMult  = wepData.CritKbMult;
-		delay = wepData.Delay;
+		Delay = wepData.Delay;
 	}
 	
 	public override void _Process(double delta)  
 	{
-		if (hand.isAnimPlaying)  
+		if (ItemHandler.IsAnimPlaying)  
 		{  
 			Visible = true;  
-			attackCollider.Disabled = false;  
+			AttackCollider.Disabled = false;  
 		}  
 		else  
 		{  
 			Visible = false;  
-			attackCollider.Disabled = true;  
-		}  
+			AttackCollider.Disabled = true;  
+		}
+
+		/*if (comboTime < 1)
+			comboTime += delta;
+		else
+			isCombo = true;*/
 	}
 
 	public override void UsePrimary()
 	{
-		Attack();
+		if (ItemHandler.IsAnimPlaying || IsCooldown)  
+			return;  
+		
+		ActionType = "attack";
+		ItemHandler.IsAnimPlaying = true;
 	}
 
 	public override void UseSecondary(int dir)
@@ -64,22 +73,30 @@ public partial class Weapon : ActionEntity
 		//swing based on player direction  
 		Swing(dir);
 	}
-
-	private void Attack()
-	{
-		if (hand.isAnimPlaying || isCooldown)  
-			return;  
-		
-		actionType = "attack";
-		hand.isAnimPlaying = true;
-	}
 	
 	private void Swing(int dir)  
 	{  
-		if (hand.isAnimPlaying || isCooldown)  
+		if (ItemHandler.IsAnimPlaying || IsCooldown)  
 			return;  
 		
-		actionType = "swing";
-		hand.isAnimPlaying = true;  
+		ActionType = "swing";
+		ItemHandler.IsAnimPlaying = true;  
 	} 
+	
+	public override void AttackFinished()  
+	{  
+		IsCooldown = true;  
+		ItemHandler.IsAnimPlaying = false;  
+		
+		/*if (isCombo)
+		{
+			 IsCooldown = false;
+			 return;
+		}*/
+		
+		GetTree().CreateTimer(Delay).Timeout += () =>  
+		{  
+			IsCooldown = false;   
+		};  
+	}
 }

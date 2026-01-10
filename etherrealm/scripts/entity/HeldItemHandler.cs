@@ -4,11 +4,11 @@ using Godot;
 
 namespace EtherRealm.scripts.entity;
 
-public partial class Hand : Node2D
+public partial class HeldItemHandler : Node2D
 {
     public ActionEntity actionEntity;
-    public bool isAnimPlaying = false;
-    public bool isEntityInitialized = false;
+    public bool IsAnimPlaying = false;
+    public bool IsEntityInitialized = false;
     
     private bool isPendingUpdate = false;
     private InventorySlot invSlot;
@@ -23,7 +23,7 @@ public partial class Hand : Node2D
     {
         if (isPendingUpdate)
         {
-            if (!isEntityInitialized || actionEntity.CanAttack())
+            if (!IsEntityInitialized || actionEntity.CanAttack())
             {
                 UpdateActionEntity(invSlot);
                 isPendingUpdate = false;
@@ -34,10 +34,10 @@ public partial class Hand : Node2D
     private void UpdateActionEntity(InventorySlot slot)
     {
         actionEntity = null;
-        isEntityInitialized = false;
+        IsEntityInitialized = false;
         foreach (var child in GetChildren())
         {
-            child.QueueFree(); //flush the children into the toilet
+            child.QueueFree();
         }
 
         if (slot.Item == null || slot.Item.ItemData == null || slot.Item.ItemData.EntityData == null)
@@ -50,7 +50,7 @@ public partial class Hand : Node2D
         {
             actionEntity = node as ActionEntity;
             actionEntity.Initialize(slot.Item.ItemData.EntityData);
-            actionEntity.itemSlot = slot;
+            actionEntity.ItemSlot = slot;
             CallDeferred("SpawnEntity", slot);
         }
     }
@@ -63,32 +63,24 @@ public partial class Hand : Node2D
     
     public void PlayAnimation(int dir, AnimationPlayer animPlayer)
     {
-        var action = actionEntity.actionType;
-        if (action == "swing")
+        var action = actionEntity.ActionType;
+        /*if (action == "swing")
         {
             if (dir == 1)
             {
                 animPlayer.Play("swingRight");
-                actionEntity.hitDir = Vector2.Right;
+                actionEntity.HitDir = Vector2.Right;
             }
             else
             {
                 animPlayer.Play("swingLeft");
-                actionEntity.hitDir = Vector2.Left;
+                actionEntity.HitDir = Vector2.Left;
             }
-        }
-        else if (action == "attack")
+        }*/
+        if (action == "attack")
         {
-            if (dir == 1)
-            {
-                animPlayer.Play("attackRight");
-                actionEntity.hitDir = Vector2.Right;
-            }
-            else
-            {
-                animPlayer.Play("attackLeft");
-                actionEntity.hitDir = Vector2.Left;
-            }
+            animPlayer.Play("stab");
+            actionEntity.HitDir = dir == 1 ? Vector2.Right : Vector2.Left;
         }
         else if (action == "place")
         {
@@ -98,8 +90,8 @@ public partial class Hand : Node2D
 
     public void AnimationFinished()
     {
-        isAnimPlaying = false;  
-        if (isEntityInitialized)
+        IsAnimPlaying = false;  
+        if (IsEntityInitialized)
             actionEntity.AttackFinished();
     }
     
