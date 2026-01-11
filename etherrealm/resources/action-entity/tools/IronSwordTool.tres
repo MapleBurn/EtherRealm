@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://caqcbilfimlna"]
 
+[ext_resource type="Texture2D" uid="uid://bt0udtxw6i6sb" path="res://assets/items/sword.png" id="1_a068d"]
 [ext_resource type="Script" uid="uid://bs641eiw7xnvp" path="res://scripts/resource/action-entity/WeaponData.cs" id="1_j35tp"]
-[ext_resource type="Texture2D" uid="uid://dibxb5nc6jyjh" path="res://assets/items/swordtest.png" id="1_kngnr"]
 
 [resource]
 script = ExtResource("1_j35tp")
@@ -12,7 +12,7 @@ CritDmgMult = 2.0
 Knockback = 200.0
 CritKbMult = 1.5
 Type = "weapon"
-Delay = 0.8
-Model = ExtResource("1_kngnr")
+Delay = 0.6
+Model = ExtResource("1_a068d")
 ColliderPoints = PackedVector2Array(-5, 1, 1, 7, 17, -9, 11, -15)
 EntityScenePath = "res://scenes/tools/weapon.tscn"

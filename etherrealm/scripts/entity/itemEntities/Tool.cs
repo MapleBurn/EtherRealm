@@ -57,7 +57,7 @@ public partial class Tool : ActionEntity
         if (ItemHandler.IsAnimPlaying || IsCooldown)  
             return;
         
-        ActionType = "swing";
+        ActionType = "mine";
         ItemHandler.IsAnimPlaying = true;
         
         var mousePos = GetGlobalMousePosition();

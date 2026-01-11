@@ -218,7 +218,7 @@ public partial class Player : Entity
 	
 	private void AnimationFinished(StringName animName)  
 	{  
-		if (animName == "stab" || animName == "place")
+		if (animName == "stab" || animName == "place" || animName == "mine")
 		{  
 			ItemHandler.AnimationFinished();
 		}

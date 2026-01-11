@@ -82,9 +82,14 @@ public partial class HeldItemHandler : Node2D
             animPlayer.Play("stab");
             actionEntity.HitDir = dir == 1 ? Vector2.Right : Vector2.Left;
         }
+        else if (action == "mine")
+        {
+            animPlayer.Play("mine");
+            //actionEntity.HitDir = dir == 1 ? Vector2.Right : Vector2.Left;
+        }
         else if (action == "place")
         {
-            animPlayer.Play(dir == 1 ? "placeRight" : "placeLeft");
+            animPlayer.Play("place");
         }
     }
 
