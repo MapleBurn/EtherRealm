@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cecj28lgkcph4"]
+
+[ext_resource type="Script" uid="uid://dnmsdik0c4aqi" path="res://Entities/Enemy/TestEnemy.cs" id="1_oam3n"]
+[ext_resource type="Texture2D" uid="uid://bxduor8pxwc6n" path="res://Entities/Enemy/guard.png" id="2_lomtj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5f4k"]
+size = Vector2(24, 46)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rqk5s"]
+radius = 105.076164
+
+[node name="TestEnemy" type="CharacterBody2D" unique_id=894676291 node_paths=PackedStringArray("_raycast", "_sprite")]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_oam3n")
+_raycast = NodePath("RayCast2D")
+_sprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=288117387]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_k5f4k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=230109261]
+texture = ExtResource("2_lomtj")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=671642819]
+position = Vector2(12, 20)
+target_position = Vector2(10, 0)
+
+[node name="detectionArea" type="Area2D" parent="." unique_id=294363843]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea" unique_id=661035257]
+shape = SubResource("CircleShape2D_rqk5s")

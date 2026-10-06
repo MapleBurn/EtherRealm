@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bi01wr6uco8q5"]
+
+[ext_resource type="Script" uid="uid://d16qygtqsn1rj" path="res://Entities/Survivor/Player.cs" id="1_gb1tc"]
+[ext_resource type="Texture2D" uid="uid://c6bc7g231faww" path="res://Entities/Survivor/Anaya.png" id="2_xd3k7"]
+[ext_resource type="Script" uid="uid://cvmqh01bsknqw" path="res://Entities/Survivor/Weapon.cs" id="3_qf0h4"]
+[ext_resource type="Texture2D" uid="uid://cnfpavmjmmgrh" path="res://icon.svg" id="4_8mcgf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f60y1"]
+size = Vector2(24, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qf0h4"]
+size = Vector2(29, 5)
+
+[node name="Player" type="CharacterBody2D" unique_id=539933136 node_paths=PackedStringArray("_weapon")]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_gb1tc")
+_weapon = NodePath("weapon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=301665904]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_f60y1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=426199684]
+texture = ExtResource("2_xd3k7")
+
+[node name="weapon" type="Area2D" parent="." unique_id=1495741492 node_paths=PackedStringArray("_sprite")]
+position = Vector2(16, 0)
+script = ExtResource("3_qf0h4")
+_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="weapon" unique_id=954670897]
+scale = Vector2(0.22656251, 0.03906248)
+texture = ExtResource("4_8mcgf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weapon" unique_id=1305377417]
+shape = SubResource("RectangleShape2D_qf0h4")

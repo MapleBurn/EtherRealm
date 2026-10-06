@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6bc7g231faww"
-path="res://.godot/imported/Anaya.png-5f3384b4308c2d67c07d116f7663f7bf.ctex"
+uid="uid://bxduor8pxwc6n"
+path="res://.godot/imported/guard.png-75751d1ab881e137dce803cdeb897f85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Anaya.png"
-dest_files=["res://.godot/imported/Anaya.png-5f3384b4308c2d67c07d116f7663f7bf.ctex"]
+source_file="res://Entities/Enemy/guard.png"
+dest_files=["res://.godot/imported/guard.png-75751d1ab881e137dce803cdeb897f85.ctex"]
 
 [params]
 
