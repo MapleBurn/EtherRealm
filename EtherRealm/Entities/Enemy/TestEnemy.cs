@@ -1,10 +1,11 @@
 using System;
 using EtherRealm.Entities.Survivor;
+using EtherRealm.Entities.Visual;
 using Godot;
 
 namespace EtherRealm.Entities.Enemy;
 
-public partial class TestEnemy : CharacterBody2D
+public partial class TestEnemy : LivingEntity
 {
     public enum State
     {
@@ -12,10 +13,7 @@ public partial class TestEnemy : CharacterBody2D
         Wander,
         Chase
     }
-
-    public float MoveSpeed = 200f;
-    public float JumpVelocity = -400f;
-    private int _maxHealth = 100;
+    
     private int _health;
 
     [Export] public float MinIdleTime = 1.0f; // seconds
@@ -33,7 +31,7 @@ public partial class TestEnemy : CharacterBody2D
 
     public override void _Ready()
     {
-        _health = _maxHealth;
+        _health = MaxHealth;
         EnterState(State.Idle);
     }
 
@@ -93,6 +91,11 @@ public partial class TestEnemy : CharacterBody2D
     public void TakeDamage(int amount)
     {
         _health -= amount;
+        var scene = GD.Load<PackedScene>(FloatingTextPath);
+        var text = scene.Instantiate<FloatingText>();
+        AddChild(text);
+        text.SetText(amount, FloatingText.DamageType.Damage, false);
+        
         if (_health <= 0)
         {
             QueueFree();

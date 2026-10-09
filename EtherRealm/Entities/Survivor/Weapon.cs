@@ -1,9 +1,12 @@
+using EtherRealm.Entities.Enemy;
 using Godot;
 
 namespace EtherRealm.Entities.Survivor;
 
 public partial class Weapon : Area2D
 {
+    private int _damage = 10;
+    
     [Export] public float SideOffset = 16f;      // half of the player's width
     [Export] public float LungeDistance = 40f;
     [Export] public float LungeTime = 0.08f;
@@ -64,5 +67,11 @@ public partial class Weapon : Area2D
             .SetEase(Tween.EaseType.In);
         _tween.TweenInterval(Cooldown);
         _tween.Finished += () => _isLunging = false;
+    }
+
+    private void OnBodyEntered(Node2D body)
+    {
+        if (body is TestEnemy enemy)
+            enemy.TakeDamage(_damage);
     }
 }
